@@ -1,3 +1,5 @@
+#include "bishop.h"
+
 
 // {
 // private:

@@ -1,5 +1,6 @@
 
 
 class Piece {
-    virtual bool canMove();
+    public:
+        virtual bool canMove() const;
 };
