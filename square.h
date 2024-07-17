@@ -1,12 +1,22 @@
-#include "piece.h"
+#ifndef SQUARE_H
+#define SQUARE_H
+
 #include <vector>
-#include <memory>
+
+
+class Piece;
 
 class Square {
         const int x;
         const int y;
-        Piece piece;
+        Piece* piece;
     public:
-        Piece &getPiece();
+        Piece* getPiece();
         std::vector<int> getCoords();
+        int getX() const; 
+        int getY() const; 
+        bool isEmpty() const; 
 };
+
+#endif
+
