@@ -11,7 +11,9 @@ class Square {
         const int y;
         Piece* piece;
     public:
+        Square(int x, int y, Piece* piece = nullptr); 
         Piece* getPiece();
+        void setPiece(Piece* piece); 
         std::vector<int> getCoords();
         int getX() const; 
         int getY() const; 

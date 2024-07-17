@@ -1,7 +1,13 @@
 #include "square.h"
 
+Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {}
+
 Piece* Square::getPiece() {
     return piece;
+}
+
+void Square::setPiece(Piece* piece) {
+    this->piece = piece; 
 }
 
 std::vector<int> Square::getCoords() {
