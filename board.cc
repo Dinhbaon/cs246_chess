@@ -25,13 +25,13 @@ Board::Board() {
 } 
 
 void Board::updateAllPieces() {
-    std::vector<Piece> blackPieces; 
-    std::vector<Piece> whitePieces; 
+    std::vector<Piece*> blackPieces; 
+    std::vector<Piece*> whitePieces; 
 
     for (Square* square: this->board) {
-        if (square->getPiece()->getIsWhite() == true) whitePieces.emplace_back(square->getPiece()); 
+        if (square->getPiece()->getColor() == true) whitePieces.emplace_back(square->getPiece()); 
 
-        if (square->getPiece()->getIsWhite() == false) blackPieces.emplace_back(square->getPiece()); 
+        if (square->getPiece()->getColor() == false) blackPieces.emplace_back(square->getPiece()); 
 
         allPieces[WHITE] = whitePieces; 
         allPieces[BLACK] = blackPieces; 

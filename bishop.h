@@ -5,7 +5,7 @@
 
 class Bishop: public Piece {
     public:
-        Bishop(bool isWhite);
+        Bishop(Color color);
         bool canMove(const Move& move, const Board& board) const override;
 };  
 

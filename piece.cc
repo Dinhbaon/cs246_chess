@@ -1,9 +1,9 @@
 #include "piece.h"
 
-bool Piece::getIsWhite() const {
-    return isWhite; 
+Color Piece::getColor() const {
+    return color; 
 }
 
 Piece::~Piece() {}
 
-Piece::Piece(bool isWhite): isWhite{isWhite} {}
+Piece::Piece(Color color): color{color} {}

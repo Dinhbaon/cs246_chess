@@ -4,7 +4,7 @@
 #include "square.h"
 #include <stdlib.h> 
 
-Knight::Knight(bool isWhite) : Piece(isWhite) {}
+Knight::Knight(Color color) : Piece(color) {}
 
 bool Knight::canMove(const Move& move, const Board& board) const {
     // If not on diagonal return false
@@ -14,5 +14,5 @@ bool Knight::canMove(const Move& move, const Board& board) const {
 
     // Check if final square is friendly piece
     Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
-    return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getIsWhite() != getIsWhite();
+    return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }

@@ -3,13 +3,14 @@
 
 #include "piece.h"
 #include "square.h"
+#include "color.h"
 #include <vector>
 #include <map>
 #include <string>
 
 class Board {
-        enum Color {WHITE, BLACK}; 
-        std::map<Color, std::vector<Piece>> allPieces; 
+
+        std::map<Color, std::vector<Piece*>> allPieces; 
         std::vector<Square*> board;
         int xDimension = 8;
         int yDimension = 8;
