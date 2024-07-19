@@ -12,14 +12,19 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     int dy = move.end.getY() - move.start.getY(); 
     if (abs(dy / dx) != 1) return false; 
 
-    // Check if any pieces blocking path
-    int iterX = move.start.getX(); 
-    int iterY = move.start.getY(); 
-    while (iterX != move.end.getX() && iterY != move.end.getY()) {
-        iterX += (dx > 0) ? 1 : -1;
-        iterY += (dy > 0) ? 1 : -1;
-        Square* iterSquare = board.getSquare(iterX, iterY); 
-        if (iterSquare == nullptr || !iterSquare->isEmpty()) return false; 
+    // Determine the direction of movement
+    int stepX = (dx > 0) ? 1 : -1;
+    int stepY = (dy > 0) ? 1 : -1;
+
+    // Check for blocking pieces
+    int iterX = move.start.getX();
+    int iterY = move.start.getY();
+    while (iterX != move.end.getX() || iterY != move.end.getY()) {
+        iterX += stepX;
+        iterY += stepY;
+
+        Square* iterSquare = board.getSquare(iterX, iterY);
+        if (iterSquare == nullptr || iterSquare->isEmpty()) return false;
     }
 
     // Check if final square is friendly piece

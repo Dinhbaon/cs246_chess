@@ -14,16 +14,20 @@ class Controller {
     Color playerTurn = WHITE; 
     Mode mode; 
     bool isInGame;
-    void notify();  
+    void notifyObservers();  
+    void switchTurn(); 
 
     public: 
         explicit Controller(Board* board); 
         void makeMove(Move move, Color color);
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
+        Mode getMode() const;
         bool getIsInGame() const; 
+        bool isValidMove(Move move, Color color) const; 
         void setIsInGame(bool isInGame); 
         Player* getPlayerTurn() const; 
+        Color getPlayerColor() const; 
 };
 
 #endif

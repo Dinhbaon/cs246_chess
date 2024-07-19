@@ -7,11 +7,12 @@
 class Piece;
 
 class Square {
-        const int x;
-        const int y;
-        Piece* piece;
+    int x;
+    int y;
+    Piece* piece;
     public:
-        Square(int x, int y, Piece* piece = nullptr); 
+        Square(int x = 0, int y = 0, Piece* piece = nullptr); 
+        Square& operator=(const Square& other); 
         Piece* getPiece();
         void setPiece(Piece* piece); 
         std::vector<int> getCoords();

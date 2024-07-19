@@ -1,6 +1,8 @@
 #include "square.h"
+#include "move.h"
 
 Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {}
+
 
 Piece* Square::getPiece() {
     return piece;
@@ -25,4 +27,15 @@ int Square::getY() const {
 
 bool Square::isEmpty() const {
     return piece == nullptr; 
+}
+
+Square& Square::operator=(const Square& other) {
+    if (this == &other) {
+        return *this; 
+    }
+    
+    x = other.x; 
+    y = other.y; 
+    piece = other.piece;
+    return *this;
 }

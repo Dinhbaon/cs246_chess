@@ -4,6 +4,7 @@
 #include "piece.h"
 #include "square.h"
 #include "color.h"
+#include "move.h"
 #include <vector>
 #include <map>
 #include <string>
@@ -17,6 +18,7 @@ class Board {
     void updateAllPieces();  
     public:
         Board(); 
+        ~Board();
         void movePiece(Move move, Color color);
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Square* square); 
