@@ -10,7 +10,11 @@ Square* Board::getSquare(const int x, const int y) const {
     return board[xDimension*y + x];
 }
 
-void Board::movePiece(const int fromX, const int fromY, const int toX, const int toY) {
+void Board::setSquare(int x, int y, Square* square) {
+    this->getSquare(x, y)->setPiece(square->getPiece()); 
+}
+
+void Board::movePiece(Move move, Color color) {
     Piece* piece = this->getSquare(fromX, fromY)->getPiece(); 
     Move move{Square{fromX, fromY}, Square{toX, toY}};
     if (piece->canMove(move, *this)) {
@@ -23,6 +27,7 @@ void Board::movePiece(const int fromX, const int fromY, const int toX, const int
 Board::Board() {
     updateAllPieces(); 
 } 
+
 
 void Board::updateAllPieces() {
     std::vector<Piece*> blackPieces; 
