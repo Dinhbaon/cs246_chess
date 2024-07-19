@@ -1,20 +1,28 @@
 #include "human.h"
 #include "move.h"
-#include "iostream"
+#include <string>    
+#include <iostream>
 
-boolean Human::getIsHuman() {
+bool Human::getIsHuman() const {
     return true; 
 }
 
-
-void Human::makeMove(Move move) {
-    board->
-}
-
-void Human::getNextMove() {
+Move Human::getNextMove() const {
     std::string src, dest; 
     std::cin >> src >> dest; 
 
-    int xIndex = src - 'a'
+    int xSrcIndex = src[0] - 'a'; 
+
+    int ySrcIndex = std::stoi(src[1]); 
+
+    Square srcSquare = Square{xSrcIndex, ySrcIndex}; 
+
+    int xDestIndex = dest[0] - 'a'; 
+
+    int yDestIndex = std::stoi(dest[1]); 
+
+    Square destSquare = Square{xDestIndex, yDestIndex}; 
+
+    return Move{srcSquare, destSquare}; 
 
 }

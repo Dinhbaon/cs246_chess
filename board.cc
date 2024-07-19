@@ -1,6 +1,7 @@
 #include "board.h"
 #include "move.h"
 #include "piece.h"
+#include "move.h"
 #include <vector>
 
 Square* Board::getSquare(const int x, const int y) const {
@@ -15,8 +16,12 @@ void Board::setSquare(int x, int y, Square* square) {
 }
 
 void Board::movePiece(Move move, Color color) {
+    int fromX = move.start.getX(); 
+    int fromY = move.start.getY();
+
+    int toX = move.start.getX(); 
+    int toY = move.start.getY(); 
     Piece* piece = this->getSquare(fromX, fromY)->getPiece(); 
-    Move move{Square{fromX, fromY}, Square{toX, toY}};
     if (piece->canMove(move, *this)) {
         this->getSquare(fromX, fromY)->setPiece(nullptr);
         this->getSquare(toX, toY)->setPiece(piece);

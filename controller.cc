@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "board.h"
+#include "move.h"
 
 Controller::Controller(Board* board): board{board} {}
 
@@ -18,4 +19,10 @@ Player* Controller::getPlayerTurn() const {
         case BLACK: 
             return blackPlayer; 
     } 
+}
+
+void Controller::makeMove(Move move, Color color) {
+    notify(); 
+    
+
 }

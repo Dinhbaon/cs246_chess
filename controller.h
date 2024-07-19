@@ -18,6 +18,7 @@ class Controller {
 
     public: 
         explicit Controller(Board* board); 
+        void makeMove(Move move, Color color);
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
         bool getIsInGame() const; 

@@ -10,7 +10,7 @@ class Human: public Player {
     Color color; 
     public:
         Human(Color color, Board* Board);
-        void getNextMove(); 
+        Move getNextMove() const override; 
         bool getIsHuman() const override; 
 };  
 

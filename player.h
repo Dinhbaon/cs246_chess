@@ -8,7 +8,7 @@ class Player {
     Color color; 
     public:
         Player(Color color);
-        virtual Move getNextMove() = 0; 
+        virtual Move getNextMove() const = 0; 
         virtual bool getIsHuman() const = 0; 
 };  
 
