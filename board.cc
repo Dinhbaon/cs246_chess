@@ -3,6 +3,8 @@
 #include "knight.h"
 #include "bishop.h"
 #include "queen.h"
+#include "king.h"
+#include "pawn.h"
 #include "move.h"
 
 Square* Board::getSquare(const int x, const int y) const {
@@ -44,6 +46,27 @@ Board::Board() {
     this->setSquare(1, 0, new Square(1, 0, new Knight(WHITE)));
     this->setSquare(2, 0, new Square(2, 0, new Bishop(WHITE)));
     this->setSquare(3, 0, new Square(3, 0, new Queen(WHITE)));
+    this->setSquare(4, 0, new Square(4, 0, new King(WHITE))); 
+    this->setSquare(5, 0, new Square(5, 0, new Bishop(WHITE))); 
+    this->setSquare(6, 0, new Square(6, 0, new Knight(WHITE))); 
+    this->setSquare(7, 0, new Square(7, 0, new Rook(WHITE))); 
+
+    for (int i = 0; i < xDimension; i++) {
+        this->setSquare(i, 1, new Square(i, 1, new Pawn(WHITE))); 
+    }
+
+    this->setSquare(0, 8, new Square(0, 0, new Rook(BLACK)));
+    this->setSquare(1, 8, new Square(1, 0, new Knight(BLACK)));
+    this->setSquare(2, 8, new Square(2, 0, new Bishop(BLACK)));
+    this->setSquare(3, 8, new Square(3, 0, new Queen(BLACK)));
+    this->setSquare(4, 8, new Square(4, 0, new King(BLACK))); 
+    this->setSquare(5, 8, new Square(5, 0, new Bishop(BLACK))); 
+    this->setSquare(6, 8, new Square(6, 0, new Knight(BLACK))); 
+    this->setSquare(7, 8, new Square(7, 0, new Rook(BLACK))); 
+    
+    for (int i = 0; i < xDimension; i++) {
+        this->setSquare(i, 7, new Square(i, 1, new Pawn(BLACK))); 
+    }
 
     updateAllPieces();
 }
