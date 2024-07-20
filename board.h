@@ -15,6 +15,7 @@ class Board {
     std::vector<Square*> board;
     int xDimension = 8;
     int yDimension = 8; 
+    Move lastMove; 
     void updateAllPieces();  
     public:
         Board(); 
@@ -23,6 +24,8 @@ class Board {
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Square* square); 
         std::map<Color, std::vector<Piece*>> getPieces();
+        Move getLastMove() const; 
+
 };
 
 #endif

@@ -51,7 +51,12 @@ int main() {
                     move = controller.getPlayerTurn()->getNextMove(); 
                 }
 
+
                 controller.makeMove(move, controller.getPlayerColor()); 
+
+                if (controller.checkPromotion()) {
+                    controller.getPlayerTurn()->handlePromotion();
+                }
 
             } else {
 

@@ -26,3 +26,9 @@ Move Human::getNextMove() const {
 
     return Move{srcSquare, destSquare}; 
 }
+
+void Human::handlePromotion() {
+    std::string newPiece; 
+    std::cout << "Choose a piece to promote your pawn to (Q(ueen), B(ishop), K(night), R(ook))" <<std::endl; 
+    std::cin >> newPiece; 
+}

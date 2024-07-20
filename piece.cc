@@ -16,3 +16,4 @@ void Piece::setHasMoved(bool hasMoved) {
     hasMoved = hasMoved; 
 }
 
+

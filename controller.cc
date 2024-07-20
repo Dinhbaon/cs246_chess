@@ -93,3 +93,23 @@ void Controller::switchTurn() {
             break; 
     }
 }
+
+bool Controller::checkPromotion() const {
+    Move lastMove = board->getLastMove(); 
+    Piece* piece = board->getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece(); 
+    if (piece->getPieceType() == PAWN) {
+        switch(piece->getColor()) {
+            case WHITE: 
+                if (lastMove.end.getY() == 7) {
+                    return true; 
+                }
+                break; 
+            case BLACK: 
+                if (lastMove.end.getY() == 0) {
+                    return true; 
+                }
+        }
+    }
+    return false; 
+    
+}

@@ -15,3 +15,7 @@ bool Knight::canMove(const Move& move, const Board& board) const {
     Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
+
+PieceType Knight::getPieceType() const {
+    return KNIGHT; 
+}

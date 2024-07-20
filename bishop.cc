@@ -31,3 +31,7 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
+
+PieceType Bishop::getPieceType() const {
+    return BISHOP; 
+}

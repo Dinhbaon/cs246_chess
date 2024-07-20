@@ -13,6 +13,7 @@ class Player {
         Player(Color color, Board* board);
         virtual Move getNextMove() const = 0; 
         virtual bool getIsHuman() const = 0; 
+        virtual void handlePromotion(); 
 };  
 
 #endif

@@ -8,6 +8,7 @@ class Knight: public Piece {
     public:
         Knight(Color color);
         bool canMove(const Move& move, const Board& board) const override;
+        PieceType getPieceType() const override; 
 };  
 
 #endif

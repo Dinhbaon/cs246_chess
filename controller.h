@@ -19,6 +19,7 @@ class Controller {
 
     public: 
         explicit Controller(Board* board); 
+        bool checkPromotion() const;  
         void makeMove(Move move, Color color);
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 

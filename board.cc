@@ -9,21 +9,6 @@
 
 #include <stdexcept>
 
-Square* Board::getSquare(const int x, const int y) const {
-    if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
-        return nullptr;
-    }
-    return board[y * xDimension + x];
-}
-
-void Board::setSquare(int x, int y, Square* square) {
-    if (x >= 0 && x < xDimension && y >= 0 && y < yDimension) {
-        board[y * xDimension + x]->setPiece(square->getPiece());
-    } else {
-        throw std::invalid_argument( "Inputted square not on board" );
-    }
-}
-
 void Board::movePiece(Move move, Color color) {
     int fromX = move.start.getX();
     int fromY = move.start.getY();
@@ -35,6 +20,10 @@ void Board::movePiece(Move move, Color color) {
     this->getSquare(fromX, fromY)->setPiece(nullptr);
     this->getSquare(toX, toY)->setPiece(piece);
     updateAllPieces();
+
+    lastMove = move; 
+
+
 }
 
 Board::Board() {
@@ -42,7 +31,7 @@ Board::Board() {
 
     for (int i = 0; i < xDimension; i++) {
         for (int j = 0; j < yDimension; j++) {
-            board[j * xDimension + i] = new Square(i, j); // Place default Square
+            board[j * xDimension + i] = new Square(i, j); 
         }
     }
 
@@ -106,3 +95,23 @@ void Board::updateAllPieces() {
 std::map<Color, std::vector<Piece*>> Board::getPieces(){
     return allPieces;
 }
+
+Square* Board::getSquare(const int x, const int y) const {
+    if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
+        return nullptr;
+    }
+    return board[y * xDimension + x];
+}
+
+void Board::setSquare(int x, int y, Square* square) {
+    if (x >= 0 && x < xDimension && y >= 0 && y < yDimension) {
+        board[y * xDimension + x]->setPiece(square->getPiece());
+    } else {
+        throw std::invalid_argument( "Inputted square not on board" );
+    }
+}
+
+Move Board::getLastMove() const {
+    return lastMove; 
+}
+

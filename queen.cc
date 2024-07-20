@@ -9,3 +9,7 @@ bool Queen::canMove(const Move& move, const Board& board) const {
     Rook tempRook{this->getColor()}; 
     return tempBishop.canMove(move, board) || tempRook.canMove(move, board);
 }
+
+PieceType Queen::getPieceType() const {
+    return QUEEN; 
+}
