@@ -2,6 +2,7 @@
 #include "board.h"
 #include "move.h"
 #include "human.h"
+#include <iostream>
 
 Controller::Controller(Board* board): board{board} {}
 
@@ -24,7 +25,7 @@ Player* Controller::getPlayerTurn() const {
 
 void Controller::makeMove(Move move, Color color) {
     notifyObservers(); 
-    // switchTurn(); 
+    switchTurn(); 
     board->movePiece(move, color); 
 }
 
@@ -52,7 +53,7 @@ void Controller::setPlayers(Color color, std::string player) {
                 whitePlayer = new Human(WHITE, this->board); 
                 break; 
             case BLACK: 
-                blackPlayer = new Human(WHITE, this->board); 
+                blackPlayer = new Human(BLACK, this->board); 
                 break; 
         }
     }

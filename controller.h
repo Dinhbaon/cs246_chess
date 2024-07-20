@@ -12,7 +12,7 @@ class Controller {
     Player* blackPlayer;  
     Board* board; 
     Color playerTurn = WHITE; 
-    Mode mode; 
+    Mode mode = START; 
     bool isInGame;
     void notifyObservers();  
     void switchTurn(); 

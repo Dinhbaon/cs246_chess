@@ -37,6 +37,7 @@ int main() {
             if (controller.getMode() == GAME) { 
                 Move move; 
                 // If Human then read input and make the move
+                std::cout << controller.getPlayerTurn() << std::endl; 
                 if (controller.getPlayerTurn()->getIsHuman()) {
                     
                     move = controller.getPlayerTurn()->getNextMove();

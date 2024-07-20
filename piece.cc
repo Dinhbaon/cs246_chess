@@ -7,3 +7,12 @@ Color Piece::getColor() const {
 Piece::~Piece() {}
 
 Piece::Piece(Color color): color{color} {}
+
+bool Piece::getHasMoved() const {
+    return hasMoved; 
+}
+
+void Piece::setHasMoved(bool hasMoved) {
+    hasMoved = hasMoved; 
+}
+

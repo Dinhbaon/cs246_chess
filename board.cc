@@ -7,6 +7,8 @@
 #include "pawn.h"
 #include "move.h"
 
+#include <stdexcept>
+
 Square* Board::getSquare(const int x, const int y) const {
     if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
         return nullptr;
@@ -17,6 +19,8 @@ Square* Board::getSquare(const int x, const int y) const {
 void Board::setSquare(int x, int y, Square* square) {
     if (x >= 0 && x < xDimension && y >= 0 && y < yDimension) {
         board[y * xDimension + x]->setPiece(square->getPiece());
+    } else {
+        throw std::invalid_argument( "Inputted square not on board" );
     }
 }
 
@@ -55,17 +59,17 @@ Board::Board() {
         this->setSquare(i, 1, new Square(i, 1, new Pawn(WHITE))); 
     }
 
-    this->setSquare(0, 8, new Square(0, 0, new Rook(BLACK)));
-    this->setSquare(1, 8, new Square(1, 0, new Knight(BLACK)));
-    this->setSquare(2, 8, new Square(2, 0, new Bishop(BLACK)));
-    this->setSquare(3, 8, new Square(3, 0, new Queen(BLACK)));
-    this->setSquare(4, 8, new Square(4, 0, new King(BLACK))); 
-    this->setSquare(5, 8, new Square(5, 0, new Bishop(BLACK))); 
-    this->setSquare(6, 8, new Square(6, 0, new Knight(BLACK))); 
-    this->setSquare(7, 8, new Square(7, 0, new Rook(BLACK))); 
+    this->setSquare(0, 7, new Square(0, 0, new Rook(BLACK)));
+    this->setSquare(1, 7, new Square(1, 0, new Knight(BLACK)));
+    this->setSquare(2, 7, new Square(2, 0, new Bishop(BLACK)));
+    this->setSquare(3, 7, new Square(3, 0, new Queen(BLACK)));
+    this->setSquare(4, 7, new Square(4, 0, new King(BLACK))); 
+    this->setSquare(5, 7, new Square(5, 0, new Bishop(BLACK))); 
+    this->setSquare(6, 7, new Square(6, 0, new Knight(BLACK))); 
+    this->setSquare(7, 7, new Square(7, 0, new Rook(BLACK))); 
     
     for (int i = 0; i < xDimension; i++) {
-        this->setSquare(i, 7, new Square(i, 1, new Pawn(BLACK))); 
+        this->setSquare(i, 6, new Square(i, 6, new Pawn(BLACK))); 
     }
 
     updateAllPieces();
