@@ -25,3 +25,7 @@ Move BotLevel1::getNextMove() const {
     int ithMove = distrMove(gen);
     return moves[ithMove];
 }
+
+void BotLevel1::handlePromotion()  {
+    return; 
+}
