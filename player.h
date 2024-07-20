@@ -6,8 +6,9 @@
 #include "board.h"
 
 class Player {
-    Color color; 
-    Board* board; 
+    protected:
+        Color color;    
+        Board* board; 
     public:
         Player(Color color, Board* board);
         virtual Move getNextMove() const = 0; 

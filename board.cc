@@ -102,3 +102,7 @@ void Board::updateAllPieces() {
     allPieces[WHITE] = whitePieces;
     allPieces[BLACK] = blackPieces;
 }
+
+std::map<Color, std::vector<Piece*>> Board::getPieces(){
+    return allPieces;
+}

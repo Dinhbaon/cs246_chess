@@ -22,8 +22,7 @@ class Board {
         void movePiece(Move move, Color color);
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Square* square); 
-        
- 
+        std::map<Color, std::vector<Piece*>> getPieces();
 };
 
 #endif
