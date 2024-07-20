@@ -92,7 +92,7 @@ void Board::updateAllPieces() {
     allPieces[BLACK] = blackPieces;
 }
 
-std::map<Color, std::vector<Piece*>> Board::getPieces(){
+std::map<Color, std::vector<Piece*>> Board::getPieces() const {
     return allPieces;
 }
 
@@ -115,3 +115,15 @@ Move Board::getLastMove() const {
     return lastMove; 
 }
 
+bool Board::isSquareUnderAttack(const Square& square, Color color) const {
+    // Iterate through all pieces on the board
+    for (const Piece* piece : this->getPieces()[color]) {
+        // Skip pieces of the same color
+        if (piece->getColor() == color) {
+            continue;
+        }
+
+        if (piece->canMove(square, *this)) return true;  
+    }
+    return false;
+}

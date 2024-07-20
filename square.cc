@@ -4,7 +4,7 @@
 Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {}
 
 
-Piece* Square::getPiece() {
+Piece* Square::getPiece() const {
     return piece;
 }
 

@@ -13,7 +13,7 @@ class Square {
     public:
         Square(int x = 0, int y = 0, Piece* piece = nullptr); 
         Square& operator=(const Square& other); 
-        Piece* getPiece();
+        Piece* getPiece() const;
         void setPiece(Piece* piece); 
         std::vector<int> getCoords();
         int getX() const; 

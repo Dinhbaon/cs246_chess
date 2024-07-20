@@ -34,6 +34,7 @@ bool Pawn::canMove(const Move& move, const Board& board) const {
             return true;
         }
 
+        // Check for enpassent
         const Move& lastMove = board.getLastMove();
         if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 && 
             lastMove.end.getX() == move.end.getX() &&

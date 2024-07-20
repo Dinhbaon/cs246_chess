@@ -59,10 +59,12 @@ int main() {
                 }
 
             } else {
-
+                std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
             }
         } else if (command == "undo") {
 
+        } else if (command == "setup") {
+            controller.setMode(SETUP); 
         }
     }
 }
