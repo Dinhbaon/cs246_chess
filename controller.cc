@@ -8,6 +8,10 @@
 
 Controller::Controller(Board* board): board{board} {}
 
+char Controller::getState(int row, int col) const {
+    return board->charAt(row, col);
+}
+
 bool Controller::getIsInGame() const {
     return isInGame;
 }
@@ -85,10 +89,6 @@ void Controller::setMode(Mode mode) {
 
 Mode Controller::getMode() const {
     return mode; 
-}
-
-void Controller::notifyObservers() {
-    return ;
 }
 
 void Controller::switchTurn() {

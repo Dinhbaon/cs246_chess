@@ -27,6 +27,7 @@ class Board {
     public:
         Board(); 
         ~Board();
+        char charAt(int row, int col);
         void movePiece(Move move, Color color);
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  

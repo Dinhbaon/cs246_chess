@@ -6,18 +6,19 @@
 #include "player.h"
 #include "mode.h"
 #include <string>
+#include "subject.h"
 
-class Controller {
+class Controller: public Subject {
     Player* whitePlayer;
     Player* blackPlayer;  
     Board* board; 
     Color playerTurn = WHITE; 
     Mode mode = START; 
-    bool isInGame;
-    void notifyObservers();  
+    bool isInGame; 
     void switchTurn(); 
 
     public: 
+        char getState(int row, int col) const override;
         explicit Controller(Board* board); 
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
