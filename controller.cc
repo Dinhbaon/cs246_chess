@@ -44,6 +44,8 @@ bool Controller::isValidMove(Move move, Color color) const {
     int toX = move.start.getX(); 
     int toY = move.start.getY(); 
     Square* startSquare = this->board->getSquare(fromX, fromY); 
+    if (board->isInCheck(color)) return false; 
+    if (board->isPiecePinned(move.start, color)) return false; 
     if (startSquare->isEmpty()) return false; 
     if (color != startSquare->getPiece()->getColor()) return false; 
     Piece* piece = this->board->getSquare(fromX, fromY)->getPiece(); 

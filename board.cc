@@ -94,6 +94,27 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
     return false;
 }
 
+bool Board::isInCheck(Color color) const {
+    return isSquareUnderAttack(*getKingSquare(color), color);
+}
+
+bool Board::isPiecePinned(const Square& square, Color color) {
+    Piece* piece = square.getPiece(); 
+
+    // If we remove the piece, is the king in check
+    setSquare(square.getX(), square.getY(), nullptr); 
+
+    if (isInCheck(color)) {
+        // Place the piece back to original square 
+        setSquare(square.getX(), square.getY(), piece); 
+        return true; 
+    }
+    
+    setSquare(square.getX(), square.getY(), piece);
+    return false;  
+
+}
+
 void Board::updateAllPieces() {
     std::vector<Piece*> blackPieces;
     std::vector<Piece*> whitePieces;
@@ -199,6 +220,16 @@ void Board::setSquare(int x, int y, Piece* piece) {
 Move Board::getLastMove() const {
     return lastMove; 
 }
+
+Square* Board::getKingSquare(Color color) const {
+    for (Square* square: board) {
+        Piece* piece = square->getPiece(); 
+        if (!square->isEmpty() && piece->getPieceType() == KING && piece->getColor() == color) {
+            return square; 
+        }
+    }
+}
+
 
 
 

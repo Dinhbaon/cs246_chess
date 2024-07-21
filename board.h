@@ -30,11 +30,14 @@ class Board {
         void movePiece(Move move, Color color);
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  
+        bool isInCheck(Color color) const;
+        bool isPiecePinned(const Square& square, Color color);  
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Piece* square); 
         std::map<Color, std::vector<Piece*>> getPieces() const;
         Move getLastMove() const;
+        Square* getKingSquare(Color color) const;
 
 };
 
