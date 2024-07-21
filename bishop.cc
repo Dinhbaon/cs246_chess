@@ -10,7 +10,7 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     // If not on diagonal return false
     int dx = move.end.getX() - move.start.getX();
     int dy = move.end.getY() - move.start.getY(); 
-    if (abs(dy / dx) != 1) return false; 
+    if (abs(dy) != abs(dx)) return false; 
 
     // Determine the direction of movement
     int stepX = (dx > 0) ? 1 : -1;
