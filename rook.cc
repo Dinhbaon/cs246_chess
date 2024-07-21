@@ -31,6 +31,10 @@ bool Rook::canMove(const Move& move, const Board& board) const {
     return endSquare != nullptr && (endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor());
 }
 
+bool Rook::canCapture(const Move& move, const Board& board) const {
+    return canMove(move,board); 
+}
+
 PieceType Rook::getPieceType() const {
     return ROOK; 
 }

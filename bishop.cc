@@ -32,6 +32,10 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
 
+bool Bishop::canCapture(const Move& move, const Board& board) const {
+    return canMove(move, board); 
+}
+
 PieceType Bishop::getPieceType() const {
     return BISHOP; 
 }

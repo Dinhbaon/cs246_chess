@@ -44,6 +44,10 @@ bool King::canMove(const Move& move, const Board& board) const {
     return false;
 }
 
+bool King::canCapture(const Move& move, const Board& board) const {
+    return canMove(move, board); 
+}
+
 PieceType King::getPieceType() const {
     return KING; 
 }

@@ -37,7 +37,6 @@ int main() {
             if (controller.getMode() == GAME) { 
                 Move move; 
                 // If Human then read input and make the move
-                std::cout << controller.getPlayerTurn() << std::endl; 
                 if (controller.getPlayerTurn()->getIsHuman()) {
                     
                     move = controller.getPlayerTurn()->getNextMove();
@@ -54,9 +53,6 @@ int main() {
 
                 controller.makeMove(move, controller.getPlayerColor()); 
 
-                if (controller.checkPromotion()) {
-                    controller.getPlayerTurn()->handlePromotion();
-                }
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 

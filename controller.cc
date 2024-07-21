@@ -26,9 +26,15 @@ Player* Controller::getPlayerTurn() const {
 }
 
 void Controller::makeMove(Move move, Color color) {
+
+    board->movePiece(move, color); 
+
+    if (this->checkPromotion()) {
+        this->getPlayerTurn()->handlePromotion();
+    }
+
     notifyObservers(); 
     switchTurn(); 
-    board->movePiece(move, color); 
 }
 
 bool Controller::isValidMove(Move move, Color color) const {
@@ -87,9 +93,11 @@ void Controller::switchTurn() {
     switch(playerTurn) {
         case WHITE: 
             playerTurn = BLACK; 
+            std::cout << "It is now Blacks turn to move" << std::endl; 
             break; 
         case BLACK:
             playerTurn = WHITE; 
+            std::cout << "It is now Whites turn to move" << std::endl; 
             break; 
     }
 }

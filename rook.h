@@ -8,6 +8,7 @@ class Rook: public Piece {
     public:
         Rook(Color color);
         bool canMove(const Move& move, const Board& board) const override;
+        bool canCapture(const Move& move, const Board& board) const override; 
         PieceType getPieceType() const override; 
 };  
 

@@ -16,6 +16,10 @@ bool Knight::canMove(const Move& move, const Board& board) const {
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
 
+bool Knight::canCapture(const Move& move, const Board& board) const {
+    return canMove(move, board); 
+}
+
 PieceType Knight::getPieceType() const {
     return KNIGHT; 
 }

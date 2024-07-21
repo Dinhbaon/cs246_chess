@@ -58,5 +58,5 @@ void Human::handlePromotion() {
 
     Move lastMove = board->getLastMove(); 
 
-    board->setSquare(lastMove.end.getX(), lastMove.end.getY(), new Square{lastMove.end.getX(), lastMove.end.getY(), piece}); 
+    board->setSquare(lastMove.end.getX(), lastMove.end.getY(), piece); 
 }

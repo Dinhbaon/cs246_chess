@@ -1,2 +1,6 @@
-game Human computer
-move a1 a2
+game Human Human
+move e2 e4
+move g8 f6
+move e4 e5
+move d7 d5
+move e5 d6

@@ -10,6 +10,10 @@ bool Queen::canMove(const Move& move, const Board& board) const {
     return tempBishop.canMove(move, board) || tempRook.canMove(move, board);
 }
 
+bool Queen::canCapture(const Move& move, const Board& board) const {
+    return canMove(move, board); 
+}
+
 PieceType Queen::getPieceType() const {
     return QUEEN; 
 }
