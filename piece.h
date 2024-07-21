@@ -12,6 +12,7 @@ class Piece {
     Color color; 
     PieceType pieceType; 
     public:
+        char name();
         // canMove returns if move is possible. 
         virtual bool canMove(const Move& move, const Board& board) const = 0;
         // canCapture returns if move is capture. All captures are moves but not all moves are captures. 

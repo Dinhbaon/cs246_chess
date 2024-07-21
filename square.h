@@ -11,6 +11,7 @@ class Square {
     int y;
     Piece* piece;
     public:
+        char charAt(int row, int col);
         Square(int x = 0, int y = 0, Piece* piece = nullptr); 
         Square& operator=(const Square& other); 
         Piece* getPiece() const;

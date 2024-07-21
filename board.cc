@@ -9,6 +9,10 @@
 
 #include <stdexcept>
 
+char Board::charAt(int row, int col) {
+    return (board[row * 8 + col])->charAt(row, col);
+}
+
 void Board::movePiece(Move move, Color color) {
     int fromX = move.start.getX();
     int fromY = move.start.getY();

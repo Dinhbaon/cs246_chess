@@ -3,6 +3,12 @@
 
 Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {}
 
+char Square::charAt(int row, int col) {
+    if (isEmpty()) {
+        return '_';
+    }
+    return piece->name();
+}
 
 Piece* Square::getPiece() const {
     return piece;
