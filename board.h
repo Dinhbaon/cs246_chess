@@ -9,9 +9,11 @@
 #include <map>
 #include <string>
 
+template class std::map<Color, std::vector<Piece*>>;
+
 class Board {
 
-    std::map<Color, std::vector<Piece*>> allPieces; 
+    std::map<Color, std::vector<Square*>> allSquaresWithPieces; 
     std::vector<Square*> board;
     int xDimension = 8;
     int yDimension = 8; 
@@ -36,7 +38,7 @@ class Board {
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Piece* piece); 
-        std::map<Color, std::vector<Piece*>> getPieces() const;
+        std::map<Color, std::vector<Square*>> getAllSquaresWithPieces() const;
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;
 

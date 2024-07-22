@@ -1,6 +1,7 @@
 game Human Human
 move e2 e4
-move g8 f6
-move e4 e5
 move d7 d5
-move e5 d6
+move g1 f3
+move b8 c6
+move f1 b5
+move c6 e5
