@@ -161,7 +161,7 @@ bool Board::isMoveCastle(const Move& move) const {
 void Board::Castle(const Move& move) {
     int dx = move.end.getX() - move.start.getX(); 
 
-    Piece* king = move.start.getPiece(); 
+    Piece* king = getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     this->setSquare(move.end.getX(), move.end.getY(), king); 
     this->setSquare(move.start.getX(), move.start.getY(), nullptr); 
     // King side castle

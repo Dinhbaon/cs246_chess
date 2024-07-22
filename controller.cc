@@ -53,9 +53,9 @@ bool Controller::isValidMove(Move move, Color color) const {
     int toX = move.end.getX(); 
     int toY = move.end.getY(); 
     Square* startSquare = this->board->getSquare(fromX, fromY); 
-    if (board->isCheckAfterMove(move, color)) return false; 
     if (startSquare->isEmpty()) return false; 
-    if (color != startSquare->getPiece()->getColor()) return false; 
+    if (color != startSquare->getPiece()->getColor()) return false;
+    if (board->isCheckAfterMove(move, color)) return false;  
     Piece* piece = this->board->getSquare(fromX, fromY)->getPiece(); 
     return piece->canMove(move, *this->board); 
 }
@@ -111,7 +111,7 @@ void Controller::switchTurn() {
 bool Controller::checkPromotion() const {
     Move lastMove = board->getLastMove(); 
     Piece* piece = board->getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece(); 
-    if (piece->getPieceType() == PAWN) {
+    if (piece != nullptr && piece->getPieceType() == PAWN) {
         if (lastMove.end.getY() == 7 || lastMove.end.getY() == 0) {
             return true; 
         }
