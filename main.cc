@@ -73,8 +73,21 @@ int main() {
                 PieceType pt = ROOK;
                 std::string s;
                 if (command == "done") {
-                        // check conditions
-                        
+                    if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
+                        std::cout << "A Knight is in check - cannot exit setup \
+                                      mode until both Knights are not in check." << std::endl;
+                    } else if (!(board->oneKing(WHITE) && board->oneKing(BLACK))) {
+                        std::cout << "There are two Kings of the same color on the board \
+                                      - cannot exit setup mode until one King of each color \
+                                      are on the board." << std::endl;
+                    } else if (controller.checkPromotion()) {
+                        std::cout << "There is a pawn in the first or last rows of the board \
+                                      - cannot exit setup mode until there are no pawns in \
+                                      either the first or last rows of the board." << std::endl;
+                    } else {
+                        controller.setMode(START);
+                        break;
+                    }
                 } else if (command == "+") {
                     if (command == "R") {
                         c = WHITE;

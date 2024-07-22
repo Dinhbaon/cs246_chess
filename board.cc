@@ -234,6 +234,18 @@ Square* Board::getKingSquare(Color color) const {
     }
 }
 
+bool Board::oneKing(const Color color) const {
+    int count = 0;
+    for (auto it = board.begin(); it != board.end(); ++it) {
+        if ((*it)->getPiece()->getPieceType() == KING && 
+            (*it)->getPiece()->getColor() == color) {
+            count += 1;
+        }
+    }
+    if (count > 0) {
+        return false;
+    }
+}
 
 
 
