@@ -9,6 +9,8 @@ class Piece;
 class Square {
     int x;
     int y;
+    int const dim = 8;
+    bool black;
     Piece* piece;
     public:
         char charAt(int row, int col);
@@ -20,6 +22,7 @@ class Square {
         int getX() const; 
         int getY() const; 
         bool isEmpty() const; 
+        bool isBlack();
 };
 
 #endif
