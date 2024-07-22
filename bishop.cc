@@ -24,7 +24,7 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
         iterY += stepY;
 
         Square* iterSquare = board.getSquare(iterX, iterY);
-        if (iterSquare == nullptr || iterSquare->isEmpty()) return false;
+        if (iterSquare == nullptr || !iterSquare->isEmpty()) return false;
     }
 
     // Check if final square is friendly piece

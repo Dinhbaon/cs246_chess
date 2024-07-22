@@ -34,7 +34,7 @@ void Board::movePiece(Move move, Color color) {
 
     lastMove = move; 
 
-    piece->setHasMoved(false); 
+    piece->setHasMoved(true); 
 
 
 }
@@ -86,14 +86,18 @@ Board::~Board() {
 
 //Helper methods
 bool Board::isSquareUnderAttack(const Square& square, Color color) const {
-    // Iterate through all pieces on the board
-    for (const Piece* piece : this->getPieces()[color]) {
-        // Skip pieces of the same color
-        if (piece->getColor() == color) {
-            continue;
+    Color attackingColor; 
+    if (color == WHITE) {
+        attackingColor = BLACK; 
+    } else {
+        attackingColor = WHITE; 
+    }
+    const std::vector<Square*>& squares = allSquaresWithPieces.at(attackingColor);
+    for (Square* squareWithPieces : squares) {
+        Move move{*squareWithPieces, square}; 
+        if (squareWithPieces->getPiece()->canCapture(move, *this)) {
+            return true;
         }
-
-        if (piece->canCapture(square, *this)) return true;  
     }
     return false;
 }
@@ -103,7 +107,7 @@ bool Board::isInCheck(Color color) const {
 }
 
 bool Board::isPiecePinned(const Square& square, Color color) {
-    Piece* piece = square.getPiece(); 
+    Piece* piece = getSquare(square.getX(), square.getY())->getPiece(); 
 
     // If we remove the piece, is the king in check
     setSquare(square.getX(), square.getY(), nullptr); 
@@ -120,24 +124,21 @@ bool Board::isPiecePinned(const Square& square, Color color) {
 }
 
 void Board::updateAllPieces() {
-    std::vector<Piece*> blackPieces;
-    std::vector<Piece*> whitePieces;
-
+    allSquaresWithPieces[WHITE].clear(); 
+    allSquaresWithPieces[BLACK].clear(); 
     for (Square* square : this->board) {
         if (square != nullptr) {
             Piece* piece = square->getPiece();
             if (piece != nullptr) {
                 if (piece->getColor() == WHITE) {
-                    whitePieces.emplace_back(piece);
+                    allSquaresWithPieces[WHITE].emplace_back(piece);
                 } else {
-                    blackPieces.emplace_back(piece);
+                    allSquaresWithPieces[BLACK].emplace_back(piece);
                 }
             }
         }
     }
 
-    allPieces[WHITE] = whitePieces;
-    allPieces[BLACK] = blackPieces;
 }
 
 bool Board::isMoveCastle(const Move& move) const {
@@ -202,8 +203,8 @@ void Board::Enpassent(const Move& move) {
 }
 
 //Getters and setters
-std::map<Color, std::vector<Piece*>> Board::getPieces() const {
-    return allPieces;
+std::map<Color, std::vector<Square*>> Board::getAllSquaresWithPieces() const {
+    return allSquaresWithPieces;
 }
 
 Square* Board::getSquare(const int x, const int y) const {
