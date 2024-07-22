@@ -6,10 +6,12 @@
 King::King(Color color): Piece{color} {}
 
 bool King::canMove(const Move& move, const Board& board) const {
+    return canCapture(move, board) || board.isSquareUnderAttack(move.end, getColor());
+}
+
+bool King::canCapture(const Move& move, const Board& board) const {
     int dx = abs(move.end.getX() - move.start.getX());
     int dy = abs(move.end.getY() - move.start.getY());
-
-    if (board.isSquareUnderAttack(move.end, getColor())) return false;
 
     // The king can move one square in any direction
     if ((dx <= 1 && dy <= 1) && (dx != 0 || dy != 0)) {
@@ -42,10 +44,6 @@ bool King::canMove(const Move& move, const Board& board) const {
 
     // Invalid move
     return false;
-}
-
-bool King::canCapture(const Move& move, const Board& board) const {
-    return canMove(move, board); 
 }
 
 PieceType King::getPieceType() const {

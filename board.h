@@ -29,12 +29,14 @@ class Board {
     public:
         Board(); 
         ~Board();
+        Board &operator=(const Board &other);
         char charAt(int row, int col);
         void movePiece(Move move, Color color);
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  
         bool isInCheck(Color color) const;
-        bool isPiecePinned(const Square& square, Color color);  
+        bool isPiecePinned(const Square& square, Color color); 
+        bool isCheckAfterMove(Move move, Color color);
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Piece* piece); 

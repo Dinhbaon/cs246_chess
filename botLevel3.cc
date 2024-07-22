@@ -1,8 +1,6 @@
-#include "botLevel2.h"
+#include "botLevel3.h"
 #include "king.h"
 #include <random>
-
-BotLevel2::BotLevel2(Color color, Board* board): Bot{color, board}{}
 
 template <typename T> T getRandom(std::vector<T> vector) {
     std::random_device rd;
@@ -12,16 +10,21 @@ template <typename T> T getRandom(std::vector<T> vector) {
     return vector[ithElement];
 }
 
-Move BotLevel2::getNextMove() const {
+BotLevel3::BotLevel3(Color color, Board* board): Bot{color, board}{}
+
+Move BotLevel3::getNextMove() const {
     std::vector<Square*> &squares = board->getAllSquaresWithPieces()[color];
     std::vector<Move> captureMoves = findCaptureMoves(squares, color);
     std::vector<Move> checkMoves = findCheckMoves(squares, color);
+    std::vector<Move> getCaptureMoves = findGetCaptureMoves(squares, color);
     std::vector<Move> getRandomMoves = findRandomMoves(squares, color);
 
     if(captureMoves.size() > 0){
         return getRandom<Move>(captureMoves);
     } else if(checkMoves.size() > 0){
         return getRandom<Move>(checkMoves);
+    } else if (getCaptureMoves.size() > 0){
+        return getRandom<Move>(getCaptureMoves);
     } else {
         return getRandom<Move>(getRandomMoves);
     }
