@@ -131,9 +131,9 @@ void Board::updateAllPieces() {
             Piece* piece = square->getPiece();
             if (piece != nullptr) {
                 if (piece->getColor() == WHITE) {
-                    allSquaresWithPieces[WHITE].emplace_back(piece);
+                    allSquaresWithPieces[WHITE].emplace_back(square);
                 } else {
-                    allSquaresWithPieces[BLACK].emplace_back(piece);
+                    allSquaresWithPieces[BLACK].emplace_back(square);
                 }
             }
         }
@@ -227,9 +227,8 @@ Move Board::getLastMove() const {
 }
 
 Square* Board::getKingSquare(Color color) const {
-    for (Square* square: board) {
-        Piece* piece = square->getPiece(); 
-        if (!square->isEmpty() && piece->getPieceType() == KING && piece->getColor() == color) {
+    for (Square* square: allSquaresWithPieces.at(color)) {
+        if (square->getPiece()->getPieceType() == KING && square->getPiece()->getColor() == color) {
             return square; 
         }
     }
