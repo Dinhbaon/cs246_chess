@@ -6,12 +6,14 @@ Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {
         for (int i = 1; i < dim; i += 2) {
             if (x == i) {
                 black = true;
+                return;
             }
         }
     } else {
         for (int i = 0; i < dim; i += 2) {
             if (x == i) {
                 black = true;
+                return;
             }
         }
     }
