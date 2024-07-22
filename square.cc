@@ -1,11 +1,30 @@
 #include "square.h"
 #include "move.h"
 
-Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {}
+Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {
+    if (y == 7 || y == 5 || y == 3 || y == 1) {
+        for (int i = 1; i < dim; i += 2) {
+            if (x == i) {
+                black = true;
+            }
+        }
+    } else {
+        for (int i = 0; i < dim; i += 2) {
+            if (x == i) {
+                black = true;
+            }
+        }
+    }
+    black = false;
+}
 
 char Square::charAt(int row, int col) {
     if (isEmpty()) {
-        return '_';
+        if (isBlack()) {
+            return '_';
+        } else {
+            return ' ';
+        }
     }
     return piece->name();
 }
@@ -44,4 +63,8 @@ Square& Square::operator=(const Square& other) {
     y = other.y; 
     piece = other.piece;
     return *this;
+}
+
+bool Square::isBlack() {
+    return black;
 }
