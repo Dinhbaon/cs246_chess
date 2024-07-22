@@ -29,7 +29,8 @@ class Controller: public Subject {
         bool isValidMove(Move move, Color color) const; 
         void setIsInGame(bool isInGame); 
         Player* getPlayerTurn() const; 
-        Color getPlayerColor() const; 
+        Color getPlayerColor() const;
+        void setPlayerTurn(Color color); 
 };
 
 #endif

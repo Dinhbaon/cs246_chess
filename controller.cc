@@ -123,3 +123,7 @@ bool Controller::checkPromotion() const {
     return false; 
     
 }
+
+void Controller::setPlayerTurn(Color color) {
+    playerTurn = color;
+}

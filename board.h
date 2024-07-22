@@ -37,7 +37,7 @@ class Board {
         bool isPiecePinned(const Square& square, Color color);  
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
-        void setSquare(const int x, const int y, Piece* square); 
+        void setSquare(const int x, const int y, Piece* piece); 
         std::map<Color, std::vector<Square*>> getAllSquaresWithPieces() const;
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;

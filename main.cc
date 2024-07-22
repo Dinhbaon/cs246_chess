@@ -2,7 +2,14 @@
 #include "controller.h"
 #include "mode.h"
 #include "move.h"
+#include "bishop.h"
+#include "rook.h"
+#include "knight.h"
+#include "queen.h"
+#include "king.h"
+#include "pawn.h"
 #include <iostream>
+#include <string>
 
 int main() {
 
@@ -61,6 +68,85 @@ int main() {
 
         } else if (command == "setup") {
             controller.setMode(SETUP); 
-        }
+            while (std::cin >> command) {
+                Color c = BLACK;
+                PieceType pt = ROOK;
+                std::string s;
+                if (command == "done") {
+                        // check conditions
+                        
+                } else if (command == "+") {
+                    if (command == "R") {
+                        c = WHITE;
+                        pt = ROOK;
+                    } else if (command == "N") {
+                        c = WHITE;
+                        pt = KNIGHT;
+                    } else if (command == "B") {
+                        c = WHITE;
+                        pt = BISHOP;
+                    } else if (command == "Q") {
+                        c = WHITE;
+                        pt = QUEEN;
+                    } else if (command == "K") {
+                        c = WHITE;
+                        pt = KING;
+                    } else if (command == "P") {
+                        c = WHITE;
+                        pt = PAWN;
+                    } else if (command == "r") {
+                        pt = ROOK;
+                    } else if (command == "n") {
+                        pt = KNIGHT;
+                    } else if (command == "b") {
+                        pt = BISHOP;
+                    } else if (command =="q") {
+                        pt = QUEEN;
+                    } else if (command == "k") {
+                        pt = KING;
+                    } else if (command == "p") {
+                        pt = PAWN;
+                    }
+                    std::string src;
+                    std::cin >> src; 
+
+                    int xIndex = src[0] - 'a'; 
+                    int yIndex = src[1] - '0' - 1; 
+                    if (!((board->getSquare(xIndex, yIndex))->isEmpty())) {
+                        delete (board->getSquare(xIndex, yIndex))->getPiece();
+                    }
+                    if (pt == ROOK) {
+                        board->setSquare(xIndex, yIndex, new Rook(c));
+                    } else if (pt == KNIGHT) {
+                        board->setSquare(xIndex, yIndex, new Knight(c));
+                    } else if (pt == BISHOP) {
+                        board->setSquare(xIndex, yIndex, new Bishop(c));
+                    } else if (pt == QUEEN) {
+                        board->setSquare(xIndex, yIndex, new Queen(c));
+                    } else if (pt == KING) {
+                        board->setSquare(xIndex, yIndex, new King(c));
+                    } else {
+                        board->setSquare(xIndex, yIndex, new Pawn(c));
+                    }
+                } else if (command == "-") {
+                    std::string src;
+                    std::cin >> src; 
+
+                    int xIndex = src[0] - 'a'; 
+                    int yIndex = src[1] - '0' - 1; 
+                    delete (board->getSquare(xIndex, yIndex))->getPiece();
+
+                } else { // command == "="
+                    std::cin >> s;
+                    if (s == "black" || "b" || "B") {
+                        c = BLACK;
+                    } else {
+                        c = WHITE;
+                    }
+                    controller.setPlayerTurn(c);
+                }
+                
+            }
+        } 
     }
 }
