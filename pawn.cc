@@ -62,7 +62,7 @@ bool Pawn::canCapture(const Move& move, const Board& board) const {
         const Move& lastMove = board.getLastMove();
         if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 &&
             lastMove.end.getX() == move.end.getX() &&
-            lastMove.end.getY() == move.start.getY() + direction) {
+            lastMove.end.getY() == move.start.getY()) {
             Piece* lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
             if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PieceType::PAWN &&
                 lastMovedPiece->getColor() != getColor()) {
