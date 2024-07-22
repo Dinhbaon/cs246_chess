@@ -44,7 +44,7 @@ class Board {
         std::map<Color, std::vector<Square*>> getAllSquaresWithPieces() const;
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;
-        
+        bool oneKing(const Color color) const;
 };
 
 #endif

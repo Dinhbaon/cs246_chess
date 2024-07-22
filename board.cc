@@ -246,8 +246,7 @@ Board::Board(const Board& other) {
     // Copy xDimension and yDimension
     xDimension = other.xDimension;
     yDimension = other.yDimension;
-
-    // Deep copy the board squares
+        // Deep copy the board squares
     for (const auto& square : other.board) {
         if (square != nullptr) {
             board.push_back(new Square(*square)); // Create a new Square and copy the contents
@@ -273,6 +272,30 @@ Board::Board(const Board& other) {
     // Copy the last move
     lastMove = other.lastMove;
 }
+
+bool Board::oneKing(const Color color) const {
+    int count = 0;
+    for (auto it = board.begin(); it != board.end(); ++it) {
+        if ((*it)->getPiece()->getPieceType() == KING && 
+            (*it)->getPiece()->getColor() == color) {
+            count += 1;
+        }
+    }
+    if (count > 0) {
+        return false;
+    }
+}
+
+Board& Board::operator=(const Board &other){
+    allSquaresWithPieces = other.allSquaresWithPieces;
+    board = other.board;
+    xDimension = other.xDimension;
+    yDimension = other.yDimension;
+    lastMove = other.lastMove;
+    return *this;
+
+}
+
 bool Board::isCheckAfterMove(Move move, Color color){
     Board tmpBoard{*this};
     if(getSquare(move.start.getX(), move.start.getY())->getPiece()->canMove(move, *this)) {
