@@ -58,6 +58,10 @@ int main() {
 
                 } else {
                     move = controller.getPlayerTurn()->getNextMove(); 
+
+                    while (!controller.isValidMove(move, controller.getPlayerColor())) {
+                        move = controller.getPlayerTurn()->getNextMove(); 
+                    }
                 }
 
 
