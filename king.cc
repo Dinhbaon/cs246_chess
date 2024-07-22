@@ -30,22 +30,23 @@ bool King::canCapture(const Move& move, const Board& board) const {
         }
     }
 
-        // Castling move
-    if (dy == 0 && dx == 2&& !getHasMoved()) {
+    // Castling move
+    if (dy == 0 && dx == 2 && !getHasMoved()) {
         int rookX = (dx > 0) ? 7 : 0; // Rook's initial position (kingside or queenside)
-        Square rookSquare(rookX, 0);
-        Piece* rook = board.getSquare(rookX, 0)->getPiece();
+        int kingY = move.start.getY(); // The rank of the king
+        Piece* rook = board.getSquare(rookX, kingY)->getPiece();
 
         // Check if the rook is in place and hasn't moved
         if (rook != nullptr && rook->getPieceType() == PieceType::ROOK && !rook->getHasMoved()) {
             int step = (rookX == 7) ? 1 : -1;
-            for (int x = move.start.getX() + step; x != rookSquare.getX(); x += step) {
-                if (board.getSquare(rookSquare.getX(), 0)->getPiece() != nullptr) return false; // Making sure no pieces is in the way
+            for (int x = move.start.getX() + step; x != rookX; x += step) {
+                if (board.getSquare(x, kingY)->getPiece() != nullptr) return false; // Making sure no pieces is in the way
 
-                if (board.isSquareUnderAttack(Square(x, move.start.getY()), getColor()))  return false; // Can't casle through check
+                if (board.isSquareUnderAttack(Square(x, kingY), getColor())) return false; // Can't castle through check
             }
-            // Check the destination square
-            if (board.isSquareUnderAttack(rookSquare, getColor())) return false;
+            // Check the destination square and the square before it
+            if (board.isSquareUnderAttack(Square(move.start.getX() + step, kingY), getColor()) || 
+                board.isSquareUnderAttack(move.end, getColor())) return false;
             return true;
         }
     }
@@ -53,6 +54,7 @@ bool King::canCapture(const Move& move, const Board& board) const {
     // Invalid move
     return false;
 }
+
 
 PieceType King::getPieceType() const {
     return KING; 
