@@ -76,7 +76,7 @@ void Controller::setPlayers(Color color, std::string player) {
                 whitePlayer = new BotLevel1(WHITE, this->board); 
                 break; 
             case BLACK: 
-                blackPlayer = new BotLevel1(WHITE, this->board); 
+                blackPlayer = new BotLevel1(BLACK, this->board); 
                 break; 
         }
     }

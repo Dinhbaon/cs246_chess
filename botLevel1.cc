@@ -3,27 +3,29 @@
 
 BotLevel1::BotLevel1(Color color, Board* board): Bot{color, board}{}
 
-Move BotLevel1::getNextMove() const {
+template <typename T> T getRandom(std::vector<T> vector){
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::vector<Piece*> pieces = board->getPieces()[color];
-    std::uniform_int_distribution<> distrPiece(0, pieces.size());
-    int ithPiece = distrPiece(gen);
-    Piece* selectedPiece = pieces[ithPiece];
+    std::uniform_int_distribution<> distrMoves(0, vector.size());
+    int ithElement = distrMoves(gen);
+    return vector[ithElement];
+}
+
+Move BotLevel1::getNextMove() const {
+    std::vector<Square*> &squares = board->getAllSquaresWithPieces()[color];
+    Square* selectedSquare = getRandom<Square*>(squares);
     std::vector<Move> moves;
 
-    for(int i = 0; i < 8; ++i){
-        for(int j = 0; j < 8; j++){
-            Move move {i, j};
-            if(selectedPiece->canMove(move, *board)){
+    for(int x = 0; x < 8; ++x){
+        for(int y = 0; y < 8; ++y){
+            Move move {*selectedSquare, Square(x, y)};
+            if(selectedSquare->getPiece()->canMove(move, *board)){
                 moves.emplace_back(move);
             }
         }
     }
 
-    std::uniform_int_distribution<> distrMove(0, pieces.size());
-    int ithMove = distrMove(gen);
-    return moves[ithMove];
+    return getRandom<Move>(moves);
 }
 
 void BotLevel1::handlePromotion()  {
