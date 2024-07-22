@@ -15,7 +15,7 @@ char Bishop::name() const {
 }
 
 bool Bishop::canMove(const Move& move, const Board& board) const {
-    // If not on diagonal return false
+    // If not on diagonal, return false
     int dx = move.end.getX() - move.start.getX();
     int dy = move.end.getY() - move.start.getY(); 
     if (abs(dy) != abs(dx)) return false; 
@@ -24,21 +24,21 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     int stepX = (dx > 0) ? 1 : -1;
     int stepY = (dy > 0) ? 1 : -1;
 
-    // Check for blocking pieces
-    int iterX = move.start.getX();
-    int iterY = move.start.getY();
+    // Check for blocking pieces in the path (excluding the destination square)
+    int iterX = move.start.getX() + stepX;
+    int iterY = move.start.getY() + stepY;
     while (iterX != move.end.getX() || iterY != move.end.getY()) {
-        iterX += stepX;
-        iterY += stepY;
-
         Square* iterSquare = board.getSquare(iterX, iterY);
         if (iterSquare == nullptr || !iterSquare->isEmpty()) return false;
+        iterX += stepX;
+        iterY += stepY;
     }
 
-    // Check if final square is friendly piece
+    // Check if the final square is empty or contains an opponent's piece
     Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
+
 
 bool Bishop::canCapture(const Move& move, const Board& board) const {
     return canMove(move, board); 
