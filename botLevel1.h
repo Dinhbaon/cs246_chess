@@ -7,7 +7,6 @@ class BotLevel1: public Bot{
     public:
         BotLevel1(Color color, Board* board);
         Move getNextMove() const override;
-        void handlePromotion() override; 
 };
 
 #endif

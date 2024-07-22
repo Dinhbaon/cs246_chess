@@ -238,7 +238,22 @@ Square* Board::getKingSquare(Color color) const {
     }
 }
 
+Board& Board::operator=(const Board &other){
+    allSquaresWithPieces = other.allSquaresWithPieces;
+    board = other.board;
+    xDimension = other.xDimension;
+    yDimension = other.yDimension;
+    lastMove = other.lastMove;
+    return *this;
+}
 
-
-
-
+bool Board::isCheckAfterMove(Move move, Color color){
+    Board tmpBoard = *this;
+    if(move.start.getPiece()->canMove(move, *this)){
+        tmpBoard.movePiece(move, color);
+        if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(color), color)){
+            return true;
+        };
+    }
+    return false;
+}
