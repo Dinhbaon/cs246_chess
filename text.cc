@@ -14,12 +14,14 @@ Text::~Text() {
 }
 
 void Text::notify() {
-    int start_top_index = 8;
+    ///
+    cout << "text notify()" << endl;
+    ///
+    int start_top_index = 7;
     for (int i = 0; i < bottom; ++i) {
-        cout << (8 - i) << ' ';
+        cout << (start_top_index + 1 - i) << ' ';
         for (int j = 0; j < right; ++j) {
-            start_top_index - j;
-            cout << subject->getState(i, start_top_index);
+            cout << subject->getState(j, start_top_index - i);
         }
         cout << endl;
     }

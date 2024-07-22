@@ -5,6 +5,14 @@
 
 King::King(Color color): Piece{color} {}
 
+char King::name() const {
+    if (getColor() == BLACK) {
+        return 'k';
+    } else {
+        return 'K';
+    }
+}
+
 bool King::canMove(const Move& move, const Board& board) const {
     return canCapture(move, board) || board.isSquareUnderAttack(move.end, getColor());
 }

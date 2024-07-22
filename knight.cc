@@ -6,6 +6,14 @@
 
 Knight::Knight(Color color) : Piece(color) {}
 
+char Knight::name() const {
+    if (getColor() == BLACK) {
+        return 'n';
+    } else {
+        return 'N';
+    }
+}
+
 bool Knight::canMove(const Move& move, const Board& board) const {
     int dx = move.end.getX() - move.start.getX();
     int dy = move.end.getY() - move.start.getY(); 

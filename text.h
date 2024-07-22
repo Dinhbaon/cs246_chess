@@ -5,8 +5,8 @@
 
 class Text: public Observer {
     Controller *subject;
-    int bottom = 7;
-    int right = 9;
+    int bottom = 8;
+    int right = 8;
 
     public:
         Text(Controller *s);

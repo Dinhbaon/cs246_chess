@@ -8,6 +8,7 @@
 #include "queen.h"
 #include "king.h"
 #include "pawn.h"
+#include "text.h"
 #include <iostream>
 #include <string>
 
@@ -16,6 +17,8 @@ int main() {
     Board* board = new Board(); 
     Controller controller{board}; 
     std::string command;
+    std::vector<Observer*> observers;
+    observers.emplace_back(new Text{&controller});
 
 
     while (std::cin >> command) {
@@ -161,5 +164,8 @@ int main() {
                 
             }
         } 
+    }
+    for (auto it = observers.begin(); it != observers.end(); ++it) {
+        delete *it;
     }
 }

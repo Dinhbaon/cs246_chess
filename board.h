@@ -31,7 +31,8 @@ class Board {
         Board(); 
         // ~Board();
         Board(const Board& other);
-        char charAt(int row, int col);
+        Board &operator=(const Board &other);
+        char charAt(int col, int row);
         void movePiece(Move move, Color color);
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  

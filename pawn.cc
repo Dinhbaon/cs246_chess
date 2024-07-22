@@ -6,6 +6,14 @@
 
 Pawn::Pawn(Color color) : Piece(color) {}
 
+char Pawn::name() const {
+    if (getColor() == BLACK) {
+        return 'p';
+    } else {
+        return 'P';
+    }
+}
+
 bool Pawn::canMove(const Move& move, const Board& board) const {
     int dx = move.end.getX() - move.start.getX(); 
     int dy = move.end.getY() - move.start.getY(); 

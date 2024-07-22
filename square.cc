@@ -28,7 +28,7 @@ Square::Square(const Square& other) {
         y = other.y; 
 }
 
-char Square::charAt(int row, int col) {
+char Square::charAt(int col, int row) {
     if (isEmpty()) {
         if (isBlack()) {
             return '_';

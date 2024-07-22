@@ -13,6 +13,7 @@ class Pawn: public Piece {
         PieceType getPieceType() const override; 
         void promote(Board& board); 
         Piece* copy() const override; 
+        char name() const override;
 };  
 
 #endif

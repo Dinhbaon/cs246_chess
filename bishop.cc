@@ -6,6 +6,14 @@
 
 Bishop::Bishop(Color color) : Piece(color) {}
 
+char Bishop::name() const {
+    if (getColor() == BLACK) {
+        return 'b';
+    } else {
+        return 'B';
+    }
+}
+
 bool Bishop::canMove(const Move& move, const Board& board) const {
     // If not on diagonal return false
     int dx = move.end.getX() - move.start.getX();

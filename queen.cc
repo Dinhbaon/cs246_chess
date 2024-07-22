@@ -4,6 +4,14 @@
 
 Queen::Queen(Color color): Piece{color} {}
 
+char Queen::name() const {
+    if (getColor() == BLACK) {
+        return 'q';
+    } else {
+        return 'Q';
+    }
+}
+
 bool Queen::canMove(const Move& move, const Board& board) const {
     Bishop tempBishop{this->getColor()}; 
     Rook tempRook{this->getColor()}; 

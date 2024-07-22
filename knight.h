@@ -11,6 +11,7 @@ class Knight: public Piece {
         bool canCapture(const Move& move, const Board& board) const override; 
         PieceType getPieceType() const override; 
         Piece* copy() const override; 
+        char name() const override;
 };  
 
 #endif

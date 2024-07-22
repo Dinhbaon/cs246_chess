@@ -6,10 +6,12 @@
 #include <iostream>
 #include "botLevel1.h"
 
-Controller::Controller(Board* board): board{board} {}
+Controller::Controller(Board* board): board{board} {
 
-char Controller::getState(int row, int col) const {
-    return board->charAt(row, col);
+}
+
+char Controller::getState(int col, int row) const {
+    return board->charAt(col, row);
 }
 
 bool Controller::getIsInGame() const {
@@ -39,6 +41,7 @@ void Controller::makeMove(Move move, Color color) {
         this->getPlayerTurn()->handlePromotion();
     }
 
+    std::cout << "makeMove" << std::endl;
     notifyObservers(); 
     switchTurn(); 
 }
@@ -63,7 +66,7 @@ Color Controller::getPlayerColor() const {
 }
 
 void Controller::setPlayers(Color color, std::string player) {
-    if (player == "Human") {
+    if (player == "Human" || player == "human") {
         switch(color){
             case WHITE: 
                 whitePlayer = new Human(WHITE, this->board); 

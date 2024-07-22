@@ -18,7 +18,7 @@ class Controller: public Subject {
     void switchTurn(); 
 
     public: 
-        char getState(int row, int col) const override;
+        char getState(int col, int row) const override;
         explicit Controller(Board* board); 
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);

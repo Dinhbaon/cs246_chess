@@ -4,6 +4,14 @@
 
 Rook::Rook(Color color) : Piece(color) {}
 
+char Rook::name() const {
+    if (getColor() == BLACK) {
+        return 'r';
+    } else {
+        return 'R';
+    }
+}
+
 bool Rook::canMove(const Move& move, const Board& board) const {
     int dx = move.end.getX() - move.start.getX();
     int dy = move.end.getY() - move.start.getY();

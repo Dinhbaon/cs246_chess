@@ -9,8 +9,8 @@
 
 #include <stdexcept>
 
-char Board::charAt(int row, int col) {
-    return (board[row * 8 + col])->charAt(row, col);
+char Board::charAt(int col, int row) {
+    return (board[(yDimension - 1 - row) * xDimension + col])->charAt(col, row);
 }
 
 void Board::movePiece(Move move, Color color) {
@@ -44,7 +44,7 @@ Board::Board() {
 
     for (int i = 0; i < xDimension; i++) {
         for (int j = 0; j < yDimension; j++) {
-            board[j * xDimension + i] = new Square(i, j); 
+            board[(yDimension - 1 - i) * xDimension + j] = new Square(j, i); 
         }
     }
 
@@ -236,6 +236,7 @@ Square* Board::getKingSquare(Color color) const {
             return square; 
         }
     }
+    return getSquare(0, 7); // returns first square if no King
 }
 
 Board::Board(const Board& other) {
@@ -281,12 +282,13 @@ bool Board::oneKing(const Color color) const {
             count += 1;
         }
     }
-    if (count > 0) {
-        return false;
+    if (count == 1) {
+        return true;
     }
+    return false;
 }
 
-Board& Board::operator=(const Board &other){
+Board& Board::operator=(const Board &other) {
     allSquaresWithPieces = other.allSquaresWithPieces;
     board = other.board;
     xDimension = other.xDimension;

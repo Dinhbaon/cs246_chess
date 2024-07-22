@@ -13,7 +13,7 @@ class Square {
     bool black;
     Piece* piece;
     public:
-        char charAt(int row, int col);
+        char charAt(int col, int row);
         Square(int x = 0, int y = 0, Piece* piece = nullptr); 
         Square& operator=(const Square& other); 
         Square(const Square& square); 
