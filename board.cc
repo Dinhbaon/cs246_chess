@@ -112,13 +112,17 @@ bool Board::isPiecePinned(const Square& square, Color color) {
     // If we remove the piece, is the king in check
     setSquare(square.getX(), square.getY(), nullptr); 
 
+    updateAllPieces(); 
+
     if (isInCheck(color)) {
         // Place the piece back to original square 
-        setSquare(square.getX(), square.getY(), piece); 
+        setSquare(square.getX(), square.getY(), piece);
+        updateAllPieces();  
         return true; 
     }
     
     setSquare(square.getX(), square.getY(), piece);
+    updateAllPieces(); 
     return false;  
 
 }
@@ -196,7 +200,7 @@ void Board::Enpassent(const Move& move) {
     this->setSquare(move.end.getX(), move.end.getY(), pawn); 
     this->setSquare(move.start.getX(), move.start.getY(), nullptr); 
 
-    // the pawn to be captured in enpassent will be the x of the endsquare but the y of the starting square
+    // The pawn to be captured in enpassent will be the x of the endsquare but the y of the starting square
     // This removes the pawn
     this->setSquare(move.end.getX(), move.start.getY(), nullptr); 
 
