@@ -215,12 +215,12 @@ Square* Board::getSquare(const int x, const int y) const {
     if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
         return nullptr;
     }
-    return board[y * xDimension + x];
+    return board[(yDimension -1 -y) * xDimension + x];
 }
 
 void Board::setSquare(int x, int y, Piece* piece) {
     if (x >= 0 && x < xDimension && y >= 0 && y < yDimension) {
-        board[y * xDimension + x]->setPiece(piece);
+        board[(yDimension - 1 - y) * xDimension + x]->setPiece(piece);
     } else {
         throw std::invalid_argument( "Inputted square not on board" );
     }

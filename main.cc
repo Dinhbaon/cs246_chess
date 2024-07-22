@@ -19,6 +19,7 @@ int main() {
     std::string command;
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
+    controller.notifyObservers();
 
 
     while (std::cin >> command) {
