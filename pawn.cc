@@ -9,10 +9,9 @@ Pawn::Pawn(Color color) : Piece(color) {}
 bool Pawn::canMove(const Move& move, const Board& board) const {
     int dx = move.end.getX() - move.start.getX(); 
     int dy = move.end.getY() - move.start.getY(); 
-    // Pawns move differently based on their color
     int direction = (getColor() == Color::WHITE) ? 1 : -1;
 
-        // Check if moving straight forward
+    // Check if moving straight forward
     if (dx == 0) {
         // Moving one square forward
         if (dy == direction && board.getSquare(move.end.getX(), move.end.getY())->getPiece() == nullptr) {
@@ -20,47 +19,17 @@ bool Pawn::canMove(const Move& move, const Board& board) const {
         }
 
         // Moving two squares forward from starting position
-        if (!getHasMoved() && dy == 2 * direction && board.getSquare(move.end.getX(), move.end.getY())->getPiece() == nullptr) {
+        if (!getHasMoved() && dy == 2 * direction && 
+            board.getSquare(move.end.getX(), move.end.getY())->getPiece() == nullptr &&
+            board.getSquare(move.start.getX(), move.start.getY() + direction)->getPiece() == nullptr) {
             return true;
-        }
-    }   
-
-    // Check for capturing move (diagonal move by one square)
-    if (abs(dx) == 1 && dy == direction && board.getSquare(move.end.getX(), move.end.getY())->getPiece() != nullptr &&
-        board.getSquare(move.end.getX(), move.end.getY())->getPiece()->getColor() != getColor()) {
-        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
-        if (target != nullptr && target->getColor() != getColor()) {
-            return true;
-        }
-
-        // Check for enpassent
-        const Move& lastMove = board.getLastMove();
-        if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 && 
-            lastMove.end.getX() == move.end.getX() &&
-            lastMove.end.getY() == move.start.getY() + direction) {
-            Piece* lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
-            if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PAWN &&
-                lastMovedPiece->getColor() != getColor()) {
-                return true;
-            }
         }
     }
 
-    // If enpassent 
-    if (abs(dx) == 1 && dy == direction && board.getSquare(move.end.getX(), move.end.getY() - direction)->getPiece() != nullptr &&
-        board.getSquare(move.end.getX(), move.end.getY() - direction)->getPiece()->getColor() != getColor()) {
-        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
-
-        // Check for enpassent
-        const Move& lastMove = board.getLastMove();
-        if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 && 
-            lastMove.end.getX() == move.end.getX() &&
-            lastMove.end.getY() == move.end.getY() - direction) {
-            Piece* lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
-            if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PAWN &&
-                lastMovedPiece->getColor() != getColor()) {
-                return true;
-            }
+    // Check for capturing move
+    if (abs(dx) == 1 && dy == direction) {
+        if (canCapture(move, board)) {
+            return true;
         }
     }
 
@@ -68,23 +37,26 @@ bool Pawn::canMove(const Move& move, const Board& board) const {
 }
 
 bool Pawn::canCapture(const Move& move, const Board& board) const {
-
     int dx = move.end.getX() - move.start.getX(); 
     int dy = move.end.getY() - move.start.getY(); 
-    // Pawns move differently based on their color
     int direction = (getColor() == Color::WHITE) ? 1 : -1;
-        // If enpassent 
-    if (abs(dx) == 1 && dy == direction && board.getSquare(move.end.getX(), move.end.getY() - direction)->getPiece() != nullptr &&
-        board.getSquare(move.end.getX(), move.end.getY() - direction)->getPiece()->getColor() != getColor()) {
-        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
 
-        // Check for enpassent
+    // Check for normal capture
+    if (abs(dx) == 1 && dy == direction) {
+        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
+        if (target != nullptr && target->getColor() != getColor()) {
+            return true;
+        }
+    }
+
+    // Check for en passant capture
+    if (abs(dx) == 1 && dy == direction) {
         const Move& lastMove = board.getLastMove();
-        if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 && 
+        if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 &&
             lastMove.end.getX() == move.end.getX() &&
-            lastMove.end.getY() == move.end.getY() - direction) {
+            lastMove.end.getY() == move.start.getY() + direction) {
             Piece* lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
-            if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PAWN &&
+            if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PieceType::PAWN &&
                 lastMovedPiece->getColor() != getColor()) {
                 return true;
             }
@@ -96,4 +68,9 @@ bool Pawn::canCapture(const Move& move, const Board& board) const {
 
 PieceType Pawn::getPieceType() const {
     return PAWN; 
+}
+
+
+Piece* Pawn::copy() const {
+    return new Pawn(*this); 
 }

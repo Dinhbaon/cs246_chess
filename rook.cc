@@ -38,3 +38,7 @@ bool Rook::canCapture(const Move& move, const Board& board) const {
 PieceType Rook::getPieceType() const {
     return ROOK; 
 }
+
+Piece* Rook::copy() const {
+    return new Rook(*this); 
+}

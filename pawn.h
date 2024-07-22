@@ -12,6 +12,7 @@ class Pawn: public Piece {
         bool canCapture(const Move& move, const Board& board) const override; 
         PieceType getPieceType() const override; 
         void promote(Board& board); 
+        Piece* copy() const override; 
 };  
 
 #endif

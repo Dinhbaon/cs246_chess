@@ -23,3 +23,7 @@ bool Knight::canCapture(const Move& move, const Board& board) const {
 PieceType Knight::getPieceType() const {
     return KNIGHT; 
 }
+
+Piece* Knight::copy() const {
+    return new Knight(*this); 
+}

@@ -45,7 +45,7 @@ bool Piece::getHasMoved() const {
 }
 
 void Piece::setHasMoved(bool hasMoved) {
-    hasMoved = hasMoved; 
+    this->hasMoved = hasMoved; 
 }
 
 

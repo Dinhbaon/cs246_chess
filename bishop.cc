@@ -39,3 +39,8 @@ bool Bishop::canCapture(const Move& move, const Board& board) const {
 PieceType Bishop::getPieceType() const {
     return BISHOP; 
 }
+
+
+Piece* Bishop::copy() const {
+    return new Bishop(*this); 
+}

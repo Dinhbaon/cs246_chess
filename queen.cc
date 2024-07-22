@@ -17,3 +17,7 @@ bool Queen::canCapture(const Move& move, const Board& board) const {
 PieceType Queen::getPieceType() const {
     return QUEEN; 
 }
+
+Piece* Queen::copy() const {
+    return new Queen(*this); 
+}

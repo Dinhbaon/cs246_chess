@@ -77,12 +77,12 @@ Board::Board() {
     updateAllPieces();
 }
 
-Board::~Board() {
-    for (Square* square : board) {
-        delete square->getPiece(); 
-        delete square;  
-    }
-}
+// Board::~Board() {
+//     for (Square* square : board) {
+//         delete square->getPiece(); 
+//         delete square;  
+//     }
+// }
 
 //Helper methods
 bool Board::isSquareUnderAttack(const Square& square, Color color) const {
@@ -238,22 +238,66 @@ Square* Board::getKingSquare(Color color) const {
     }
 }
 
-Board& Board::operator=(const Board &other){
-    allSquaresWithPieces = other.allSquaresWithPieces;
-    board = other.board;
+Board::Board(const Board& other) {
+
+    // Clear the existing board data
+    clearBoard();
+
+    // Copy xDimension and yDimension
     xDimension = other.xDimension;
     yDimension = other.yDimension;
-    lastMove = other.lastMove;
-    return *this;
-}
 
+    // Deep copy the board squares
+    for (const auto& square : other.board) {
+        if (square != nullptr) {
+            board.push_back(new Square(*square)); // Create a new Square and copy the contents
+        } else {
+            board.push_back(nullptr);
+        }
+    }
+
+    // Deep copy the allSquaresWithPieces map
+    for (const auto& pair : other.allSquaresWithPieces) {
+        Color color = pair.first;
+        std::vector<Square*> squares;
+        for (const auto& square : pair.second) {
+            if (square != nullptr) {
+                squares.push_back(new Square(*square)); // Create a new Square and copy the contents
+            } else {
+                squares.push_back(nullptr);
+            }
+        }
+        allSquaresWithPieces[color] = squares;
+    }
+
+    // Copy the last move
+    lastMove = other.lastMove;
+}
 bool Board::isCheckAfterMove(Move move, Color color){
-    Board tmpBoard = *this;
-    if(move.start.getPiece()->canMove(move, *this)){
+    Board tmpBoard{*this};
+    if(getSquare(move.start.getX(), move.start.getY())->getPiece()->canMove(move, *this)) {
         tmpBoard.movePiece(move, color);
         if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(color), color)){
             return true;
         };
     }
     return false;
+}
+
+
+void Board::clearBoard() {
+    // Delete dynamically allocated squares
+    for (auto& square : board) {
+        delete square;
+    }
+    board.clear();
+
+    // Delete dynamically allocated squares in the map
+    for (auto& pair : allSquaresWithPieces) {
+        for (auto& square : pair.second) {
+            delete square;
+        }
+        pair.second.clear();
+    }
+    allSquaresWithPieces.clear();
 }

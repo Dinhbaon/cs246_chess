@@ -20,6 +20,7 @@ class Board {
     Move lastMove; 
     // Private utility methods
     void updateAllPieces();  
+    void clearBoard(); 
     // Castle related
     bool isMoveCastle(const Move& move) const;
     void Castle(const Move& move);  
@@ -28,8 +29,8 @@ class Board {
     void Enpassent(const Move& move); 
     public:
         Board(); 
-        ~Board();
-        Board &operator=(const Board &other);
+        // ~Board();
+        Board(const Board& other);
         char charAt(int row, int col);
         void movePiece(Move move, Color color);
         // Public utility methods

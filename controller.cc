@@ -33,6 +33,8 @@ void Controller::makeMove(Move move, Color color) {
 
     board->movePiece(move, color); 
 
+    
+
     if (this->checkPromotion()) {
         this->getPlayerTurn()->handlePromotion();
     }
@@ -48,8 +50,8 @@ bool Controller::isValidMove(Move move, Color color) const {
     int toX = move.start.getX(); 
     int toY = move.start.getY(); 
     Square* startSquare = this->board->getSquare(fromX, fromY); 
-    if (board->isInCheck(color)) return false; 
-    if (board->isPiecePinned(move.start, color)) return false; 
+    if (board->isCheckAfterMove(move, color)) return false; 
+    // if (board->isPiecePinned(move.start, color)) return false; 
     if (startSquare->isEmpty()) return false; 
     if (color != startSquare->getPiece()->getColor()) return false; 
     Piece* piece = this->board->getSquare(fromX, fromY)->getPiece(); 
@@ -108,16 +110,8 @@ bool Controller::checkPromotion() const {
     Move lastMove = board->getLastMove(); 
     Piece* piece = board->getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece(); 
     if (piece->getPieceType() == PAWN) {
-        switch(piece->getColor()) {
-            case WHITE: 
-                if (lastMove.end.getY() == 7) {
-                    return true; 
-                }
-                break; 
-            case BLACK: 
-                if (lastMove.end.getY() == 0) {
-                    return true; 
-                }
+        if (lastMove.end.getY() == 7 || lastMove.end.getY() == 0) {
+            return true; 
         }
     }
     return false; 

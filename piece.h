@@ -10,7 +10,8 @@ class Board;
 class Piece {
     bool hasMoved = false; 
     Color color; 
-    PieceType pieceType; 
+    protected:
+        PieceType pieceType;
     public:
         char name();
         // canMove returns if move is possible. 
@@ -24,6 +25,7 @@ class Piece {
         bool getHasMoved() const;
         void setHasMoved(bool hasMoved); 
         virtual PieceType getPieceType() const = 0; 
+        virtual Piece* copy() const = 0; 
 };
 
 #endif

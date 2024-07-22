@@ -18,6 +18,16 @@ Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {
     black = false;
 }
 
+Square::Square(const Square& other) {
+        if (other.piece) {
+            piece = other.piece->copy(); 
+        } else {
+            piece = nullptr;
+        }
+        x = other.x; 
+        y = other.y; 
+}
+
 char Square::charAt(int row, int col) {
     if (isEmpty()) {
         if (isBlack()) {

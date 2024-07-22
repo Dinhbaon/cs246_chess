@@ -50,3 +50,6 @@ PieceType King::getPieceType() const {
     return KING; 
 }
 
+Piece* King::copy() const {
+    return new King(*this); 
+}
