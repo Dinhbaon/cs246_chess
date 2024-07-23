@@ -25,17 +25,20 @@ void Bot::handlePromotion() {
 
 std::vector<Move> Bot::findGetCaptureMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
+
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
-                if(!(board->isSquareUnderAttack(Square(x, y), color))){
-                    Move move {**it, Square(x, y)};
+                Move move {**it, *board->getSquare(x, y)};
+                if((*it)->getPiece()->canMove(move, *board)
+                && !(board->isSquareUnderAttack(Square(x, y), color))
+                && !(board->isCheckAfterMove(move, color))){
                     moves.emplace_back(move);
                 }
             }
         }
     }
-    return moves;
+    return moves;    
 }
 
 std::vector<Move> Bot::findCaptureMoves(const std::vector<Square*> &squares, Color color) const {
@@ -45,11 +48,13 @@ std::vector<Move> Bot::findCaptureMoves(const std::vector<Square*> &squares, Col
             for(int y = 0; y < 8; ++y){
                 Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)
-                && board->getSquare(x, y)->getPiece() != nullptr){
+                && board->getSquare(x, y)->getPiece() != nullptr
+                && !(board->isCheckAfterMove(move, color))){
                     moves.emplace_back(move);
                 } else if ((*it)->getPiece()->getPieceType() == PAWN
                 && (*it)->getPiece()->canMove(move, *board)
-                && (*it)->getPiece()->canCapture(move, *board)){
+                && (*it)->getPiece()->canCapture(move, *board)
+                && !(board->isCheckAfterMove(move, color))){
                     moves.emplace_back(move);
                 }
             }
@@ -73,7 +78,8 @@ std::vector<Move> Bot::findCheckMoves(const std::vector<Square*> &squares, Color
                     } else {
                         attackingColor = WHITE;
                     }
-                    if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(attackingColor), attackingColor)){
+                    if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(attackingColor), attackingColor)
+                    && !(board->isCheckAfterMove(move, color))){
                         moves.emplace_back(move);
                     };
                 }
@@ -90,7 +96,8 @@ std::vector<Move> Bot::findRandomMoves(const std::vector<Square*> &squares, Colo
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
                 Move move {**it, *board->getSquare(x, y)};
-                if((*it)->getPiece()->canMove(move, *board)){
+                if((*it)->getPiece()->canMove(move, *board)
+                && !(board->isCheckAfterMove(move, color))){
                     moves.emplace_back(move);
                 }
             }

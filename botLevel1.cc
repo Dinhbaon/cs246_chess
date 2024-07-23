@@ -21,7 +21,8 @@ Move BotLevel1::getNextMove() const {
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
                 Move move {**it, *board->getSquare(x, y)};
-                if((*it)->getPiece()->canMove(move, *board)){
+                if((*it)->getPiece()->canMove(move, *board)
+                && board->isCheckAfterMove(move, color)){
                     moves.emplace_back(move);
                 }
             }
