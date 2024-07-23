@@ -182,7 +182,7 @@ bool Board::isMoveEnpassent(const Move& move) const {
     Piece* piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     // If Pawn is moving sideways that means its a capture but if the target square is empty
     // That must be enpassent
-    if (piece->getPieceType() == PAWN  && abs(dx) == 1 && move.end.isEmpty()) {
+    if (piece->getPieceType() == PAWN  && abs(dx) == 1 && getSquare(move.end.getX(), move.end.getY())->isEmpty()) {
         return true; 
     }
 
