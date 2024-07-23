@@ -207,7 +207,7 @@ void Board::Enpassent(const Move& move) {
 }
 
 //Getters and setters
-std::map<Color, std::vector<Square*>> Board::getAllSquaresWithPieces() const {
+const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() {
     return allSquaresWithPieces;
 }
 
@@ -236,7 +236,7 @@ Square* Board::getKingSquare(Color color) const {
             return square; 
         }
     }
-    return getSquare(0, 7); // returns first square if no King
+    return nullptr; // returns first square if no King
 }
 
 Board::Board(const Board& other) {

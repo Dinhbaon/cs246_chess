@@ -5,6 +5,7 @@
 #include "human.h"
 #include <iostream>
 #include "botLevel1.h"
+#include "botLevel2.h"
 
 Controller::Controller(Board* board): board{board} {
 
@@ -81,6 +82,15 @@ void Controller::setPlayers(Color color, std::string player) {
                 break; 
             case BLACK: 
                 blackPlayer = new BotLevel1(BLACK, this->board); 
+                break; 
+        }
+    } else if (player == "computer2"){
+        switch(color){
+            case WHITE: 
+                whitePlayer = new BotLevel2(WHITE, this->board); 
+                break; 
+            case BLACK: 
+                blackPlayer = new BotLevel2(BLACK, this->board); 
                 break; 
         }
     }
