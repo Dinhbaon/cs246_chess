@@ -9,6 +9,7 @@
 #include "king.h"
 #include "pawn.h"
 #include "text.h"
+#include "graphic.h"
 #include <iostream>
 #include <string>
 
@@ -19,7 +20,8 @@ int main() {
     std::string command;
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
-    controller.notifyObservers();
+    observers.emplace_back(new Graphic{&controller});
+    controller.printInit();
 
 
     while (std::cin >> command) {

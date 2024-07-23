@@ -16,7 +16,10 @@ void Subject::detach( Observer* o ) { /*** FILL IN ***/
     }
 }
 
-void Subject::notifyObservers() const { /*** FILL IN ***/ 
-    std::cout << "notifyOberservers" << std::endl;
-    for (auto ob : observers) ob->notify();
+void Subject::notifyObservers(Move move) const { /*** FILL IN ***/ 
+    for (auto ob : observers) ob->notify(move);
+}
+
+void Subject::printInit() const {
+    for (auto ob : observers) ob->initNotify();
 }

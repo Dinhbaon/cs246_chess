@@ -215,7 +215,7 @@ Square* Board::getSquare(const int x, const int y) const {
     if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
         return nullptr;
     }
-    return board[(yDimension -1 -y) * xDimension + x];
+    return board[(yDimension - 1 -y) * xDimension + x];
 }
 
 void Board::setSquare(int x, int y, Piece* piece) {

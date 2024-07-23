@@ -10,7 +10,8 @@ class Text: public Observer {
 
     public:
         Text(Controller *s);
-        void notify() override;
+        void notify(Move move) override;
+        void initNotify() override;
         ~Text();
 };
 

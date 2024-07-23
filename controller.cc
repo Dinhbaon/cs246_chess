@@ -41,8 +41,8 @@ void Controller::makeMove(Move move, Color color) {
         this->getPlayerTurn()->handlePromotion();
     }
 
-    std::cout << "makeMove" << std::endl;
-    notifyObservers(); 
+    
+    notifyObservers(move); 
     switchTurn(); 
 }
 
@@ -122,4 +122,9 @@ bool Controller::checkPromotion() const {
 
 void Controller::setPlayerTurn(Color color) {
     playerTurn = color;
+}
+
+
+Square * Controller::getSquare(const int x, const int y) const {
+    return board->getSquare(x, y);
 }
