@@ -30,8 +30,6 @@ void Board::movePiece(Move move, Color color) {
         this->getSquare(toX, toY)->setPiece(piece);
     }
 
-    updateAllPieces();
-
     lastMove = move; 
 
     piece->setHasMoved(true); 
@@ -74,7 +72,6 @@ Board::Board() {
         this->setSquare(i, 6, new Pawn(BLACK)); 
     }
 
-    updateAllPieces();
 }
 
 // Board::~Board() {
@@ -92,7 +89,7 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
     } else {
         attackingColor = WHITE; 
     }
-    const std::vector<Square*>& squares = allSquaresWithPieces.at(attackingColor);
+    const std::vector<Square*>& squares = getAllSquaresWithPieces().at(attackingColor);
     for (Square* squareWithPieces : squares) {
         Move move{*squareWithPieces, square}; 
         if (squareWithPieces->getPiece()->canCapture(move, *this)) {
@@ -104,45 +101,6 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
 
 bool Board::isInCheck(Color color) const {
     return isSquareUnderAttack(*getKingSquare(color), color);
-}
-
-bool Board::isPiecePinned(const Square& square, Color color) {
-    Piece* piece = getSquare(square.getX(), square.getY())->getPiece(); 
-
-    // If we remove the piece, is the king in check
-    setSquare(square.getX(), square.getY(), nullptr); 
-
-    updateAllPieces(); 
-
-    if (isInCheck(color)) {
-        // Place the piece back to original square 
-        setSquare(square.getX(), square.getY(), piece);
-        updateAllPieces();  
-        return true; 
-    }
-    
-    setSquare(square.getX(), square.getY(), piece);
-    updateAllPieces(); 
-    return false;  
-
-}
-
-void Board::updateAllPieces() {
-    allSquaresWithPieces[WHITE].clear(); 
-    allSquaresWithPieces[BLACK].clear(); 
-    for (Square* square : this->board) {
-        if (square != nullptr) {
-            Piece* piece = square->getPiece();
-            if (piece != nullptr) {
-                if (piece->getColor() == WHITE) {
-                    allSquaresWithPieces[WHITE].emplace_back(square);
-                } else {
-                    allSquaresWithPieces[BLACK].emplace_back(square);
-                }
-            }
-        }
-    }
-
 }
 
 bool Board::isMoveCastle(const Move& move) const {
@@ -207,9 +165,24 @@ void Board::Enpassent(const Move& move) {
 }
 
 //Getters and setters
-const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() {
+const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() const {
+    allSquaresWithPieces.clear(); // Clear the map before updating it
+
+    for (Square* square : this->board) {
+        if (square != nullptr) {
+            Piece* piece = square->getPiece();
+            if (piece != nullptr) {
+                if (piece->getColor() == WHITE) {
+                    allSquaresWithPieces[WHITE].emplace_back(square);
+                } else {
+                    allSquaresWithPieces[BLACK].emplace_back(square);
+                }
+            }
+        }
+    }
     return allSquaresWithPieces;
 }
+
 
 Square* Board::getSquare(const int x, const int y) const {
     if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
@@ -231,7 +204,7 @@ Move Board::getLastMove() const {
 }
 
 Square* Board::getKingSquare(Color color) const {
-    for (Square* square: allSquaresWithPieces.at(color)) {
+    for (Square* square: getAllSquaresWithPieces().at(color)) {
         if (square->getPiece()->getPieceType() == KING && square->getPiece()->getColor() == color) {
             return square; 
         }
@@ -317,12 +290,4 @@ void Board::clearBoard() {
     }
     board.clear();
 
-    // Delete dynamically allocated squares in the map
-    for (auto& pair : allSquaresWithPieces) {
-        for (auto& square : pair.second) {
-            delete square;
-        }
-        pair.second.clear();
-    }
-    allSquaresWithPieces.clear();
 }

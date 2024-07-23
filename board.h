@@ -13,13 +13,12 @@ template class std::map<Color, std::vector<Piece*>>;
 
 class Board {
 
-    std::map<Color, std::vector<Square*>> allSquaresWithPieces; 
+    mutable std::map<Color, std::vector<Square*>> allSquaresWithPieces; 
     std::vector<Square*> board;
     int xDimension = 8;
     int yDimension = 8; 
     Move lastMove; 
-    // Private utility methods
-    void updateAllPieces();  
+    // Private utility methods 
     void clearBoard(); 
     // Castle related
     bool isMoveCastle(const Move& move) const;
@@ -37,12 +36,11 @@ class Board {
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  
         bool isInCheck(Color color) const;
-        bool isPiecePinned(const Square& square, Color color); 
         bool isCheckAfterMove(Move move, Color color);
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Piece* piece); 
-        const std::map<Color, std::vector<Square*>>& getAllSquaresWithPieces();
+        const std::map<Color, std::vector<Square*>>& getAllSquaresWithPieces() const;
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;
         bool oneKing(const Color color) const;
