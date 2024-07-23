@@ -14,7 +14,7 @@ char King::name() const {
 }
 
 bool King::canMove(const Move& move, const Board& board) const {
-    return canCapture(move, board) || board.isSquareUnderAttack(move.end, getColor());
+    return canCapture(move, board) && !(board.isSquareUnderAttack(move.end, getColor()));
 }
 
 bool King::canCapture(const Move& move, const Board& board) const {

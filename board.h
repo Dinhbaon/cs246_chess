@@ -42,7 +42,7 @@ class Board {
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
         void setSquare(const int x, const int y, Piece* piece); 
-        std::map<Color, std::vector<Square*>> getAllSquaresWithPieces() const;
+        const std::map<Color, std::vector<Square*>>& getAllSquaresWithPieces();
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;
         bool oneKing(const Color color) const;

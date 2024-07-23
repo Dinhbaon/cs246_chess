@@ -24,14 +24,15 @@ bool Rook::canMove(const Move& move, const Board& board) const {
     int stepY = (dy != 0) ? (dy > 0 ? 1 : -1) : 0;
 
     // Traverse from start to end check for piece
-    int iterX = move.start.getX();
-    int iterY = move.start.getY();
+    int iterX = move.start.getX() + stepX;
+    int iterY = move.start.getY() + stepY;
     while (iterX != move.end.getX() || iterY != move.end.getY()) {
-        iterX += stepX;
-        iterY += stepY;
 
         Square* iterSquare = board.getSquare(iterX, iterY);
-        if (iterSquare == nullptr || !iterSquare->isEmpty()) return false;  
+        if (iterSquare == nullptr || !iterSquare->isEmpty()) return false; 
+
+        iterX += stepX;
+        iterY += stepY; 
     }
 
     // Check if the final destination square is empty or has an opponent's piece

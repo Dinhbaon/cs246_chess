@@ -161,7 +161,7 @@ bool Board::isMoveCastle(const Move& move) const {
 void Board::Castle(const Move& move) {
     int dx = move.end.getX() - move.start.getX(); 
 
-    Piece* king = move.start.getPiece(); 
+    Piece* king = getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     this->setSquare(move.end.getX(), move.end.getY(), king); 
     this->setSquare(move.start.getX(), move.start.getY(), nullptr); 
     // King side castle
@@ -182,7 +182,7 @@ bool Board::isMoveEnpassent(const Move& move) const {
     Piece* piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     // If Pawn is moving sideways that means its a capture but if the target square is empty
     // That must be enpassent
-    if (piece->getPieceType() == PAWN  && abs(dx) == 1 && move.end.isEmpty()) {
+    if (piece->getPieceType() == PAWN  && abs(dx) == 1 && getSquare(move.end.getX(), move.end.getY())->isEmpty()) {
         return true; 
     }
 
@@ -207,7 +207,7 @@ void Board::Enpassent(const Move& move) {
 }
 
 //Getters and setters
-std::map<Color, std::vector<Square*>> Board::getAllSquaresWithPieces() const {
+const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() {
     return allSquaresWithPieces;
 }
 
@@ -236,7 +236,7 @@ Square* Board::getKingSquare(Color color) const {
             return square; 
         }
     }
-    return getSquare(0, 7); // returns first square if no King
+    return nullptr; // returns first square if no King
 }
 
 Board::Board(const Board& other) {

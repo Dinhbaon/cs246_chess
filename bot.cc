@@ -23,7 +23,7 @@ void Bot::handlePromotion() {
     board->setSquare(lastMove.end.getX(), lastMove.end.getY(), piece); 
 }
 
-std::vector<Move> Bot::findGetCaptureMoves(std::vector<Square*> &squares, Color color) const {
+std::vector<Move> Bot::findGetCaptureMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
@@ -38,13 +38,18 @@ std::vector<Move> Bot::findGetCaptureMoves(std::vector<Square*> &squares, Color 
     return moves;
 }
 
-std::vector<Move> Bot::findCaptureMoves(std::vector<Square*> &squares, Color color) const {
+std::vector<Move> Bot::findCaptureMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
                 Move move {**it, Square(x, y)};
-                if(board->isCheckAfterMove(move, color)){
+                if((*it)->getPiece()->canMove(move, *board)
+                && board->getSquare(x, y)->getPiece() != nullptr){
+                    moves.emplace_back(move);
+                } else if ((*it)->getPiece()->getPieceType() == PAWN
+                && (*it)->getPiece()->canMove(move, *board)
+                && (*it)->getPiece()->canCapture(move, *board)){
                     moves.emplace_back(move);
                 }
             }
@@ -53,7 +58,7 @@ std::vector<Move> Bot::findCaptureMoves(std::vector<Square*> &squares, Color col
     return moves;
 }
 
-std::vector<Move> Bot::findCheckMoves(std::vector<Square*> &squares, Color color) const {
+std::vector<Move> Bot::findCheckMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
@@ -62,7 +67,13 @@ std::vector<Move> Bot::findCheckMoves(std::vector<Square*> &squares, Color color
                 Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)){
                     tmpBoard.movePiece(move, color);
-                    if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(color), color)){
+                    Color attackingColor;
+                    if(color==WHITE){
+                        attackingColor = BLACK;
+                    } else {
+                        attackingColor = WHITE;
+                    }
+                    if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(attackingColor), attackingColor)){
                         moves.emplace_back(move);
                     };
                 }
@@ -72,17 +83,19 @@ std::vector<Move> Bot::findCheckMoves(std::vector<Square*> &squares, Color color
     return moves;
 }
 
-std::vector<Move> Bot::findRandomMoves(std::vector<Square*> &squares, Color color) const {
-    Square* selectedSquare = getRandom<Square*>(squares);
+std::vector<Move> Bot::findRandomMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
 
-    for(int x = 0; x < 8; ++x){
-        for(int y = 0; y < 8; ++y){
-            Move move {*selectedSquare, Square(x, y)};
-            if(selectedSquare->getPiece()->canMove(move, *board)){
-                moves.emplace_back(move);
+    for(auto it = squares.begin(); it != squares.end(); ++it){
+        for(int x = 0; x < 8; ++x){
+            for(int y = 0; y < 8; ++y){
+                Move move {**it, *board->getSquare(x, y)};
+                if((*it)->getPiece()->canMove(move, *board)){
+                    moves.emplace_back(move);
+                }
             }
         }
     }
+
     return moves;
 }
