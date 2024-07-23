@@ -6,7 +6,7 @@
 #include "king.h"
 #include "pawn.h"
 #include "move.h"
-
+#include <iostream>
 #include <stdexcept>
 
 char Board::charAt(int col, int row) {
@@ -209,7 +209,6 @@ Square* Board::getKingSquare(Color color) const {
             return square; 
         }
     }
-    return nullptr; // returns first square if no King
 }
 
 Board::Board(const Board& other) {
@@ -249,16 +248,19 @@ Board::Board(const Board& other) {
 
 bool Board::oneKing(const Color color) const {
     int count = 0;
-    for (auto it = board.begin(); it != board.end(); ++it) {
-        if ((*it)->getPiece()->getPieceType() == KING && 
-            (*it)->getPiece()->getColor() == color) {
-            count += 1;
+    for (const auto& square : board) {
+        if (!(square->isEmpty())) {
+            if (square->getPiece()->getPieceType() == KING &&
+                square->getPiece()->getColor() == color) {
+                count += 1;
+            }
         }
     }
     if (count == 1) {
         return true;
     }
     return false;
+    
 }
 
 Board& Board::operator=(const Board &other) {

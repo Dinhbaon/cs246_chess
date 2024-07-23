@@ -9,6 +9,7 @@ class Graphic: public Observer {
     Controller *subject;
     int bottom = 8;
     int right = 8;
+    int squareDim = 10; // each square is 10 by 10
     Xwindow window;
     
     // assuming a width and hight of 10 for these methods
