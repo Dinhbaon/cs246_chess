@@ -12,14 +12,17 @@
 #include "graphic.h"
 #include <iostream>
 #include <string>
+#include "endgameservice.h"
 
 int main() {
 
     Board* board = new Board(); 
     Controller controller{board}; 
     std::string command;
+    EndGameService *endGame = new EndGameService {&controller, board};
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
+    observers.emplace_back(endGame);
     //observers.emplace_back(new Graphic{&controller});
     controller.printInit();
 
@@ -65,7 +68,12 @@ int main() {
 
 
                 controller.makeMove(move, controller.getPlayerColor()); 
-
+                if(endGame->getIsCheckMate()){
+                    controller.setMode(START);
+                    endGame->resetCheckMate();
+                    std::cout << "Check Mate" << std::endl;
+                    continue;
+                }
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 

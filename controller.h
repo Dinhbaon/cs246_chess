@@ -11,7 +11,7 @@
 class Controller: public Subject {
     Player* whitePlayer;
     Player* blackPlayer;  
-    Board* board; 
+    Board* board;
     Color playerTurn = WHITE; 
     Mode mode = START; 
     bool isInGame; 

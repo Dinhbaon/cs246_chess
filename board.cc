@@ -32,7 +32,7 @@ void Board::movePiece(Move move, Color color) {
 
     lastMove = move; 
 
-    piece->setHasMoved(true); 
+    piece->setHasMoved(true);
 
 
 }
