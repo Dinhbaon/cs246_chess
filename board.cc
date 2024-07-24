@@ -166,17 +166,16 @@ void Board::Enpassent(const Move& move) {
 
 //Getters and setters
 const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() const {
-    allSquaresWithPieces.clear(); // Clear the map before updating it
+    allSquaresWithPieces[WHITE].clear(); // Clear the map before updating it
+    allSquaresWithPieces[BLACK].clear(); 
+
+    
 
     for (Square* square : this->board) {
         if (square != nullptr) {
             Piece* piece = square->getPiece();
             if (piece != nullptr) {
-                if (piece->getColor() == WHITE) {
-                    allSquaresWithPieces[WHITE].emplace_back(square);
-                } else {
-                    allSquaresWithPieces[BLACK].emplace_back(square);
-                }
+                allSquaresWithPieces[piece->getColor()].emplace_back(square);
             }
         }
     }
