@@ -11,12 +11,10 @@ HistoryService::HistoryService(Controller* controller, Board* board)
 void HistoryService::notify(Move move) {
     if (notificationsEnabled) {
         // Remove future board states if currIndex is not at the end
-
         if (currIndex < boardHistory.size() - 1) {
             boardHistory.erase(boardHistory.begin() + currIndex + 1, boardHistory.end());
         }
         currIndex++;
-        // Create a new board state based on the current board
         Board newBoard{*currBoard};
         boardHistory.emplace_back(newBoard);
         setLastMove(move); 
@@ -24,7 +22,7 @@ void HistoryService::notify(Move move) {
 }
 
 void HistoryService::initNotify() {
-    // Implementation here if needed
+    return ; 
 }
 
 Board HistoryService::getCurrBoard() const {
@@ -33,13 +31,13 @@ Board HistoryService::getCurrBoard() const {
 
 void HistoryService::undo() {
     if (currIndex > 0) {
-        notificationsEnabled = false; // Disable notifications
+        notificationsEnabled = false; 
         currIndex--;
         Move controllerLastMove = controller->getLastMove(); 
         Board* newBoard = new Board{getCurrBoard()}; 
-        controller->setBoard(newBoard); // Directly set the current board state from history
+        controller->setBoard(newBoard); 
         currBoard = newBoard; 
-        setLastMove(Move{controllerLastMove.end, controllerLastMove.start}); // Swap move for undo
+        setLastMove(Move{controllerLastMove.end, controllerLastMove.start});
         controller->notifyObservers(Move{controllerLastMove.end, controllerLastMove.start}); 
         controller->switchTurn(); 
         notificationsEnabled = true; // Re-enable notifications
@@ -50,16 +48,16 @@ void HistoryService::undo() {
 
 void HistoryService::redo() {
     if (currIndex < boardHistory.size() - 1) {
-        notificationsEnabled = false; // Disable notifications
+        notificationsEnabled = false; 
         currIndex++; 
         Move controllerLastMove = controller->getLastMove(); 
         Board* newBoard = new Board{getCurrBoard()}; 
-        controller->setBoard(newBoard); // Directly set the current board state from history
+        controller->setBoard(newBoard); 
         currBoard = newBoard; 
-        setLastMove(Move{controllerLastMove.start, controllerLastMove.end}); // Use the original move for redo
+        setLastMove(Move{controllerLastMove.start, controllerLastMove.end}); 
         controller->notifyObservers(Move{controllerLastMove.start, controllerLastMove.end}); 
         controller->switchTurn();
-        notificationsEnabled = true; // Re-enable notifications
+        notificationsEnabled = true; 
     } else {
         std::cout << "Nothing to redo" << std::endl; 
     }
@@ -67,4 +65,8 @@ void HistoryService::redo() {
 
 void HistoryService::setLastMove(Move move) {
     lastMove = move; 
+}
+
+void HistoryService::clearHistory() {
+    boardHistory.clear(); 
 }

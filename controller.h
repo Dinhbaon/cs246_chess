@@ -26,7 +26,8 @@ class Controller: public Subject {
         explicit Controller(Board* board); 
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
-        void undo(); 
+        void emptyBoard();     
+        void reset(); 
         // Getters and setters
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
@@ -42,7 +43,7 @@ class Controller: public Subject {
         bool getIsCastle() const; 
         Move getLastMove() const;  
         void setBoard(Board* board);   
-        void emptyBoard();     
+
         
         
 };

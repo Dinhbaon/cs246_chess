@@ -27,10 +27,11 @@ int main() {
     observers.emplace_back(endGame);
     observers.emplace_back(historyService); 
     // observers.emplace_back(new Graphic{&controller});
-    controller.printInit();
+
 
 
     while (std::cin >> command) {
+        controller.printInit();
         if (command == "game") {
             if (controller.getMode() == GAME) {
                 std::cout << "Alreading in a game - resign to end the game";
@@ -71,15 +72,17 @@ int main() {
 
 
                 controller.makeMove(move, controller.getPlayerColor()); 
-                if(endGame->getIsCheckMate()){
-                    controller.setMode(START);
+                if(endGame->getIsCheckMate()) {
+                    std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
                     endGame->resetCheckMate();
-                    std::cout << "Check Mate" << std::endl;
+                    controller.reset(); 
+                    historyService->clearHistory(); 
                     continue;
-                } else if(endGame->getIsStaleMate()){
-                    controller.setMode(START);
+                } else if(endGame->getIsStaleMate()) {
                     endGame->resetStaleMate();
-                    std::cout << "Stale Mate" << std::endl;
+                    std::cout << "StaleMate - - Use the game command to start a new game" << std::endl << std::flush;
+                    controller.reset(); 
+                    historyService->clearHistory();   
                     continue;
                 }
 

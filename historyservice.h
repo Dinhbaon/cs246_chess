@@ -22,6 +22,7 @@ class HistoryService: public Observer {
         Board getCurrBoard() const;
         void undo(); 
         void redo();
+        void clearHistory(); 
 
 
 }; 

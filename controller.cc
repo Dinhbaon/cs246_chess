@@ -118,14 +118,6 @@ void Controller::setPlayers(Color color, std::string player) {
 
 }
 
-void Controller::setMode(Mode mode) {
-    this->mode = mode; 
-}
-
-Mode Controller::getMode() const {
-    return mode; 
-}
-
 void Controller::switchTurn() {
     switch(playerTurn) {
         case WHITE: 
@@ -149,6 +141,22 @@ bool Controller::checkPromotion() const {
     }
     return false; 
     
+}
+
+void Controller::reset() {
+    setBoard(new Board);
+    setMode(START);
+    whitePlayer = nullptr; 
+    blackPlayer = nullptr; 
+    playerTurn = WHITE; 
+}
+
+void Controller::setMode(Mode mode) {
+    this->mode = mode; 
+}
+
+Mode Controller::getMode() const {
+    return mode; 
 }
 
 void Controller::setPlayerTurn(Color color) {
@@ -188,3 +196,4 @@ bool Controller::checkPawnEdgeRows() const {
 Square *Controller::getEmptySquare() const {
     return board->getEmptySquare();
 }
+
