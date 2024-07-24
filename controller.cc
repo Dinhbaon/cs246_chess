@@ -34,6 +34,17 @@ Player* Controller::getPlayerTurn() const {
 }
 
 void Controller::makeMove(Move move, Color color) {
+    
+    if (board->isMoveEnpassent(move)) {
+        isEnpassent = true; 
+    } else {
+        isEnpassent = false; 
+    }
+    if (board->isMoveCastle(move)) {
+        isCastle = true;
+    } else {
+        isCastle = false;
+    }
 
     board->movePiece(move, color); 
 
@@ -43,8 +54,8 @@ void Controller::makeMove(Move move, Color color) {
         this->getPlayerTurn()->handlePromotion();
     }
 
-    
     notifyObservers(move); 
+    
     switchTurn(); 
 }
 
@@ -147,4 +158,12 @@ void Controller::setPlayerTurn(Color color) {
 
 Square * Controller::getSquare(const int x, const int y) const {
     return board->getSquare(x, y);
+}
+
+bool Controller::getIsEnpassent() const {
+    return isEnpassent; 
+}
+
+bool Controller::getIsCastle() const {
+    return isCastle;
 }

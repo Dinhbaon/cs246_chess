@@ -28,6 +28,7 @@ Square::Square(const Square& other) {
         }
         x = other.x; 
         y = other.y; 
+        black = other.black; 
 }
 
 char Square::charAt(int col, int row) {

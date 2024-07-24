@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Graphic::Graphic(Controller *s) : subject{s}, window{bottom * 10, right * 10} {
+Graphic::Graphic(Controller *s) : subject{s}, window{bottom * squareDim, right * squareDim} {
     subject->attach(this);
 }
 
@@ -15,509 +15,551 @@ Graphic::~Graphic() {
 }
 
 void Graphic::printRook(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim , eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
-    window.fillRectangle(x + 2, y, 1, 1, c_background);
-    window.fillRectangle(x + 2, y + 1, 1, 1, color);
-    window.fillRectangle(x + 2, y + 2, 1, 1, color);
-    window.fillRectangle(x + 2, y + 3, 1, 1, color);
+    window.fillRectangle((x + 2) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 2) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     for (int i = 4; i < 7; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    window.fillRectangle(x + 2, y + 7, 1, 1, color);
-    window.fillRectangle(x + 2, y + 8, 1, 1, color);
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 9; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 7, y, 1, 1, c_background);
-    window.fillRectangle(x + 7, y + 1, 1, 1, color);
-    window.fillRectangle(x + 7, y + 2, 1, 1, color);
-    window.fillRectangle(x + 7, y + 3, 1, 1, color);
+    window.fillRectangle((x + 7) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 2) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     for (int i = 4; i < 7; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    window.fillRectangle(x + 7, y + 7, 1, 1, color);
-    window.fillRectangle(x + 7, y + 8, 1, 1, color);
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
      for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
      for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 }
 
 void Graphic::printKnight(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 4; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    window.fillRectangle(x + 2, y + 4, 1, 1, color);
-    window.fillRectangle(x + 2, y + 5, 1, 1, color);
-    window.fillRectangle(x + 2, y + 7, 1, 1, color);
-    window.fillRectangle(x + 2, y + 6, 1, 1, c_background);
-    window.fillRectangle(x + 2, y + 8, 1, 1, color);
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 4) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 5) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 6) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 6; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 3, y + 6, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 7, 1, 1, color);
-    window.fillRectangle(x + 3, y + 8, 1, 1, color);
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 6) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
-    window.fillRectangle(x + 4, y + 1, 1, 1, c_background);
-    window.fillRectangle(x + 4, y + 2, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 2) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 2; i < 5; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
     for (int i = 5; i < 7; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    window.fillRectangle(x + 4, y + 7, 1, 1, color);
-    window.fillRectangle(x + 4, y + 8, 1, 1, color);
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 5; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
     for (int i = 5; i < 7; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    window.fillRectangle(x + 5, y + 7, 1, 1, color);
-    window.fillRectangle(x + 5, y + 8, 1, 1, color);
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 6, y, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 1, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 2; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 9; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, color);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 4; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 4; i < 8; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, color);
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 8, y + 8, 1, 1, c_background);
-    window.fillRectangle(x + 8, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 8) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 8) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 }
 
 void Graphic::printBishop(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 6; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, color);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 2, y + 6, 1, 1, c_background);
-    window.fillRectangle(x + 2, y + 7, 1, 1, color);
-    window.fillRectangle(x + 2, y + 8, 1, 1, color);
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 6) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 3, y, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 1, 1, 1, color);
+    window.fillRectangle((x + 3) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     for (int i = 2; i < 9; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 3; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
     for (int i = 3; i < 5; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 5; i < 9; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 6, y, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 1, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 2; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 3; i < 6; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, color);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 7, y + 6, 1, 1, c_background);
-    window.fillRectangle(x + 7, y + 7, 1, 1, color);
-    window.fillRectangle(x + 7, y + 8, 1, 1, color);
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 6) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 7) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 8) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
-    }
-}
-
-void Graphic::printQueen(int c_background, int color, int x, int y) {
-    for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
-    }
-
-    for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
-    }
-    for (int i = 3; i < 6; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, color);
-    }
-    for (int i = 6; i < 10; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
-    }
-
-    for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
-    }
-    window.fillRectangle(x + 2, y + 3, 1, 1, color);
-    for (int i = 4; i < 6; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
-    }
-    for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 3, y, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 1, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 2, 1, 1, color);
-    window.fillRectangle(x + 3, y + 3, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 4, 1, 1, color);
-    window.fillRectangle(x + 3, y + 5, 1, 1, c_background);
-    for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
-    for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
-    for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 6, y, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 1, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 2, 1, 1, color);
-    window.fillRectangle(x + 6, y + 3, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 4, 1, 1, color);
-    window.fillRectangle(x + 6, y + 5, 1, 1, c_background);
-    for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
-
-    for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
-    }
-    window.fillRectangle(x + 7, y + 3, 1, 1, color);
-    for (int i = 4; i < 6; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
-    }
-    for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
-
-    for (int i = 0; i < 3; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
-    }
-    for (int i = 3; i < 6; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, color);
-    }
-    for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
-    }
-    window.fillRectangle(x + 8, y + 9, 1, 1, c_background);
-
-    for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 }
 
 void Graphic::printKing(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
-    window.fillRectangle(x + 1, y, 1, 1, c_background);
-    window.fillRectangle(x + 1, y + 1, 1, 1, c_background);
-    for (int i = 2; i < 5; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, color);
+    for (int i = 0; i < 3; ++i) {
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    for (int i = 5; i < 9; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
+    for (int i = 3; i < 6; ++i) {
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 1, y + 9, 1, 1, c_background);
+    for (int i = 6; i < 10; ++i) {
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
 
-    for (int i = 0; i < 4; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
+    for (int i = 0; i < 3; ++i) {
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    for (int i = 4; i < 9; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, color);
-    }
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 3, y, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 1, 1, 1, color);
-    for (int i = 2; i < 6; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    for (int i = 4; i < 6; ++i) {
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 2) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 4) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 5) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 6; i < 9; ++i) {
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 6, y, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 1, 1, 1, color);
-    for (int i = 2; i < 6; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 2) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 4) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 5) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 6; i < 9; ++i) {
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    for (int i = 0; i < 3; ++i) {
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 3) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    for (int i = 4; i < 6; ++i) {
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    for (int i = 0; i < 4; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
+    for (int i = 0; i < 3; ++i) {
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    for (int i = 4; i < 9; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, color);
+    for (int i = 3; i < 6; ++i) {
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
-
-    window.fillRectangle(x + 8, y, 1, 1, c_background);
-    window.fillRectangle(x + 8, y + 1, 1, 1, c_background);
-    for (int i = 2; i < 5; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, color);
+    for (int i = 6; i < 9; ++i) {
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
-    for (int i = 5; i < 9; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
-    }
-    window.fillRectangle(x + 8, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 8) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+}
+
+void Graphic::printQueen(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
+    for (int i = 0; i < 10; ++i) {
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+
+    window.fillRectangle((x + 1) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 1) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 2; i < 5; ++i) {
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    for (int i = 5; i < 9; ++i) {
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    window.fillRectangle((x + 1) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    for (int i = 0; i < 4; ++i) {
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    for (int i = 4; i < 9; ++i) {
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 3) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    for (int i = 2; i < 6; ++i) {
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    for (int i = 6; i < 9; ++i) {
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 1; i < 9; ++i) {
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 1; i < 9; ++i) {
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 6) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    for (int i = 2; i < 6; ++i) {
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    for (int i = 6; i < 9; ++i) {
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    for (int i = 0; i < 4; ++i) {
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    for (int i = 4; i < 9; ++i) {
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    window.fillRectangle((x + 8) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 8) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    for (int i = 2; i < 5; ++i) {
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
+    }
+    for (int i = 5; i < 9; ++i) {
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    }
+    window.fillRectangle((x + 8) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+
+    for (int i = 0; i < 10; ++i) {
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 }
 
 void Graphic::printPawn(int c_background, int color, int x, int y) {
+    int eachPixelDim = squareDim / 10;
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x, y + i, 1, 1, c_background);
+        window.fillRectangle(x * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 1, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 1) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
 
     for (int i = 0; i < 7; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 7; i < 9; ++i) {
-        window.fillRectangle(x + 2, y + i, 1, 1, color);
+        window.fillRectangle((x + 2) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 2, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 2) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 3, y, 1, 1, c_background);
-    window.fillRectangle(x + 3, y + 1, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 2; i < 4; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
     for (int i = 4; i < 6; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 3, y + i, 1, 1, color);
+        window.fillRectangle((x + 3) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 3, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 3) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 4, y, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 4, y + i, 1, 1, color);
+        window.fillRectangle((x + 4) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 4, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 4) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 5, y, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 1; i < 9; ++i) {
-        window.fillRectangle(x + 5, y + i, 1, 1, color);
+        window.fillRectangle((x + 5) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 5, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 5) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
-    window.fillRectangle(x + 6, y, 1, 1, c_background);
-    window.fillRectangle(x + 6, y + 1, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, y * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 1) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     for (int i = 2; i < 4; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
     for (int i = 4; i < 6; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 6; i < 9; ++i) {
-        window.fillRectangle(x + 6, y + i, 1, 1, color);
+        window.fillRectangle((x + 6) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }
-    window.fillRectangle(x + 6, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 6) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 7; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     }
     for (int i = 7; i < 9; ++i) {
-        window.fillRectangle(x + 7, y + i, 1, 1, color);
+        window.fillRectangle((x + 7) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, color);
     }   
-    window.fillRectangle(x + 7, y + 9, 1, 1, c_background);
+    window.fillRectangle((x + 7) * eachPixelDim, (y + 9) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 8, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 8) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     } 
 
     for (int i = 0; i < 10; ++i) {
-        window.fillRectangle(x + 9, y + i, 1, 1, c_background);
+        window.fillRectangle((x + 9) * eachPixelDim, (y + i) * eachPixelDim, eachPixelDim, eachPixelDim, c_background);
     } 
 }
 
 void Graphic::printSquare(int c_background, int x, int y) {
-    window.fillRectangle(x, y, 10, 10, c_background);
+    window.fillRectangle(x, y, squareDim, squareDim, c_background);
 }
 
 void Graphic::notify(Move move) {
+    std::cout << "notify() called" << std::endl;
     int c_background;
     int color;
     if (move.start.getX() == move.end.getX() && 
-        move.start.getY() == move.start.getY()) {
+        move.start.getY() == move.end.getY()) {
         return;
     }
-    if (move.start.isBlack()) {
+
+    if (subject->getSquare(move.start.getX(), move.start.getY())->isBlack()) {
         c_background = 1;
     } else {
         c_background = 0;
     }
-    printSquare(c_background, move.start.getX(), move.start.getY());
+    printSquare(c_background, move.start.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
 
-    if (move.start.getPiece()->getColor() == WHITE) {
+    if (subject->getSquare(move.end.getX(), move.end.getY())->isBlack()) {
+        c_background = 1;
+    } else {
+        c_background = 0;
+    }
+
+    if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getColor() == WHITE) {
         color = 2; // making white pieces red so it can be seen
     } else {
         color = 3; // making black pieces green so it can be seen
     }
 
-    if (move.start.getPiece()->getPieceType() == ROOK) {
-        printRook(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
-    } else if (move.start.getPiece()->getPieceType() == KNIGHT) {
-        printKnight(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
-    } else if (move.start.getPiece()->getPieceType() == BISHOP) {
-        printBishop(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
-    } else if (move.start.getPiece()->getPieceType() == QUEEN) {
-        printQueen(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
-    } else if (move.start.getPiece()->getPieceType() == KING) {
-        printKing(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
+    if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == ROOK) {
+        std::cout << "printRook called" << std::endl;
+        printRook(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
+    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == KNIGHT) {
+        std::cout << "printKnight called" << std::endl;
+        printKnight(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
+    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == BISHOP) {
+        std::cout << "printBishop called" << std::endl;
+        printBishop(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
+    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == QUEEN) {
+        std::cout << "printQueen called" << std::endl;
+        printQueen(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
+    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == KING) {
+        std::cout << "printQueen called" << std::endl;
+        printKing(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
     } else {
-        printPawn(c_background, color, move.start.getX() * 10, (bottom - 1 - move.start.getY()) * 10);
+        std::cout << "printPawn called" << std::endl;
+        printPawn(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
     }
+
+    if (subject->getIsEnpassent()) {
+        if (subject->getSquare(move.end.getX(), move.start.getY())->isBlack()) {
+            c_background = 1;
+        } else {
+            c_background = 0;
+        }
+        printSquare(c_background, move.end.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
+    }
+
+    if (subject->getIsCastle()) {
+        int dx = move.end.getX() - move.start.getX(); 
+
+        if (dx > 0) {
+            printRook(getBackgroundColor(5, move.end.getY()), getPieceColor(5, move.end.getY()), 5 * 10, (bottom - 1 - move.end.getY()) * 10);
+            printSquare(getBackgroundColor(7, move.end.getY()), 7 * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
+        } else {
+            printRook(getBackgroundColor(3, move.end.getY()), getPieceColor(3, move.end.getY()), 3 * 10, (bottom - 1 - move.end.getY()) * 10);
+            printSquare(getBackgroundColor(0, move.end.getY()), 0 * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
+        }   
+    }
+
+
     
 }
 
 void Graphic::initNotify() {
-    /// add stuff
     Square *sq;
     int c_background;
     for (int i = 0; i < bottom; ++i) {
@@ -529,7 +571,7 @@ void Graphic::initNotify() {
                 c_background = 0;
             }
             if (sq->isEmpty()) {
-                printSquare(c_background, j * 10, i * 10);
+                printSquare(c_background, j * squareDim, i * squareDim);
             } else {
                 int color;
                 if (sq->getPiece()->getColor() == WHITE) {
@@ -554,6 +596,21 @@ void Graphic::initNotify() {
             
         }
     }   
+}
+
+int Graphic::getPieceColor(int x, int y) {
+    if (subject->getSquare(x, y)->getPiece()->getColor() == WHITE) {
+        return 2; // making white pieces red so it can be seen
+    } else {
+        return 3; // making black pieces green so it can be seen
+    }
+}
+int Graphic::getBackgroundColor(int x, int y) {
+    if (subject->getSquare(x, y)->isBlack()) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 

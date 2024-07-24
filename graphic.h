@@ -9,7 +9,7 @@ class Graphic: public Observer {
     Controller *subject;
     int bottom = 8;
     int right = 8;
-    int squareDim = 10; // each square is 10 by 10
+    int squareDim = 50; // each square is 10 by 10, must be multiples of 10
     Xwindow window;
     
     // assuming a width and hight of 10 for these methods
@@ -26,6 +26,8 @@ class Graphic: public Observer {
         void notify(Move move) override;
         void initNotify() override;
         ~Graphic();
+        int getPieceColor(int x, int y);
+        int getBackgroundColor(int x, int y);
 };
 
 #endif

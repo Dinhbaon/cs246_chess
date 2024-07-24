@@ -25,6 +25,7 @@ void Board::movePiece(Move move, Color color) {
         Castle(move); 
     } else if (isMoveEnpassent(move)) {
         Enpassent(move); 
+        
     } else {
         this->getSquare(fromX, fromY)->setPiece(nullptr);
         this->getSquare(toX, toY)->setPiece(piece);

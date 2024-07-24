@@ -20,7 +20,7 @@ int main() {
     std::string command;
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
-    //observers.emplace_back(new Graphic{&controller});
+    observers.emplace_back(new Graphic{&controller});
     controller.printInit();
 
 
