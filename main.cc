@@ -88,6 +88,8 @@ int main() {
             }
         } else if (command == "undo") {
             historyService->undo(); 
+        } else if (command == "redo") {
+            historyService->redo(); 
         } else if (command == "setup") {
             if (controller.getMode() == GAME) {
                 std::cout << "Can't enter setup mode when in game mode." << std::endl;
