@@ -228,19 +228,6 @@ Board::Board(const Board& other) {
         }
     }
 
-    // Deep copy the allSquaresWithPieces map
-    for (const auto& pair : other.allSquaresWithPieces) {
-        Color color = pair.first;
-        std::vector<Square*> squares;
-        for (const auto& square : pair.second) {
-            if (square != nullptr) {
-                squares.push_back(new Square(*square)); // Create a new Square and copy the contents
-            } else {
-                squares.push_back(nullptr);
-            }
-        }
-        allSquaresWithPieces[color] = squares;
-    }
 
     // Copy the last move
     lastMove = other.lastMove;

@@ -12,6 +12,7 @@ class HistoryService: public Observer {
     Board* currBoard; 
     std::vector<Board> boardHistory; 
     Move lastMove; 
+    bool notificationsEnabled; 
 
     void setLastMove(Move move); 
     public:
@@ -20,6 +21,7 @@ class HistoryService: public Observer {
         void initNotify() override;
         Board getCurrBoard() const;
         void undo(); 
+        void redo();
 
 
 }; 
