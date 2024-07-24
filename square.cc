@@ -28,6 +28,7 @@ Square::Square(const Square& other) {
         }
         x = other.x; 
         y = other.y; 
+        black = other.black; 
 }
 
 char Square::charAt(int col, int row) {
@@ -75,6 +76,17 @@ Square& Square::operator=(const Square& other) {
     y = other.y; 
     piece = other.piece;
     return *this;
+}
+
+bool Square::operator==(const Square& other) {
+
+    if (piece != nullptr && other.piece != nullptr) {
+        if (!(piece->getPieceType() == other.piece->getPieceType() && piece->getHasMoved() && other.piece->getHasMoved())) {
+            return false; 
+        }
+    } 
+
+    return x == other.x && y == other.y; 
 }
 
 bool Square::isBlack() {

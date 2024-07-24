@@ -10,6 +10,7 @@
 #include "pawn.h"
 #include "text.h"
 #include "graphic.h"
+#include "historyservice.h"
 #include <iostream>
 #include <string>
 #include "endgameservice.h"
@@ -18,12 +19,14 @@ int main() {
 
     Board* board = new Board(); 
     Controller controller{board}; 
+    HistoryService* historyService = new HistoryService{&controller, board};
     std::string command;
     EndGameService *endGame = new EndGameService {&controller, board};
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
     observers.emplace_back(endGame);
-    //observers.emplace_back(new Graphic{&controller});
+    observers.emplace_back(historyService); 
+    // observers.emplace_back(new Graphic{&controller});
     controller.printInit();
 
 
@@ -73,13 +76,18 @@ int main() {
                     endGame->resetCheckMate();
                     std::cout << "Check Mate" << std::endl;
                     continue;
+                } else if(endGame->getIsStaleMate()){
+                    controller.setMode(START);
+                    endGame->resetStaleMate();
+                    std::cout << "Stale Mate" << std::endl;
+                    continue;
                 }
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
             }
         } else if (command == "undo") {
-
+            historyService->undo(); 
         } else if (command == "setup") {
             if (controller.getMode() == GAME) {
                 std::cout << "Can't enter setup mode when in game mode." << std::endl;

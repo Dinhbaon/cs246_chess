@@ -25,6 +25,7 @@ void Board::movePiece(Move move, Color color) {
         Castle(move); 
     } else if (isMoveEnpassent(move)) {
         Enpassent(move); 
+        
     } else {
         this->getSquare(fromX, fromY)->setPiece(nullptr);
         this->getSquare(toX, toY)->setPiece(piece);
@@ -125,12 +126,12 @@ void Board::Castle(const Move& move) {
     // King side castle
     if (dx > 0) {
         Piece* rook = getSquare(7, move.end.getY())->getPiece(); 
-        this->setSquare(5, 0, rook); 
-        this->setSquare(7, 0, nullptr); 
+        this->setSquare(5, move.end.getY(), rook); 
+        this->setSquare(7, move.end.getY(), nullptr); 
     } else { //Queen side castle
         Piece* rook = getSquare(0, move.end.getY())->getPiece(); 
-        this->setSquare(3, 0, rook); 
-        this->setSquare(0, 0, nullptr); 
+        this->setSquare(3, move.end.getY(), rook); 
+        this->setSquare(0, move.end.getY(), nullptr); 
     }
 }
 
@@ -270,6 +271,20 @@ Board& Board::operator=(const Board &other) {
     lastMove = other.lastMove;
     return *this;
 
+}
+
+bool Board::operator==(const Board& other) {
+    if (other.board.size() != board.size()) return false; 
+
+    for (int i = 0; i < other.board.size(); i++) {
+        if (*board[i] != *other.board[i]) return false; 
+    }
+
+    return 
+    lastMove.end.getX() == other.lastMove.end.getX() && 
+    lastMove.start.getX() == other.lastMove.start.getX() &&
+    lastMove.end.getY() == other.lastMove.start.getY() &&
+    lastMove.start.getY() == other.lastMove.start.getY(); 
 }
 
 bool Board::isCheckAfterMove(Move move, Color color){

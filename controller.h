@@ -15,14 +15,18 @@ class Controller: public Subject {
     Color playerTurn = WHITE; 
     Mode mode = START; 
     bool isInGame; 
-    void switchTurn(); 
+    bool isEnpassent; 
+    bool isCastle;
 
     public: 
         Square *getSquare(const int x, const int y) const;
+        void switchTurn();
         char getState(int col, int row) const override;
         explicit Controller(Board* board); 
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
+        void undo(); 
+        // Getters and setters
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
         Mode getMode() const;
@@ -32,6 +36,11 @@ class Controller: public Subject {
         Player* getPlayerTurn() const; 
         Color getPlayerColor() const;
         void setPlayerTurn(Color color); 
+        bool getIsEnpassent() const; 
+        bool getIsCastle() const; 
+        Move getLastMove() const;  
+        void setBoard(Board* board);        
+        
 };
 
 #endif
