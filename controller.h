@@ -11,7 +11,7 @@
 class Controller: public Subject {
     Player* whitePlayer;
     Player* blackPlayer;  
-    Board* board; 
+    Board* board;
     Color playerTurn = WHITE; 
     Mode mode = START; 
     bool isInGame; 
@@ -20,6 +20,7 @@ class Controller: public Subject {
 
     public: 
         Square *getSquare(const int x, const int y) const;
+        Square *getEmptySquare() const;
         void switchTurn();
         char getState(int col, int row) const override;
         explicit Controller(Board* board); 
@@ -32,6 +33,7 @@ class Controller: public Subject {
         Mode getMode() const;
         bool getIsInGame() const; 
         bool isValidMove(Move move, Color color) const; 
+        bool checkPawnEdgeRows() const;
         void setIsInGame(bool isInGame); 
         Player* getPlayerTurn() const; 
         Color getPlayerColor() const;
@@ -39,7 +41,9 @@ class Controller: public Subject {
         bool getIsEnpassent() const; 
         bool getIsCastle() const; 
         Move getLastMove() const;  
-        void setBoard(Board* board);        
+        void setBoard(Board* board);   
+        void emptyBoard();     
+        
         
 };
 
