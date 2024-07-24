@@ -39,12 +39,15 @@ class Board {
         bool oneKing(const Color color) const;
         bool isMoveCastle(const Move& move) const;
         bool isMoveEnpassent(const Move& move) const;
+        bool checkPawnEdgeRows() const;
         // Getters and setters
         Square* getSquare(const int x, const int y) const;
+        Square *getEmptySquare() const;
         void setSquare(const int x, const int y, Piece* piece); 
         const std::map<Color, std::vector<Square*>>& getAllSquaresWithPieces() const;
         Move getLastMove() const;
         Square* getKingSquare(Color color) const;
+        void emptyBoard();
  
 };
 

@@ -307,3 +307,36 @@ void Board::clearBoard() {
     board.clear();
 
 }
+
+void Board::emptyBoard() {
+    // clears the board of all pieces
+    for (auto& square : board) {
+        delete square->getPiece();
+        square->setPiece(nullptr);
+    }
+}
+
+bool Board::checkPawnEdgeRows() const {
+    int lastRow = 0;
+    int firstRow = 7;
+    Square *sqlast;
+    Square *sqfirst;
+    for (int i = 0; i < xDimension; ++i) {
+        sqlast = getSquare(i, lastRow);
+        sqfirst = getSquare(i, firstRow);
+        if (!(sqlast->isEmpty()) && !(sqfirst->isEmpty())) {
+            if (sqlast->getPiece()->getPieceType() == PAWN || sqfirst->getPiece()->getPieceType()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+Square *Board::getEmptySquare() const {
+    for (auto square : board) {
+        if (square->isEmpty()) {
+            return square;
+        }
+    }
+}

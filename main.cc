@@ -23,12 +23,16 @@ int main() {
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
     observers.emplace_back(historyService); 
+    bool came_from_setup = false;
     observers.emplace_back(new Graphic{&controller});
-    controller.printInit();
+
 
 
     while (std::cin >> command) {
         if (command == "game") {
+            if (!(came_from_setup)) {
+                controller.printInit();
+            }
             if (controller.getMode() == GAME) {
                 std::cout << "Alreading in a game - resign to end the game";
             } else {
@@ -76,12 +80,13 @@ int main() {
         } else if (command == "undo") {
             historyService->undo(); 
         } else if (command == "setup") {
+            came_from_setup = true;
+            controller.emptyBoard();
+            controller.printInit();
             if (controller.getMode() == GAME) {
                 std::cout << "Can't enter setup mode when in game mode." << std::endl;
                 continue;
             }
-
-            std::cout << "setup command" << std::endl;
             controller.setMode(SETUP); 
             while (std::cin >> command) {
                 Color c = BLACK;
@@ -89,19 +94,24 @@ int main() {
                 std::string s;
                 if (command == "done") {
                     if (!(board->oneKing(WHITE) && board->oneKing(BLACK))) {
-                        std::cout << "There are two Kings of the same color on the board \
+                        std::cout << "There is not one of each King on the board \
                                       - cannot exit setup mode until one King of each color \
                                       are on the board." << std::endl;
                     } else if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
                         std::cout << "A Knight is in check - cannot exit setup \
                                       mode until both Knights are not in check." << std::endl; 
-                    } else if (controller.checkPromotion()) {
+                    } else if (controller.checkPawnEdgeRows()) {
                         std::cout << "There is a pawn in the first or last rows of the board \
                                       - cannot exit setup mode until there are no pawns in \
                                       either the first or last rows of the board." << std::endl;
                     } else {
                         controller.setMode(START);
-                        controller.printInit();
+                        if (controller.getPlayerColor() == WHITE) {
+                            std::cout << "It is now Whites turn to move" << std::endl; 
+                        } else {
+                            std::cout << "It is now Blacks turn to move" << std::endl; 
+                        }
+                        
                         break;
                     }
                 } else if (command == "+") {
@@ -161,8 +171,9 @@ int main() {
                         } else {
                             board->setSquare(xIndex, yIndex, new Pawn(c));
                         }
-                        
+                        controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))});
                     }
+                    
                 } else if (command == "-") {
                     std::string src;
                     std::cin >> src; 
@@ -170,9 +181,12 @@ int main() {
                     int xIndex = src[0] - 'a'; 
                     int yIndex = src[1] - '0' - 1; 
 
-                    delete (board->getSquare(xIndex, yIndex))->getPiece();
-                    board->getSquare(xIndex, yIndex)->setPiece(nullptr);
+                    
+                    delete (controller.getSquare(xIndex, yIndex))->getPiece();
+                    controller.getSquare(xIndex, yIndex)->setPiece(nullptr);
 
+                    controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))});
+                    
                 } else { // command == "="
                     std::cin >> s;
                     if (s == "black" || "b" || "B") {

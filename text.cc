@@ -22,6 +22,7 @@ void Text::notify(Move move) {
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 void Text::initNotify() {
@@ -33,4 +34,5 @@ void Text::initNotify() {
         }
         cout << endl;
     }
+    cout << endl;
 }
