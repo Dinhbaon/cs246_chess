@@ -273,6 +273,20 @@ Board& Board::operator=(const Board &other) {
 
 }
 
+bool Board::operator==(const Board& other) {
+    if (other.board.size() != board.size()) return false; 
+
+    for (int i = 0; i < other.board.size(); i++) {
+        if (*board[i] != *other.board[i]) return false; 
+    }
+
+    return 
+    lastMove.end.getX() == other.lastMove.end.getX() && 
+    lastMove.start.getX() == other.lastMove.start.getX() &&
+    lastMove.end.getY() == other.lastMove.start.getY() &&
+    lastMove.start.getY() == other.lastMove.start.getY(); 
+}
+
 bool Board::isCheckAfterMove(Move move, Color color){
     Board tmpBoard{*this};
     if(getSquare(move.start.getX(), move.start.getY())->getPiece()->canMove(move, *this)) {

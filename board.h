@@ -29,6 +29,7 @@ class Board {
         // ~Board();
         Board(const Board& other);
         Board &operator=(const Board &other);
+        bool operator==(const Board &other); 
         char charAt(int col, int row);
         void movePiece(Move move, Color color);
         // Public utility methods

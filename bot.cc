@@ -29,7 +29,7 @@ std::vector<Move> Bot::findGetCaptureMoves(const std::vector<Square*> &squares, 
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
-                Move move {**it, *board->getSquare(x, y)};
+                Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)
                 && !(board->isSquareUnderAttack(Square(x, y), color))
                 && !(board->isCheckAfterMove(move, color))){

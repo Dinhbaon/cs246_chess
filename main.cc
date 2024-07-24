@@ -10,6 +10,7 @@
 #include "pawn.h"
 #include "text.h"
 #include "graphic.h"
+#include "historyservice.h"
 #include <iostream>
 #include <string>
 
@@ -17,9 +18,11 @@ int main() {
 
     Board* board = new Board(); 
     Controller controller{board}; 
+    HistoryService* historyService = new HistoryService{&controller, board};
     std::string command;
     std::vector<Observer*> observers;
     observers.emplace_back(new Text{&controller});
+    observers.emplace_back(historyService); 
     observers.emplace_back(new Graphic{&controller});
     controller.printInit();
 
@@ -71,7 +74,7 @@ int main() {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
             }
         } else if (command == "undo") {
-
+            historyService->undo(); 
         } else if (command == "setup") {
             if (controller.getMode() == GAME) {
                 std::cout << "Can't enter setup mode when in game mode." << std::endl;

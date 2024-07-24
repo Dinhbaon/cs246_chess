@@ -78,6 +78,17 @@ Square& Square::operator=(const Square& other) {
     return *this;
 }
 
+bool Square::operator==(const Square& other) {
+
+    if (piece != nullptr && other.piece != nullptr) {
+        if (!(piece->getPieceType() == other.piece->getPieceType() && piece->getHasMoved() && other.piece->getHasMoved())) {
+            return false; 
+        }
+    } 
+
+    return x == other.x && y == other.y; 
+}
+
 bool Square::isBlack() {
     return black;
 }

@@ -167,3 +167,12 @@ bool Controller::getIsEnpassent() const {
 bool Controller::getIsCastle() const {
     return isCastle;
 }
+
+Move Controller::getLastMove() const {
+    return board->getLastMove(); 
+}
+
+
+void Controller::setBoard(Board* board) {
+    this->board = board;
+}

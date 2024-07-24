@@ -16,6 +16,7 @@ class Square {
         char charAt(int col, int row);
         Square(int x = 0, int y = 0, Piece* piece = nullptr); 
         Square& operator=(const Square& other); 
+        bool operator==(const Square& other); 
         Square(const Square& square); 
         Piece* getPiece() const;
         void setPiece(Piece* piece); 
