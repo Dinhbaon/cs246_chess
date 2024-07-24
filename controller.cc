@@ -176,3 +176,15 @@ Move Controller::getLastMove() const {
 void Controller::setBoard(Board* board) {
     this->board = board;
 }
+
+void Controller::emptyBoard() {
+    board->emptyBoard();
+}
+
+bool Controller::checkPawnEdgeRows() const {
+    return board->checkPawnEdgeRows();
+}
+
+Square *Controller::getEmptySquare() const {
+    return board->getEmptySquare();
+}

@@ -10,6 +10,7 @@ class Graphic: public Observer {
     int bottom = 8;
     int right = 8;
     int squareDim = 50; // each square is 10 by 10, must be multiples of 10
+    int pieceDim = 10;
     Xwindow window;
     
     // assuming a width and hight of 10 for these methods

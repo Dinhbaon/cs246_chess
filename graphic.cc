@@ -487,59 +487,42 @@ void Graphic::printSquare(int c_background, int x, int y) {
 }
 
 void Graphic::notify(Move move) {
-    std::cout << "notify() called" << std::endl;
     int c_background;
     int color;
+    PieceType pieceType;
     if (move.start.getX() == move.end.getX() && 
         move.start.getY() == move.end.getY()) {
         return;
     }
+    c_background = getBackgroundColor(move.start.getX(), move.start.getY());
 
-    if (subject->getSquare(move.start.getX(), move.start.getY())->isBlack()) {
-        c_background = 1;
-    } else {
-        c_background = 0;
-    }
     printSquare(c_background, move.start.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
 
-    if (subject->getSquare(move.end.getX(), move.end.getY())->isBlack()) {
-        c_background = 1;
-    } else {
-        c_background = 0;
+    c_background = getBackgroundColor(move.end.getX(), move.end.getY());
+    if (subject->getSquare(move.end.getX(), move.end.getY())->isEmpty()) {
+        printSquare(c_background, move.end.getX() * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
+        return;
     }
+    
+    color = getPieceColor(move.end.getX(), move.end.getY());
+    pieceType = subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType();
 
-    if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getColor() == WHITE) {
-        color = 2; // making white pieces red so it can be seen
+    if (pieceType == ROOK) {
+        printRook(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
+    } else if (pieceType == KNIGHT) {
+        printKnight(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
+    } else if (pieceType == BISHOP) {
+        printBishop(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
+    } else if (pieceType == QUEEN) {
+        printQueen(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
+    } else if (pieceType == KING) {
+        printKing(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
     } else {
-        color = 3; // making black pieces green so it can be seen
-    }
-
-    if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == ROOK) {
-        std::cout << "printRook called" << std::endl;
-        printRook(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
-    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == KNIGHT) {
-        std::cout << "printKnight called" << std::endl;
-        printKnight(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
-    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == BISHOP) {
-        std::cout << "printBishop called" << std::endl;
-        printBishop(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
-    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == QUEEN) {
-        std::cout << "printQueen called" << std::endl;
-        printQueen(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
-    } else if (subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType() == KING) {
-        std::cout << "printQueen called" << std::endl;
-        printKing(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
-    } else {
-        std::cout << "printPawn called" << std::endl;
-        printPawn(c_background, color, move.end.getX() * 10, (bottom - 1 - move.end.getY()) * 10);
+        printPawn(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
     }
 
     if (subject->getIsEnpassent()) {
-        if (subject->getSquare(move.end.getX(), move.start.getY())->isBlack()) {
-            c_background = 1;
-        } else {
-            c_background = 0;
-        }
+        c_background = getBackgroundColor(move.end.getX(), move.start.getY());
         printSquare(c_background, move.end.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
     }
 
@@ -547,50 +530,41 @@ void Graphic::notify(Move move) {
         int dx = move.end.getX() - move.start.getX(); 
 
         if (dx > 0) {
-            printRook(getBackgroundColor(5, move.end.getY()), getPieceColor(5, move.end.getY()), 5 * 10, (bottom - 1 - move.end.getY()) * 10);
+            printRook(getBackgroundColor(5, move.end.getY()), getPieceColor(5, move.end.getY()), 5 * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
             printSquare(getBackgroundColor(7, move.end.getY()), 7 * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
         } else {
-            printRook(getBackgroundColor(3, move.end.getY()), getPieceColor(3, move.end.getY()), 3 * 10, (bottom - 1 - move.end.getY()) * 10);
+            printRook(getBackgroundColor(3, move.end.getY()), getPieceColor(3, move.end.getY()), 3 * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
             printSquare(getBackgroundColor(0, move.end.getY()), 0 * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
         }   
-    }
-
-
-    
+    }    
 }
 
 void Graphic::initNotify() {
     Square *sq;
     int c_background;
+    PieceType pieceType;
     for (int i = 0; i < bottom; ++i) {
         for (int j = 0; j < right; ++j) {
             sq = subject->getSquare(j, bottom - 1 - i);
-            if (sq->isBlack()) {
-                c_background = 1;
-            } else {
-                c_background = 0;
-            }
+            c_background = getBackgroundColor(j, bottom - 1 - i);
             if (sq->isEmpty()) {
                 printSquare(c_background, j * squareDim, i * squareDim);
             } else {
                 int color;
-                if (sq->getPiece()->getColor() == WHITE) {
-                    color = 2; // making white pieces red so it can be seen
+                color = getPieceColor(j, bottom - 1 - i);
+                pieceType = sq->getPiece()->getPieceType();
+                if (pieceType == ROOK) {
+                    printRook(c_background, color, j * pieceDim, i * pieceDim);
+                } else if (pieceType == KNIGHT) {
+                    printKnight(c_background, color, j * pieceDim, i * pieceDim);
+                } else if (pieceType == BISHOP) {
+                    printBishop(c_background, color, j * pieceDim, i * pieceDim);
+                } else if (pieceType == QUEEN) {
+                    printQueen(c_background, color, j * pieceDim, i * pieceDim);
+                } else if (pieceType == KING) {
+                    printKing(c_background, color, j * pieceDim, i * pieceDim);
                 } else {
-                    color = 3; // making black pieces green so it can be seen
-                }
-                if (sq->getPiece()->getPieceType() == ROOK) {
-                    printRook(c_background, color, j * 10, i * 10);
-                } else if (sq->getPiece()->getPieceType() == KNIGHT) {
-                    printKnight(c_background, color, j * 10, i * 10);
-                } else if (sq->getPiece()->getPieceType() == BISHOP) {
-                    printBishop(c_background, color, j * 10, i * 10);
-                } else if (sq->getPiece()->getPieceType() == QUEEN) {
-                    printQueen(c_background, color, j * 10, i * 10);
-                } else if (sq->getPiece()->getPieceType() == KING) {
-                    printKing(c_background, color, j * 10, i * 10);
-                } else {
-                    printPawn(c_background, color, j * 10, i * 10);
+                    printPawn(c_background, color, j * pieceDim, i * pieceDim);
                 }
             }
             
@@ -607,9 +581,9 @@ int Graphic::getPieceColor(int x, int y) {
 }
 int Graphic::getBackgroundColor(int x, int y) {
     if (subject->getSquare(x, y)->isBlack()) {
-        return 1;
+        return 1; // black
     } else {
-        return 0;
+        return 0; // white
     }
 }
 
