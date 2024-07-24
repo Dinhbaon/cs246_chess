@@ -64,6 +64,12 @@ std::vector<Move> Bot::findCaptureMoves(const std::vector<Square*> &squares, Col
 }
 
 std::vector<Move> Bot::findCheckMoves(const std::vector<Square*> &squares, Color color) const {
+    Color attackingColor;
+    if(color==WHITE){
+        attackingColor = BLACK;
+    } else {
+        attackingColor = WHITE;
+    }
     std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
@@ -72,12 +78,6 @@ std::vector<Move> Bot::findCheckMoves(const std::vector<Square*> &squares, Color
                 Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)){
                     tmpBoard.movePiece(move, color);
-                    Color attackingColor;
-                    if(color==WHITE){
-                        attackingColor = BLACK;
-                    } else {
-                        attackingColor = WHITE;
-                    }
                     if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(attackingColor), attackingColor)
                     && !(board->isCheckAfterMove(move, color))){
                         moves.emplace_back(move);
