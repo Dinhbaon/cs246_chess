@@ -125,12 +125,12 @@ void Board::Castle(const Move& move) {
     // King side castle
     if (dx > 0) {
         Piece* rook = getSquare(7, move.end.getY())->getPiece(); 
-        this->setSquare(5, 0, rook); 
-        this->setSquare(7, 0, nullptr); 
+        this->setSquare(5, move.end.getY(), rook); 
+        this->setSquare(7, move.end.getY(), nullptr); 
     } else { //Queen side castle
         Piece* rook = getSquare(0, move.end.getY())->getPiece(); 
-        this->setSquare(3, 0, rook); 
-        this->setSquare(0, 0, nullptr); 
+        this->setSquare(3, move.end.getY(), rook); 
+        this->setSquare(0, move.end.getY(), nullptr); 
     }
 }
 
