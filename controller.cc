@@ -197,3 +197,4 @@ Square *Controller::getEmptySquare() const {
     return board->getEmptySquare();
 }
 
+
