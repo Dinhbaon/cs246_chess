@@ -112,9 +112,10 @@ int main() {
             historyService->redo(); 
         } else if (command == "setup") {
             came_from_setup = true;
-            if (!(controller.getMode() == GAME)) {
-                controller.emptyBoard();
-                setUpInGame = false; 
+            controller.emptyBoard();
+            controller.printInit();
+            if (controller.getMode() == GAME) {
+                std::cout << "Can't enter setup mode when in game mode." << std::endl;
                 continue;
             }
 
@@ -137,12 +138,9 @@ int main() {
                                       "- cannot exit setup mode until there are no pawns in "\
                                       "either the first or last rows of the board." << std::endl;
                     } else {
-                        if (setUpInGame) {
-                            controller.setMode(GAME); 
-                        } else {
-                            controller.setMode(START);
-                        }
-                        
+
+                        controller.setMode(START);
+                    
                         if (controller.getPlayerColor() == WHITE) {
                             std::cout << "It is now Whites turn to move" << std::endl; 
                         } else {
