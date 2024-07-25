@@ -118,8 +118,6 @@ int main() {
                 std::cout << "Can't enter setup mode when in game mode." << std::endl;
                 continue;
             }
-
-            controller.printInit();
             controller.setMode(SETUP); 
             while (std::cin >> command) {
                 Color c = BLACK;
@@ -127,7 +125,7 @@ int main() {
                 std::string s;
                 if (command == "done") {
                     if (!(board->oneKing(WHITE) && board->oneKing(BLACK))) {
-                        std::cout << "There are two Kings of the same color on the board " \
+                        std::cout << "There is not one King of each color on the board " \
                                       "- cannot exit setup mode until one King of each color " \
                                       "are on the board." << std::endl;
                     } else if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
