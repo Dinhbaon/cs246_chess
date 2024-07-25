@@ -27,7 +27,7 @@ int main() {
     observers.emplace_back(endGame);
     observers.emplace_back(historyService); 
     bool came_from_setup = false;
-    observers.emplace_back(new Graphic{&controller});
+    // observers.emplace_back(new Graphic{&controller});
 
     while (std::cin >> command) {
         if (command == "game") {
@@ -75,19 +75,29 @@ int main() {
                 controller.makeMove(move, controller.getPlayerColor()); 
                 if(endGame->getIsCheckMate()) {
                     Board* newBoard = new Board(); 
-                    std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
+                    controller.score.at(controller.getPlayerColor()) += 1; 
                     endGame->reset(newBoard);
-                    controller.reset(newBoard); 
+                    controller.handleGameEnd(newBoard); 
                     historyService->reset(newBoard); 
+                    std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
                     continue;
                 } else if(endGame->getIsStaleMate()) {
+                    controller.score.at(controller.getPlayerColor()) += 0.5; 
+                    if (controller.getPlayerColor() == WHITE) {
+                        controller.score.at(BLACK) += 0.5; 
+                    } else {
+                        controller.score.at(WHITE) += 0.5;
+                    }
                     Board* newBoard = new Board(); 
                     endGame->reset(newBoard);
-                    std::cout << "StaleMate - - Use the game command to start a new game" << std::endl << std::flush;
-                    controller.reset(newBoard); 
+                    controller.handleGameEnd(newBoard); 
                     historyService->reset(newBoard);   
+                    std::cout << "StaleMate - - Use the game command to start a new game" << std::endl << std::flush;
+
                     continue;
                 }
+
+                controller.switchTurn(); 
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
@@ -217,4 +227,8 @@ int main() {
     for (auto it = observers.begin(); it != observers.end(); ++it) {
         delete *it;
     }
+
+    std::cout << "Final Score" << std::endl; 
+    std::cout << "White: " << controller.score[WHITE] << std::endl; 
+    std::cout << "Black: " << controller.score[BLACK] << std::endl;  
 }

@@ -10,7 +10,8 @@
 #include "botLevel4.h"
 
 Controller::Controller(Board* board): board{board} {
-
+    score[WHITE] = 0; 
+    score[BLACK] = 0;
 }
 
 char Controller::getState(int col, int row) const {
@@ -57,7 +58,6 @@ void Controller::makeMove(Move move, Color color) {
 
     notifyObservers(move); 
     
-    switchTurn(); 
 }
 
 bool Controller::isValidMove(Move move, Color color) const {
@@ -153,7 +153,7 @@ bool Controller::checkPromotion() const {
     
 }
 
-void Controller::reset(Board* board) {
+void Controller::handleGameEnd(Board* board) {
     setBoard(board);
     setMode(START);
     whitePlayer = nullptr; 

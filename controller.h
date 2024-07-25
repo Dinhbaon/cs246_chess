@@ -6,6 +6,7 @@
 #include "player.h"
 #include "mode.h"
 #include <string>
+#include <map>
 #include "subject.h"
 
 class Controller: public Subject {
@@ -18,7 +19,9 @@ class Controller: public Subject {
     bool isEnpassent; 
     bool isCastle;
 
+
     public: 
+        std::map<const Color, float> score;
         Square *getSquare(const int x, const int y) const;
         Square *getEmptySquare() const;
         void switchTurn();
@@ -27,7 +30,7 @@ class Controller: public Subject {
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
         void emptyBoard();     
-        void reset(Board* board); 
+        void handleGameEnd(Board* board); 
         // Getters and setters
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
