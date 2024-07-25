@@ -28,7 +28,6 @@ int main() {
     observers.emplace_back(historyService); 
     bool came_from_setup = false;
     observers.emplace_back(new Graphic{&controller});
-    controller.printInit();
 
     while (std::cin >> command) {
         if (command == "game") {

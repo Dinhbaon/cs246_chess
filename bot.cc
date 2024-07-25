@@ -121,3 +121,41 @@ std::vector<Move> Bot::findRandomMoves(const std::vector<Square*> &squares, Colo
 
     return moves;
 }
+
+Move Bot::findBetterCaptureMoves(const std::vector<Square*> &squares, Color color) const {
+    Move bestMove;
+    int maxPoint = 0;
+    for(auto it = squares.begin(); it != squares.end(); ++it){
+        for(int x = 0; x < 8; ++x){
+            for(int y = 0; y < 8; ++y){
+                Move move {**it, Square(x, y)};
+                if((*it)->getPiece()->canMove(move, *board)
+                && board->getSquare(x, y)->getPiece() != nullptr
+                && !(board->isCheckAfterMove(move, color))
+                && (board->isSquareUnderAttack(Square(x, y), color) 
+                && piecesPoints.at((*it)->getPiece()->getPieceType()) > piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()))){
+                    if(piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()) > maxPoint){
+                        bestMove = move;
+                        maxPoint = piecesPoints.at((*it)->getPiece()->getPieceType()) - piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType());
+                    }
+                } else if ((*it)->getPiece()->canMove(move, *board)
+                && board->getSquare(x, y)->getPiece() != nullptr
+                && !(board->isCheckAfterMove(move, color))
+                && !(board->isSquareUnderAttack(Square(x, y), color))){
+                    if(piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()) > maxPoint){
+                        bestMove = move;
+                        maxPoint = piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType());
+                    }
+                } else if ((*it)->getPiece()->getPieceType() == PAWN
+                && (*it)->getPiece()->canMove(move, *board)
+                && (*it)->getPiece()->canCapture(move, *board)
+                && !(board->isCheckAfterMove(move, color))){
+                    if(maxPoint == 0){
+                        bestMove = move;
+                    }
+                }
+            }
+        }
+    }
+    return bestMove;
+}
