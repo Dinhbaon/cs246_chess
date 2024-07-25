@@ -27,7 +27,7 @@ int main() {
     observers.emplace_back(endGame);
     observers.emplace_back(historyService); 
     bool came_from_setup = false;
-    // observers.emplace_back(new Graphic{&controller});
+    observers.emplace_back(new Graphic{&controller});
 
 
 
