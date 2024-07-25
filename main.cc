@@ -20,15 +20,17 @@ int main() {
 
     std::shared_ptr<Board> board{new Board}; 
     Controller controller{board}; 
-    HistoryService* historyService = new HistoryService(&controller, board);
+    std::shared_ptr<HistoryService> historyService = std::make_unique<HistoryService>(&controller, board);
     std::string command;
-    EndGameService* endGame =  new EndGameService(&controller, board);
-    std::vector<Observer*> observers;
-    observers.emplace_back(new Text{&controller});
-    observers.emplace_back(endGame);
-    observers.emplace_back(historyService); 
+    std::shared_ptr<EndGameService>endGame =  std::make_unique<EndGameService>(&controller, board);
+    std::shared_ptr<Text> text = std::make_unique<Text>(&controller); 
+    // std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
+
     bool came_from_setup = false;
-    // observers.emplace_back(new Graphic{&controller});
+    // controller.attach(graphic);
+    controller.attach(historyService); 
+    controller.attach(text);
+    controller.attach(endGame); 
 
     while (std::cin >> command) {
         if (command == "game") {
@@ -224,9 +226,7 @@ int main() {
             }
         } 
     }
-    for (auto it = observers.begin(); it != observers.end(); ++it) {
-        delete *it;
-    }
+
 
     std::cout << "Final Score" << std::endl; 
     std::cout << "White: " << controller.score[WHITE] << std::endl; 

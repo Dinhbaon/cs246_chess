@@ -1,7 +1,7 @@
 #include "endgameservice.h"
 
 EndGameService::EndGameService(Controller *controller, std::shared_ptr<Board> board): controller{controller}, board{board} {
-    controller->attach(this);
+
     isCheckMate = false;
     isStaleMate = false;
 }
@@ -11,7 +11,7 @@ void EndGameService::initNotify(){
 }
 
 EndGameService::~EndGameService() {
-    controller->detach(this);
+
 }
 
 void EndGameService::resetCheckMate(){

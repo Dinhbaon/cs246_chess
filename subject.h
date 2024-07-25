@@ -8,10 +8,10 @@ class Observer; // forward declaration
 
 class Subject {
 
-  std::vector<Observer*> observers;
+  std::vector<std::shared_ptr<Observer>> observers;
  public:
-  void attach( Observer* o );
-  void detach( Observer* o );
+  void attach( std::shared_ptr<Observer> o );
+  void detach( std::shared_ptr<Observer> o );
   void notifyObservers(Move move, bool onlyNotifyView = false) const;
   virtual char getState( int col, int row ) const = 0;
   virtual ~Subject() = default;

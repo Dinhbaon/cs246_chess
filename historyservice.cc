@@ -5,7 +5,7 @@
 HistoryService::HistoryService(Controller* controller, std::shared_ptr<Board> board) 
     : controller{controller}, currBoard{board}, currIndex{0}, notificationsEnabled{true} {
     boardHistory.emplace_back(*board); 
-    controller->attach(this); 
+
 }
 
 void HistoryService::notify(Move move) {

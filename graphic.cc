@@ -7,11 +7,11 @@
 using namespace std;
 
 Graphic::Graphic(Controller *s) : subject{s}, window{bottom * squareDim, right * squareDim} {
-    subject->attach(this);
+
 }
 
 Graphic::~Graphic() {
-    subject->detach(this);
+
 }
 
 void Graphic::printRook(int c_background, int color, int x, int y) {

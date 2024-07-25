@@ -5,11 +5,11 @@
 #include <iostream>
 #include <vector>
 
-void Subject::attach( Observer* o ) { /*** FILL IN ***/
+void Subject::attach( std::shared_ptr<Observer> o ) { /*** FILL IN ***/
     observers.emplace_back(o);
 }
 
-void Subject::detach( Observer* o ) { /*** FILL IN ***/ 
+void Subject::detach( std::shared_ptr<Observer> o ) { /*** FILL IN ***/ 
     for (auto it = observers.begin(); it != observers.end(); ++it) {
         if (*it == o) {
             observers.erase(it);
@@ -21,9 +21,9 @@ void Subject::detach( Observer* o ) { /*** FILL IN ***/
 void Subject::notifyObservers(Move move, bool onlyNotifyView) const { /*** FILL IN ***/
     if (onlyNotifyView) {
        for (auto ob: observers) {
-        Observer*observer = ob;
-        Text *text = dynamic_cast<Text*>(observer);
-        Graphic *graphic = dynamic_cast<Graphic*>(observer);
+        std::shared_ptr<Observer>observer = ob;
+        std::shared_ptr<Text> text = std::dynamic_pointer_cast<Text>(observer);
+        std::shared_ptr<Graphic> graphic = std::dynamic_pointer_cast<Graphic>(observer);
         if (text) {
             ob->notify(move);
         } else if (graphic) {
