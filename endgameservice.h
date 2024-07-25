@@ -17,6 +17,7 @@ class EndGameService: public Observer {
         void initNotify() override;
         void resetCheckMate();
         void resetStaleMate();
+        void reset(Board* board);
         ~EndGameService();
 }; 
 

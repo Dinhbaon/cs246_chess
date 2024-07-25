@@ -40,7 +40,7 @@ void HistoryService::undo() {
         setLastMove(Move{controllerLastMove.end, controllerLastMove.start});
         controller->notifyObservers(Move{controllerLastMove.end, controllerLastMove.start}); 
         controller->switchTurn(); 
-        notificationsEnabled = true; // Re-enable notifications
+        notificationsEnabled = true; 
     } else {
         std::cout << "Nothing to undo" << std::endl; 
     }
@@ -67,6 +67,8 @@ void HistoryService::setLastMove(Move move) {
     lastMove = move; 
 }
 
-void HistoryService::clearHistory() {
+void HistoryService::reset(Board* board) {
     boardHistory.clear(); 
+    currIndex = 0; 
+    boardHistory.emplace_back(*board); 
 }

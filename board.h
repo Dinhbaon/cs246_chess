@@ -26,7 +26,7 @@ class Board {
     void Enpassent(const Move& move); 
     public:
         Board(); 
-        // ~Board();
+        ~Board();
         Board(const Board& other);
         Board &operator=(const Board &other);
         bool operator==(const Board &other); 
