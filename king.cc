@@ -32,7 +32,7 @@ bool King::canCapture(const Move& move, const Board& board) const {
 
     // Castling move
     if (dy == 0 && dx == 2 && !getHasMoved()) {
-        int rookX = (dx > 0) ? 7 : 0; // Rook's initial position (kingside or queenside)
+        int rookX = (move.end.getX() == 6) ? 7 : 0; // Rook's initial position (kingside or queenside)
         int kingY = move.start.getY(); // The rank of the king
         Piece* rook = board.getSquare(rookX, kingY)->getPiece();
 
