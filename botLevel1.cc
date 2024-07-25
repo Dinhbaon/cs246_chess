@@ -15,19 +15,7 @@ T getRandom(const std::vector<T>& vector) {
 
 Move BotLevel1::getNextMove() const {
     const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
-    std::vector<Move> moves;
-
-    for(auto it = squares.begin(); it != squares.end(); ++it){
-        for(int x = 0; x < 8; ++x){
-            for(int y = 0; y < 8; ++y){
-                Move move {**it, *board->getSquare(x, y)};
-                if((*it)->getPiece()->canMove(move, *board)
-                && !(board->isCheckAfterMove(move, color))){
-                    moves.emplace_back(move);
-                }
-            }
-        }
-    }
+    std::vector<Move> moves = findRandomMoves(squares, color);
 
     return getRandom(moves);
 }
