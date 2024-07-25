@@ -24,11 +24,11 @@ int main() {
     std::string command;
     std::shared_ptr<EndGameService>endGame =  std::make_unique<EndGameService>(&controller, board);
     std::shared_ptr<Text> text = std::make_unique<Text>(&controller); 
-    // std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
+    std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
 
     bool came_from_setup = false;
     bool setUpInGame = true; 
-    // controller.attach(graphic);
+    controller.attach(graphic);
     controller.attach(historyService); 
     controller.attach(text);
     controller.attach(endGame); 
