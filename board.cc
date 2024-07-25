@@ -305,7 +305,7 @@ bool Board::checkPawnEdgeRows() const {
         sqlast = getSquare(i, lastRow);
         sqfirst = getSquare(i, firstRow);
         if (!(sqlast->isEmpty()) && !(sqfirst->isEmpty())) {
-            if (sqlast->getPiece()->getPieceType() == PAWN || sqfirst->getPiece()->getPieceType()) {
+            if (sqlast->getPiece()->getPieceType() == PAWN || sqfirst->getPiece()->getPieceType() == PAWN) {
                 return true;
             }
         }

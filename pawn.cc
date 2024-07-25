@@ -29,7 +29,8 @@ bool Pawn::canMove(const Move& move, const Board& board) const {
         // Moving two squares forward from starting position
         if (!getHasMoved() && dy == 2 * direction && 
             board.getSquare(move.end.getX(), move.end.getY())->getPiece() == nullptr &&
-            board.getSquare(move.start.getX(), move.start.getY() + direction)->getPiece() == nullptr) {
+            board.getSquare(move.start.getX(), move.start.getY() + direction)->getPiece() == nullptr
+            && (move.start.getY() == 1 || move.start.getY() == 6)) {
             return true;
         }
     }
