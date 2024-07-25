@@ -18,4 +18,5 @@ move d3 h7
 move b8 c8
 move f7 g6
 move c8 e6
-move g6 g5
+game computer2 computer2
+move

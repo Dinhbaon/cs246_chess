@@ -1,5 +1,7 @@
 #include "subject.h"
 #include "observer.h"
+#include "text.h"
+#include "graphic.h"
 #include <iostream>
 #include <vector>
 
@@ -16,8 +18,21 @@ void Subject::detach( Observer* o ) { /*** FILL IN ***/
     }
 }
 
-void Subject::notifyObservers(Move move) const { /*** FILL IN ***/ 
-    for (auto ob : observers) ob->notify(move);
+void Subject::notifyObservers(Move move, bool onlyNotifyView) const { /*** FILL IN ***/
+    if (onlyNotifyView) {
+       for (auto ob: observers) {
+        Observer *observer = ob;
+        Text *text = dynamic_cast<Text*>(observer);
+        Graphic *graphic = dynamic_cast<Graphic*>(observer);
+        if (text) {
+            text->notify(move);
+        } else if (graphic) {
+            graphic->notify(move);
+        }
+       }
+    } else {
+        for (auto ob : observers)  ob->notify(move);
+    }
 }
 
 void Subject::printInit() const {

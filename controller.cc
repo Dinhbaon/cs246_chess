@@ -7,6 +7,7 @@
 #include "botLevel1.h"
 #include "botLevel2.h"
 #include "botLevel3.h"
+#include "botLevel4.h"
 
 Controller::Controller(Board* board): board{board} {
 
@@ -114,6 +115,15 @@ void Controller::setPlayers(Color color, std::string player) {
                 blackPlayer = new BotLevel3(BLACK, this->board); 
                 break; 
         }
+    } else if (player == "computer4"){
+        switch(color){
+            case WHITE: 
+                whitePlayer = new BotLevel4(WHITE, this->board); 
+                break; 
+            case BLACK: 
+                blackPlayer = new BotLevel4(BLACK, this->board); 
+                break; 
+        }
     }
 
 }
@@ -196,4 +206,5 @@ bool Controller::checkPawnEdgeRows() const {
 Square *Controller::getEmptySquare() const {
     return board->getEmptySquare();
 }
+
 

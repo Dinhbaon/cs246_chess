@@ -91,12 +91,15 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
         attackingColor = WHITE; 
     }
     const std::vector<Square*>& squares = getAllSquaresWithPieces().at(attackingColor);
-    for (Square* squareWithPieces : squares) {
-        Move move{*squareWithPieces, square}; 
-        if (squareWithPieces->getPiece()->canCapture(move, *this)) {
-            return true;
+    if (!squares.empty()) {
+        for (Square* squareWithPieces : squares) {
+            Move move{*squareWithPieces, square}; 
+            if (squareWithPieces->getPiece()->canCapture(move, *this)) {
+                return true;
+            }
         }
     }
+
     return false;
 }
 

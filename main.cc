@@ -29,11 +29,11 @@ int main() {
     bool came_from_setup = false;
     observers.emplace_back(new Graphic{&controller});
 
-
-
     while (std::cin >> command) {
-        controller.printInit();
         if (command == "game") {
+            if (!came_from_setup) {
+                controller.printInit();
+            }
             if (controller.getMode() == GAME) {
                 std::cout << "Alreading in a game - resign to end the game";
             } else {
@@ -111,16 +111,16 @@ int main() {
                 std::string s;
                 if (command == "done") {
                     if (!(board->oneKing(WHITE) && board->oneKing(BLACK))) {
-                        std::cout << "There are two Kings of the same color on the board \
-                                      - cannot exit setup mode until one King of each color \
-                                      are on the board." << std::endl;
+                        std::cout << "There are two Kings of the same color on the board " \
+                                      "- cannot exit setup mode until one King of each color " \
+                                      "are on the board." << std::endl;
                     } else if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
-                        std::cout << "A Knight is in check - cannot exit setup \
-                                      mode until both Knights are not in check." << std::endl; 
+                        std::cout << "A Knight is in check - cannot exit setup " \
+                                      "mode until both Knights are not in check." << std::endl; 
                     } else if (controller.checkPawnEdgeRows()) {
-                        std::cout << "There is a pawn in the first or last rows of the board \
-                                      - cannot exit setup mode until there are no pawns in \
-                                      either the first or last rows of the board." << std::endl;
+                        std::cout << "There is a pawn in the first or last rows of the board "\
+                                      "- cannot exit setup mode until there are no pawns in "\
+                                      "either the first or last rows of the board." << std::endl;
                     } else {
                         controller.setMode(START);
                         if (controller.getPlayerColor() == WHITE) {
@@ -187,7 +187,7 @@ int main() {
                         } else {
                             board->setSquare(xIndex, yIndex, new Pawn(c));
                         }
-                        controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))});
+                        controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))}, true);
                     }
                 } else if (command == "-") {
                     std::string src;
@@ -199,7 +199,7 @@ int main() {
                     delete (board->getSquare(xIndex, yIndex))->getPiece();
                     board->getSquare(xIndex, yIndex)->setPiece(nullptr);
 
-                    controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))});
+                    controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))}, true);
 
                 } else { // command == "="
                     std::cin >> s;

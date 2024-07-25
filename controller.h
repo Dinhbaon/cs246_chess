@@ -43,7 +43,7 @@ class Controller: public Subject {
         bool getIsCastle() const; 
         Move getLastMove() const;  
         void setBoard(Board* board);   
-
+        void notifyView() const;
         
         
 };
