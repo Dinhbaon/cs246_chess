@@ -25,13 +25,13 @@ void Subject::notifyObservers(Move move, bool onlyNotifyView) const { /*** FILL 
         Text *text = dynamic_cast<Text*>(observer);
         Graphic *graphic = dynamic_cast<Graphic*>(observer);
         if (text) {
-            text->notify(move);
+            ob->notify(move);
         } else if (graphic) {
-            graphic->notify(move);
+            ob->notify(move);
         }
        }
     } else {
-        for (auto ob : observers)  ob->notify(move);
+        for (auto ob : observers) ob->notify(move);
     }
 }
 
