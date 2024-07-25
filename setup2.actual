@@ -1,0 +1,17 @@
+8 rnbqkbnr
+7 pppppppp
+6  _ _ _ _
+5 _ _ _ _ 
+4  _ _ _ _
+3 _ _ _ _ 
+2 PPPPPPPP
+1 RNBQKBNR
+setup command
++ command
+3
+3
+after delete
+pieceType is King
+done + command
+done command
+There are two Kings of the same color on the board                                       - cannot exit setup mode until one King of each color                                       are on the board.

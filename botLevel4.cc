@@ -1,4 +1,4 @@
-#include "botLevel3.h"
+#include "botLevel4.h"
 #include "king.h"
 #include <random>
 
@@ -11,9 +11,15 @@ T getRandom(std::vector<T> vector) {
     return vector[ithElement];
 }
 
-BotLevel3::BotLevel3(Color color, Board* board): Bot{color, board}{}
+BotLevel4::BotLevel4(Color color, Board* board): Bot{color, board}{
+    allSquaresWithPieces[QUEEN] = 9;
+    allSquaresWithPieces[ROOK] = 5;
+    allSquaresWithPieces[BISHOP] = 3;
+    allSquaresWithPieces[KNIGHT] = 3;
+    allSquaresWithPieces[PAWN] = 1;
+}
 
-Move BotLevel3::getNextMove() const {
+Move BotLevel4::getNextMove() const {
     const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
     std::vector<Move> captureMoves = findCaptureMoves(squares, color);
     std::vector<Move> checkMoves = findCheckMoves(squares, color);
