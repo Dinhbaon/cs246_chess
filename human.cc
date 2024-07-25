@@ -7,7 +7,7 @@
 #include <string>    
 #include <iostream>
 
-Human::Human(Color color, Board* board): Player{color, board} {}
+Human::Human(Color color, std::shared_ptr<Board> board): Player{color, board} {}
 
 
 bool Human::getIsHuman() const {
@@ -35,19 +35,19 @@ void Human::handlePromotion() {
     std::string newPiece; 
     std::cout << "Choose a piece to promote your pawn to (Q(ueen), B(ishop), K(night), R(ook))" <<std::endl;
     std::cin >> newPiece; 
-    Piece* piece; 
+    std::shared_ptr<Piece> piece; 
     while (true) {
         if (newPiece == "Q") {
-            piece = new Queen{color};
+            piece = std::make_shared<Queen>(color);
             break; 
         } else if (newPiece == "R") {
-            piece = new Rook{color}; 
+            piece =  std::make_shared<Rook>(color); 
             break; 
         } else if (newPiece == "B") {
-            piece = new Bishop{color};
+            piece = std::make_shared<Bishop>(color);
             break;  
         } else if (newPiece == "K") {
-            piece = new Knight{color}; 
+            piece = std::make_shared<Knight>(color); 
             break; 
         } else {
             std::cout << "Invalid selection" << std::endl; 

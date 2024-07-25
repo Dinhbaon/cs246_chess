@@ -4,6 +4,7 @@
 #include "square.h"
 #include <stdlib.h> 
 
+
 Knight::Knight(Color color) : Piece(color) {}
 
 char Knight::name() const {
@@ -20,7 +21,7 @@ bool Knight::canMove(const Move& move, const Board& board) const {
     if (!((abs(dx) == 2 && abs(dy) == 1) || (abs(dy) == 2 && abs(dx) == 1))) return false; 
 
     // Check if final square is friendly piece
-    Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
+    std::shared_ptr<Square> endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
 
@@ -32,6 +33,6 @@ PieceType Knight::getPieceType() const {
     return KNIGHT; 
 }
 
-Piece* Knight::copy() const {
-    return new Knight(*this); 
+std::shared_ptr<Piece> Knight::copy() const {
+    return  std::make_shared<Knight>(*this); 
 }

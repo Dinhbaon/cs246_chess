@@ -21,7 +21,7 @@ void Subject::detach( Observer* o ) { /*** FILL IN ***/
 void Subject::notifyObservers(Move move, bool onlyNotifyView) const { /*** FILL IN ***/
     if (onlyNotifyView) {
        for (auto ob: observers) {
-        Observer *observer = ob;
+        Observer*observer = ob;
         Text *text = dynamic_cast<Text*>(observer);
         Graphic *graphic = dynamic_cast<Graphic*>(observer);
         if (text) {

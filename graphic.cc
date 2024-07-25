@@ -305,7 +305,7 @@ void Graphic::notify(Move move) {
 }
 
 void Graphic::initNotify() {
-    Square *sq;
+    std::shared_ptr<Square>sq;
     int c_background;
     PieceType pieceType;
     for (int i = 0; i < bottom; ++i) {

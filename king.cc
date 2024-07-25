@@ -23,7 +23,7 @@ bool King::canCapture(const Move& move, const Board& board) const {
 
     // The king can move one square in any direction
     if ((dx <= 1 && dy <= 1) && (dx != 0 || dy != 0)) {
-        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
+        std::shared_ptr<Piece> target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
         // Check if the destination square is either empty or contains an opponent's piece
         if (target == nullptr || target->getColor() != getColor()) {
             return true;
@@ -34,7 +34,7 @@ bool King::canCapture(const Move& move, const Board& board) const {
     if (dy == 0 && dx == 2 && !getHasMoved()) {
         int rookX = (move.end.getX() == 6) ? 7 : 0; // Rook's initial position (kingside or queenside)
         int kingY = move.start.getY(); // The rank of the king
-        Piece* rook = board.getSquare(rookX, kingY)->getPiece();
+        std::shared_ptr<Piece> rook = board.getSquare(rookX, kingY)->getPiece();
 
         // Check if the rook is in place and hasn't moved
         if (rook != nullptr && rook->getPieceType() == PieceType::ROOK && !rook->getHasMoved()) {
@@ -60,6 +60,6 @@ PieceType King::getPieceType() const {
     return KING; 
 }
 
-Piece* King::copy() const {
-    return new King(*this); 
+std::shared_ptr<Piece> King::copy() const {
+    return  std::make_shared<King>(*this); 
 }

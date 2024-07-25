@@ -4,6 +4,7 @@
 #include "square.h"
 #include <stdlib.h> 
 
+
 Bishop::Bishop(Color color) : Piece(color) {}
 
 char Bishop::name() const {
@@ -28,14 +29,14 @@ bool Bishop::canMove(const Move& move, const Board& board) const {
     int iterX = move.start.getX() + stepX;
     int iterY = move.start.getY() + stepY;
     while (iterX != move.end.getX() || iterY != move.end.getY()) {
-        Square* iterSquare = board.getSquare(iterX, iterY);
+        std::shared_ptr<Square> iterSquare = board.getSquare(iterX, iterY);
         if (iterSquare == nullptr || !iterSquare->isEmpty()) return false;
         iterX += stepX;
         iterY += stepY;
     }
 
     // Check if the final square is empty or contains an opponent's piece
-    Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
+    std::shared_ptr<Square> endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare == nullptr || endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor();
 }
 
@@ -49,6 +50,6 @@ PieceType Bishop::getPieceType() const {
 }
 
 
-Piece* Bishop::copy() const {
-    return new Bishop(*this); 
+std::shared_ptr<Piece> Bishop::copy() const {
+    return  std::make_shared<Bishop>(*this); 
 }

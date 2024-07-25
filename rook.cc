@@ -28,7 +28,7 @@ bool Rook::canMove(const Move& move, const Board& board) const {
     int iterY = move.start.getY() + stepY;
     while (iterX != move.end.getX() || iterY != move.end.getY()) {
 
-        Square* iterSquare = board.getSquare(iterX, iterY);
+        std::shared_ptr<Square> iterSquare = board.getSquare(iterX, iterY);
         if (iterSquare == nullptr || !iterSquare->isEmpty()) return false; 
 
         iterX += stepX;
@@ -36,7 +36,7 @@ bool Rook::canMove(const Move& move, const Board& board) const {
     }
 
     // Check if the final destination square is empty or has an opponent's piece
-    Square* endSquare = board.getSquare(move.end.getX(), move.end.getY());
+    std::shared_ptr<Square> endSquare = board.getSquare(move.end.getX(), move.end.getY());
     return endSquare != nullptr && (endSquare->isEmpty() || endSquare->getPiece()->getColor() != getColor());
 }
 
@@ -48,6 +48,6 @@ PieceType Rook::getPieceType() const {
     return ROOK; 
 }
 
-Piece* Rook::copy() const {
-    return new Rook(*this); 
+std::shared_ptr<Piece> Rook::copy() const {
+    return  std::make_shared<Rook>(*this); 
 }

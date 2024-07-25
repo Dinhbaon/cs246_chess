@@ -1,7 +1,7 @@
 #include "botLevel1.h"
 #include <random>
 
-BotLevel1::BotLevel1(Color color, Board* board): Bot{color, board} {}
+BotLevel1::BotLevel1(Color color, std::shared_ptr<Board> board): Bot{color, board} {}
 
 template <typename T>
 
@@ -14,7 +14,7 @@ T getRandom(const std::vector<T>& vector) {
 }
 
 Move BotLevel1::getNextMove() const {
-    const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(color);
     std::vector<Move> moves = findRandomMoves(squares, color);
 
     return getRandom(moves);

@@ -11,10 +11,10 @@ T getRandom(std::vector<T> vector) {
     return vector[ithElement];
 }
 
-BotLevel3::BotLevel3(Color color, Board* board): Bot{color, board}{}
+BotLevel3::BotLevel3(Color color, std::shared_ptr<Board> board): Bot{color, board}{}
 
 Move BotLevel3::getNextMove() const {
-    const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(color);
     std::vector<Move> captureMoves = findCaptureMoves(squares, color);
     std::vector<Move> checkMoves = findCheckMoves(squares, color);
     std::vector<Move> avoidCapture = findAvoidCaptureMoves(squares, color);

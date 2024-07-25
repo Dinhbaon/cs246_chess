@@ -2,7 +2,7 @@
 #include "move.h"
 #include <iostream>
 
-HistoryService::HistoryService(Controller* controller, Board* board) 
+HistoryService::HistoryService(Controller* controller, std::shared_ptr<Board> board) 
     : controller{controller}, currBoard{board}, currIndex{0}, notificationsEnabled{true} {
     boardHistory.emplace_back(*board); 
     controller->attach(this); 
@@ -34,7 +34,7 @@ void HistoryService::undo() {
         notificationsEnabled = false; 
         currIndex--;
         Move controllerLastMove = controller->getLastMove(); 
-        Board* newBoard = new Board{getCurrBoard()}; 
+        std::shared_ptr<Board> newBoard = std::make_shared<Board>(getCurrBoard()); 
         controller->setBoard(newBoard); 
         currBoard = newBoard; 
         setLastMove(Move{controllerLastMove.end, controllerLastMove.start});
@@ -51,7 +51,7 @@ void HistoryService::redo() {
         notificationsEnabled = false; 
         currIndex++; 
         Move controllerLastMove = controller->getLastMove(); 
-        Board* newBoard = new Board{getCurrBoard()}; 
+        std::shared_ptr<Board> newBoard = std::make_shared<Board>(getCurrBoard()); 
         controller->setBoard(newBoard); 
         currBoard = newBoard; 
         setLastMove(Move{controllerLastMove.start, controllerLastMove.end}); 
@@ -67,7 +67,7 @@ void HistoryService::setLastMove(Move move) {
     lastMove = move; 
 }
 
-void HistoryService::reset(Board* board) {
+void HistoryService::reset(std::shared_ptr<Board> board) {
     boardHistory.clear(); 
     currIndex = 0; 
     boardHistory.emplace_back(*board); 

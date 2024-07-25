@@ -51,7 +51,7 @@ bool Pawn::canCapture(const Move& move, const Board& board) const {
 
     // Check for normal capture
     if (abs(dx) == 1 && dy == direction) {
-        Piece* target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
+        std::shared_ptr<Piece> target = board.getSquare(move.end.getX(), move.end.getY())->getPiece();
         if (target != nullptr && target->getColor() != getColor()) {
             return true;
         }
@@ -63,7 +63,7 @@ bool Pawn::canCapture(const Move& move, const Board& board) const {
         if (abs(lastMove.end.getY() - lastMove.start.getY()) == 2 &&
             lastMove.end.getX() == move.end.getX() &&
             lastMove.end.getY() == move.start.getY()) {
-            Piece* lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
+            std::shared_ptr<Piece> lastMovedPiece = board.getSquare(lastMove.end.getX(), lastMove.end.getY())->getPiece();
             if (lastMovedPiece != nullptr && lastMovedPiece->getPieceType() == PieceType::PAWN &&
                 lastMovedPiece->getColor() != getColor()) {
                 return true;
@@ -79,6 +79,6 @@ PieceType Pawn::getPieceType() const {
 }
 
 
-Piece* Pawn::copy() const {
-    return new Pawn(*this); 
+std::shared_ptr<Piece> Pawn::copy() const {
+    return std::make_shared<Pawn>(*this); 
 }

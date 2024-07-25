@@ -3,14 +3,14 @@
 
 #include "board.h"
 #include "color.h"
-#include "board.h"
+#include <memory>
 
 class Player {
     protected:
         Color color;    
-        Board* board; 
+        std::shared_ptr<Board> board; 
     public:
-        Player(Color color, Board* board);
+        Player(Color color, std::shared_ptr<Board> board);
         virtual Move getNextMove() const = 0; 
         virtual bool getIsHuman() const = 0; 
         virtual void handlePromotion() = 0; 

@@ -3,6 +3,7 @@
 
 #include "color.h"
 #include "piecetype.h"
+#include <memory>
 
 class Move;
 class Board;
@@ -25,7 +26,7 @@ class Piece {
         bool getHasMoved() const;
         void setHasMoved(bool hasMoved); 
         virtual PieceType getPieceType() const = 0; 
-        virtual Piece* copy() const = 0; 
+        virtual std::shared_ptr<Piece> copy() const = 0; 
 };
 
 #endif

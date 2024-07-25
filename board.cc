@@ -20,7 +20,7 @@ void Board::movePiece(Move move, Color color) {
     int toX = move.end.getX();
     int toY = move.end.getY();
 
-    Piece* piece = this->getSquare(fromX, fromY)->getPiece();
+    std::shared_ptr<Piece> piece = this->getSquare(fromX, fromY)->getPiece();
     if (isMoveCastle(move)) {
         Castle(move); 
     } else if (isMoveEnpassent(move)) {
@@ -43,44 +43,38 @@ Board::Board() {
 
     for (int i = 0; i < xDimension; i++) {
         for (int j = 0; j < yDimension; j++) {
-            board[(yDimension - 1 - i) * xDimension + j] = new Square(j, i); 
+            board[(yDimension - 1 - i) * xDimension + j] = std::make_shared<Square>(j, i); 
         }
     }
 
-    this->setSquare(0, 0, new Rook(WHITE));
-    this->setSquare(1, 0, new Knight(WHITE));
-    this->setSquare(2, 0, new Bishop(WHITE));
-    this->setSquare(3, 0, new Queen(WHITE));
-    this->setSquare(4, 0, new King(WHITE)); 
-    this->setSquare(5, 0, new Bishop(WHITE)); 
-    this->setSquare(6, 0, new Knight(WHITE)); 
-    this->setSquare(7, 0, new Rook(WHITE)); 
+    this->setSquare(0, 0, std::make_shared<Rook>(WHITE));
+    this->setSquare(1, 0, std::make_shared<Knight>(WHITE));
+    this->setSquare(2, 0, std::make_shared<Bishop>(WHITE));
+    this->setSquare(3, 0, std::make_shared<Queen>(WHITE));
+    this->setSquare(4, 0, std::make_shared<King>(WHITE)); 
+    this->setSquare(5, 0, std::make_shared<Bishop>(WHITE)); 
+    this->setSquare(6, 0, std::make_shared<Knight>(WHITE)); 
+    this->setSquare(7, 0, std::make_shared<Rook>(WHITE)); 
 
     for (int i = 0; i < xDimension; i++) {
-        this->setSquare(i, 1, new Pawn(WHITE)); 
+        this->setSquare(i, 1, std::make_shared<Pawn>(WHITE)); 
     }
 
-    this->setSquare(0, 7, new Rook(BLACK));
-    this->setSquare(1, 7, new Knight(BLACK));
-    this->setSquare(2, 7, new Bishop(BLACK));
-    this->setSquare(3, 7, new Queen(BLACK));
-    this->setSquare(4, 7, new King(BLACK)); 
-    this->setSquare(5, 7, new Bishop(BLACK)); 
-    this->setSquare(6, 7, new Knight(BLACK)); 
-    this->setSquare(7, 7, new Rook(BLACK)); 
+    this->setSquare(0, 7, std::make_shared<Rook>(BLACK));
+    this->setSquare(1, 7, std::make_shared<Knight>(BLACK));
+    this->setSquare(2, 7, std::make_shared<Bishop>(BLACK));
+    this->setSquare(3, 7, std::make_shared<Queen>(BLACK));
+    this->setSquare(4, 7, std::make_shared<King>(BLACK)); 
+    this->setSquare(5, 7, std::make_shared<Bishop>(BLACK)); 
+    this->setSquare(6, 7, std::make_shared<Knight>(BLACK)); 
+    this->setSquare(7, 7, std::make_shared<Rook>(BLACK)); 
     
     for (int i = 0; i < xDimension; i++) {
-        this->setSquare(i, 6, new Pawn(BLACK)); 
+        this->setSquare(i, 6,  std::make_shared<Pawn>(BLACK)); 
     }
 
 }
 
-Board::~Board() {
-    for (Square* square : board) {
-        delete square->getPiece(); 
-        delete square;  
-    }
-}
 
 //Helper methods
 bool Board::isSquareUnderAttack(const Square& square, Color color) const {
@@ -90,9 +84,9 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
     } else {
         attackingColor = WHITE; 
     }
-    const std::vector<Square*>& squares = getAllSquaresWithPieces().at(attackingColor);
+    const std::vector<std::shared_ptr<Square>>& squares = getAllSquaresWithPieces().at(attackingColor);
     if (!squares.empty()) {
-        for (Square* squareWithPieces : squares) {
+        for (std::shared_ptr<Square> squareWithPieces : squares) {
             Move move{*squareWithPieces, square}; 
             if (squareWithPieces->getPiece()->canCapture(move, *this)) {
                 return true;
@@ -112,7 +106,7 @@ bool Board::isMoveCastle(const Move& move) const {
 
     int dy = move.end.getY() - move.start.getY(); 
 
-    Piece* piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece();
+    std::shared_ptr<Piece> piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece();
 
     if (piece->getPieceType() == KING && (abs(dx) == 2) && (dy == 0) ) {
         return true; 
@@ -123,16 +117,16 @@ bool Board::isMoveCastle(const Move& move) const {
 void Board::Castle(const Move& move) {
     int dx = move.end.getX() - move.start.getX(); 
 
-    Piece* king = getSquare(move.start.getX(), move.start.getY())->getPiece(); 
+    std::shared_ptr<Piece> king = getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     this->setSquare(move.end.getX(), move.end.getY(), king); 
     this->setSquare(move.start.getX(), move.start.getY(), nullptr); 
     // King side castle
     if (dx > 0) {
-        Piece* rook = getSquare(7, move.end.getY())->getPiece(); 
+        std::shared_ptr<Piece> rook = getSquare(7, move.end.getY())->getPiece(); 
         this->setSquare(5, move.end.getY(), rook); 
         this->setSquare(7, move.end.getY(), nullptr); 
     } else { //Queen side castle
-        Piece* rook = getSquare(0, move.end.getY())->getPiece(); 
+        std::shared_ptr<Piece> rook = getSquare(0, move.end.getY())->getPiece(); 
         this->setSquare(3, move.end.getY(), rook); 
         this->setSquare(0, move.end.getY(), nullptr); 
     }
@@ -141,7 +135,7 @@ void Board::Castle(const Move& move) {
 bool Board::isMoveEnpassent(const Move& move) const {
     int dx = move.end.getX() - move.start.getX(); 
 
-    Piece* piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
+    std::shared_ptr<Piece> piece = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
     // If Pawn is moving sideways that means its a capture but if the target square is empty
     // That must be enpassent
     if (piece->getPieceType() == PAWN  && abs(dx) == 1 && getSquare(move.end.getX(), move.end.getY())->isEmpty()) {
@@ -157,7 +151,7 @@ void Board::Enpassent(const Move& move) {
 
     int direction = (dy > 0) ? 1 : -1; 
 
-    Piece* pawn = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
+    std::shared_ptr<Piece> pawn = this->getSquare(move.start.getX(), move.start.getY())->getPiece(); 
 
     this->setSquare(move.end.getX(), move.end.getY(), pawn); 
     this->setSquare(move.start.getX(), move.start.getY(), nullptr); 
@@ -169,15 +163,15 @@ void Board::Enpassent(const Move& move) {
 }
 
 //Getters and setters
-const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() const {
+const std::map<Color, std::vector<std::shared_ptr<Square>>>& Board::getAllSquaresWithPieces() const {
     allSquaresWithPieces[WHITE].clear(); // Clear the map before updating it
     allSquaresWithPieces[BLACK].clear(); 
 
     
 
-    for (Square* square : this->board) {
+    for (std::shared_ptr<Square> square : this->board) {
         if (square != nullptr) {
-            Piece* piece = square->getPiece();
+            std::shared_ptr<Piece> piece = square->getPiece();
             if (piece != nullptr) {
                 allSquaresWithPieces[piece->getColor()].emplace_back(square);
             }
@@ -187,14 +181,14 @@ const std::map<Color, std::vector<Square*>>& Board::getAllSquaresWithPieces() co
 }
 
 
-Square* Board::getSquare(const int x, const int y) const {
+std::shared_ptr<Square> Board::getSquare(const int x, const int y) const {
     if (x < 0 || x >= xDimension || y < 0 || y >= yDimension) {
         return nullptr;
     }
     return board[(yDimension - 1 -y) * xDimension + x];
 }
 
-void Board::setSquare(int x, int y, Piece* piece) {
+void Board::setSquare(int x, int y, std::shared_ptr<Piece> piece) {
     if (x >= 0 && x < xDimension && y >= 0 && y < yDimension) {
         board[(yDimension - 1 - y) * xDimension + x]->setPiece(piece);
     } else {
@@ -206,8 +200,8 @@ Move Board::getLastMove() const {
     return lastMove; 
 }
 
-Square* Board::getKingSquare(Color color) const {
-    for (Square* square: getAllSquaresWithPieces().at(color)) {
+std::shared_ptr<Square> Board::getKingSquare(Color color) const {
+    for (std::shared_ptr<Square> square: getAllSquaresWithPieces().at(color)) {
         if (square->getPiece()->getPieceType() == KING && square->getPiece()->getColor() == color) {
             return square; 
         }
@@ -225,7 +219,7 @@ Board::Board(const Board& other) {
         // Deep copy the board squares
     for (const auto& square : other.board) {
         if (square != nullptr) {
-            board.push_back(new Square(*square)); // Create a new Square and copy the contents
+            board.push_back(std::make_shared<Square>(*square)); // Create a new Square and copy the contents
         } else {
             board.push_back(nullptr);
         }
@@ -291,9 +285,6 @@ bool Board::isCheckAfterMove(Move move, Color color){
 
 void Board::clearBoard() {
     // Delete dynamically allocated squares
-    for (auto& square : board) {
-        delete square;
-    }
     board.clear();
 
 }
@@ -301,7 +292,6 @@ void Board::clearBoard() {
 void Board::emptyBoard() {
     // clears the board of all pieces
     for (auto& square : board) {
-        delete square->getPiece();
         square->setPiece(nullptr);
     }
 }
@@ -309,8 +299,8 @@ void Board::emptyBoard() {
 bool Board::checkPawnEdgeRows() const {
     int lastRow = 0;
     int firstRow = 7;
-    Square *sqlast;
-    Square *sqfirst;
+    std::shared_ptr<Square> sqlast;
+    std::shared_ptr<Square> sqfirst;
     for (int i = 0; i < xDimension; ++i) {
         sqlast = getSquare(i, lastRow);
         sqfirst = getSquare(i, firstRow);
@@ -323,7 +313,7 @@ bool Board::checkPawnEdgeRows() const {
     return false;
 }
 
-Square *Board::getEmptySquare() const {
+std::shared_ptr<Square> Board::getEmptySquare() const {
     for (auto square : board) {
         if (square->isEmpty()) {
             return square;

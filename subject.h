@@ -2,6 +2,7 @@
 #define SUBJECT_H
 #include <vector>
 #include "move.h"
+#include <memory>
 
 class Observer; // forward declaration
 
