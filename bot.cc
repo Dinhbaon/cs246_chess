@@ -23,9 +23,27 @@ void Bot::handlePromotion() {
     board->setSquare(lastMove.end.getX(), lastMove.end.getY(), piece); 
 }
 
-std::vector<Move> Bot::findGetCaptureMoves(const std::vector<Square*> &squares, Color color) const {
+std::vector<Move> Bot::findAvoidCaptureMoves(const std::vector<Square*> &squares, Color color) const {
     std::vector<Move> moves;
+    for(auto it = squares.begin(); it != squares.end(); ++it){
+        if(board->isSquareUnderAttack(**it, color)){
+            for(int x = 0; x < 8; ++x){
+                for(int y = 0; y < 8; ++y){
+                    Move move {**it, Square(x, y)};
+                    if((*it)->getPiece()->canMove(move, *board)
+                    && !(board->isSquareUnderAttack(Square(x, y), color))
+                    && !(board->isCheckAfterMove(move, color))){
+                        moves.emplace_back(move);
+                    }
+                }
+            }
+        }
+    }
+    return moves;  
+}
 
+std::vector<Move> Bot::findRandomAvoidCaptureMoves(const std::vector<Square*> &squares, Color color) const {
+    std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
@@ -74,14 +92,11 @@ std::vector<Move> Bot::findCheckMoves(const std::vector<Square*> &squares, Color
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
-                Board tmpBoard = *board;
                 Move move {**it, Square(x, y)};
-                if((*it)->getPiece()->canMove(move, *board)){
-                    tmpBoard.movePiece(move, color);
-                    if(tmpBoard.isSquareUnderAttack(*tmpBoard.getKingSquare(attackingColor), attackingColor)
-                    && !(board->isCheckAfterMove(move, color))){
-                        moves.emplace_back(move);
-                    };
+                if((*it)->getPiece()->canMove(move, *board)
+                && board->isCheckAfterMove(move, attackingColor)
+                && !(board->isCheckAfterMove(move, color))) {
+                    moves.emplace_back(move);
                 }
             }
         }
