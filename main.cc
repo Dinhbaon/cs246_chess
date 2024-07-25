@@ -24,11 +24,11 @@ int main() {
     std::string command;
     std::shared_ptr<EndGameService>endGame =  std::make_unique<EndGameService>(&controller, board);
     std::shared_ptr<Text> text = std::make_unique<Text>(&controller); 
-    std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
+    // std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
 
     bool came_from_setup = false;
     bool setUpInGame = true; 
-    controller.attach(graphic);
+    // controller.attach(graphic);
     controller.attach(historyService); 
     controller.attach(text);
     controller.attach(endGame); 
@@ -50,11 +50,22 @@ int main() {
             }
 
             
-        } else if (command == "resign") {
-            if (controller.getIsInGame()) {
-
-            } else {
+        } else if (command == "resign") { 
+            if (controller.getMode() == GAME) {
+                std::shared_ptr<Board> newBoard{new Board()}; 
+                if (controller.getPlayerColor() == WHITE) {
+                    controller.score.at(BLACK) += 1; 
+                } else {
+                    controller.score.at(WHITE) += 1; 
+                }
                 
+                endGame->reset(newBoard);
+                controller.handleGameEnd(newBoard); 
+                historyService->reset(newBoard); 
+                std::cout <<  controller.getPlayerColor() +" Resigned - use game command to start a new game" << std::endl << std::flush;
+                continue; 
+            } else {
+                std::cout << "" <<std::endl; 
             }
         } else if (command == "move") {
         
@@ -107,9 +118,14 @@ int main() {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
             }
         } else if (command == "undo") {
-            historyService->undo(); 
+            if (controller.getMode() == GAME) {
+                historyService->undo(); 
+            } 
         } else if (command == "redo") {
-            historyService->redo(); 
+            if (controller.getMode() == GAME) {
+                historyService->redo();
+            }
+             
         } else if (command == "setup") {
             came_from_setup = true;
             controller.emptyBoard();

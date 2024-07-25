@@ -16,7 +16,6 @@ class Controller: public Subject {
     std::shared_ptr<Board> board;
     Color playerTurn = WHITE; 
     Mode mode = START; 
-    bool isInGame; 
     bool isEnpassent; 
     bool isCastle;
 

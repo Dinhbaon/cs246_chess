@@ -19,13 +19,7 @@ char Controller::getState(int col, int row) const {
     return board->charAt(col, row);
 }
 
-bool Controller::getIsInGame() const {
-    return isInGame;
-}
 
-void Controller::setIsInGame(bool isInGame) {
-    isInGame = isInGame; 
-}
 
 std::shared_ptr<Player>  Controller::getPlayerTurn() const {
     switch (playerTurn) {
