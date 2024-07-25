@@ -12,10 +12,7 @@ class HistoryService: public Observer {
     Controller* controller; 
     std::shared_ptr<Board> currBoard; 
     std::vector<Board> boardHistory; 
-    Move lastMove; 
-    bool notificationsEnabled; 
 
-    void setLastMove(Move move); 
     public:
         explicit HistoryService(Controller* controller, std::shared_ptr<Board> board); 
         void notify(Move move) override;

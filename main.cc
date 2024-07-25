@@ -27,6 +27,7 @@ int main() {
     // std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
 
     bool came_from_setup = false;
+    bool setUpInGame = true; 
     // controller.attach(graphic);
     controller.attach(historyService); 
     controller.attach(text);
@@ -111,12 +112,13 @@ int main() {
             historyService->redo(); 
         } else if (command == "setup") {
             came_from_setup = true;
-            controller.emptyBoard();
-            controller.printInit();
-            if (controller.getMode() == GAME) {
-                std::cout << "Can't enter setup mode when in game mode." << std::endl;
+            if (!(controller.getMode() == GAME)) {
+                controller.emptyBoard();
+                setUpInGame = false; 
                 continue;
             }
+
+            controller.printInit();
             controller.setMode(SETUP); 
             while (std::cin >> command) {
                 Color c = BLACK;
@@ -129,13 +131,18 @@ int main() {
                                       "are on the board." << std::endl;
                     } else if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
                         std::cout << "A King is in check - cannot exit setup " \
-                                      "mode until both Knights are not in check." << std::endl; 
+                                      "mode until both Kings are not in check." << std::endl; 
                     } else if (controller.checkPawnEdgeRows()) {
                         std::cout << "There is a pawn in the first or last rows of the board "\
                                       "- cannot exit setup mode until there are no pawns in "\
                                       "either the first or last rows of the board." << std::endl;
                     } else {
-                        controller.setMode(START);
+                        if (setUpInGame) {
+                            controller.setMode(GAME); 
+                        } else {
+                            controller.setMode(START);
+                        }
+                        
                         if (controller.getPlayerColor() == WHITE) {
                             std::cout << "It is now Whites turn to move" << std::endl; 
                         } else {
@@ -213,11 +220,11 @@ int main() {
 
                     controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))}, true);
 
-                } else { // command == "="
+                } else if (command == "=") { // command == "="
                     std::cin >> s;
                     if (s == "black" || "b" || "B") {
                         c = BLACK;
-                    } else {
+                    } else if (s == "white" || "w" || "W") {
                         c = WHITE;
                     }
                     controller.setPlayerTurn(c);
