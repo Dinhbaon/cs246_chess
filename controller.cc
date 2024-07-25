@@ -58,6 +58,8 @@ void Controller::makeMove(Move move, Color color) {
     }
 
     notifyObservers(move); 
+    isEnpassent = false;
+    isCastle = false;
     
 }
 
