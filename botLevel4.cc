@@ -11,23 +11,26 @@ T getRandom(std::vector<T> vector) {
     return vector[ithElement];
 }
 
-BotLevel4::BotLevel4(Color color, Board* board): Bot{color, board}{
-    allSquaresWithPieces[QUEEN] = 9;
-    allSquaresWithPieces[ROOK] = 5;
-    allSquaresWithPieces[BISHOP] = 3;
-    allSquaresWithPieces[KNIGHT] = 3;
-    allSquaresWithPieces[PAWN] = 1;
+BotLevel4::BotLevel4(Color color, std::shared_ptr<Board> board): Bot{color, board}{
+    piecesPoints[QUEEN] = 9;
+    piecesPoints[ROOK] = 5;
+    piecesPoints[BISHOP] = 3;
+    piecesPoints[KNIGHT] = 3;
+    piecesPoints[PAWN] = 1;
 }
 
 Move BotLevel4::getNextMove() const {
-    const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(color);
+    Move betterCaptureMove = findBetterCaptureMoves(squares, color);
     std::vector<Move> captureMoves = findCaptureMoves(squares, color);
     std::vector<Move> checkMoves = findCheckMoves(squares, color);
     std::vector<Move> avoidCapture = findAvoidCaptureMoves(squares, color);
     std::vector<Move> randomAvoidCaptureMoves = findRandomAvoidCaptureMoves(squares, color);
     std::vector<Move> getRandomMoves = findRandomMoves(squares, color);
 
-    if(captureMoves.size() > 0){
+    if (!(betterCaptureMove.start == Square(0,0) && betterCaptureMove.end == Square(0,0))){
+        return betterCaptureMove;
+    } else if(captureMoves.size() > 0){
         return getRandom(captureMoves);
     } else if(checkMoves.size() > 0){
         return getRandom(checkMoves);

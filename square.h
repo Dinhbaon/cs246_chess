@@ -2,6 +2,7 @@
 #define SQUARE_H
 
 #include <vector>
+#include <memory>
 
 
 class Piece;
@@ -11,15 +12,15 @@ class Square {
     int y;
     int const dim = 8;
     bool black;
-    Piece* piece;
+    std::shared_ptr<Piece> piece;
     public:
         char charAt(int col, int row);
-        Square(int x = 0, int y = 0, Piece* piece = nullptr); 
+        Square(int x = 0, int y = 0, std::shared_ptr<Piece> piece = nullptr); 
         Square& operator=(const Square& other); 
         bool operator==(const Square& other); 
         Square(const Square& square); 
-        Piece* getPiece() const;
-        void setPiece(Piece* piece); 
+        std::shared_ptr<Piece> getPiece() const;
+        void setPiece(std::shared_ptr<Piece> piece); 
         std::vector<int> getCoords();
         int getX() const; 
         int getY() const; 

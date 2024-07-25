@@ -6,28 +6,32 @@
 #include "player.h"
 #include "mode.h"
 #include <string>
+#include <map>
 #include "subject.h"
+#include <memory>
 
 class Controller: public Subject {
-    Player* whitePlayer;
-    Player* blackPlayer;  
-    Board* board;
+    std::shared_ptr<Player>  whitePlayer;
+    std::shared_ptr<Player> blackPlayer;  
+    std::shared_ptr<Board> board;
     Color playerTurn = WHITE; 
     Mode mode = START; 
     bool isInGame; 
     bool isEnpassent; 
     bool isCastle;
 
+
     public: 
-        Square *getSquare(const int x, const int y) const;
-        Square *getEmptySquare() const;
+        std::map<const Color, float> score;
+        std::shared_ptr<Square>getSquare(const int x, const int y) const;
+        std::shared_ptr<Square>getEmptySquare() const;
         void switchTurn();
         char getState(int col, int row) const override;
-        explicit Controller(Board* board); 
+        explicit Controller(std::shared_ptr<Board> board); 
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
         void emptyBoard();     
-        void reset(Board* board); 
+        void handleGameEnd(std::shared_ptr<Board> board); 
         // Getters and setters
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
@@ -36,14 +40,13 @@ class Controller: public Subject {
         bool isValidMove(Move move, Color color) const; 
         bool checkPawnEdgeRows() const;
         void setIsInGame(bool isInGame); 
-        Player* getPlayerTurn() const; 
+        std::shared_ptr<Player>  getPlayerTurn() const; 
         Color getPlayerColor() const;
         void setPlayerTurn(Color color); 
         bool getIsEnpassent() const; 
         bool getIsCastle() const; 
         Move getLastMove() const;  
-        void setBoard(Board* board);   
-        void notifyView() const;
+        void setBoard(std::shared_ptr<Board> board);   
         
         
 };

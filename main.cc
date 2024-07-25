@@ -14,20 +14,23 @@
 #include <iostream>
 #include <string>
 #include "endgameservice.h"
+#include <memory>
 
 int main() {
 
-    Board* board = new Board(); 
+    std::shared_ptr<Board> board{new Board}; 
     Controller controller{board}; 
-    HistoryService* historyService = new HistoryService{&controller, board};
+    std::shared_ptr<HistoryService> historyService = std::make_unique<HistoryService>(&controller, board);
     std::string command;
-    EndGameService *endGame = new EndGameService {&controller, board};
-    std::vector<Observer*> observers;
-    observers.emplace_back(new Text{&controller});
-    observers.emplace_back(endGame);
-    observers.emplace_back(historyService); 
+    std::shared_ptr<EndGameService>endGame =  std::make_unique<EndGameService>(&controller, board);
+    std::shared_ptr<Text> text = std::make_unique<Text>(&controller); 
+    // std::shared_ptr<Graphic> graphic = std::make_unique<Graphic>(&controller); 
+
     bool came_from_setup = false;
-    observers.emplace_back(new Graphic{&controller});
+    // controller.attach(graphic);
+    controller.attach(historyService); 
+    controller.attach(text);
+    controller.attach(endGame); 
 
     while (std::cin >> command) {
         if (command == "game") {
@@ -74,20 +77,30 @@ int main() {
 
                 controller.makeMove(move, controller.getPlayerColor()); 
                 if(endGame->getIsCheckMate()) {
-                    Board* newBoard = new Board(); 
-                    std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
+                    std::shared_ptr<Board> newBoard{new Board()}; 
+                    controller.score.at(controller.getPlayerColor()) += 1; 
                     endGame->reset(newBoard);
-                    controller.reset(newBoard); 
+                    controller.handleGameEnd(newBoard); 
                     historyService->reset(newBoard); 
+                    std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
                     continue;
                 } else if(endGame->getIsStaleMate()) {
-                    Board* newBoard = new Board(); 
+                    controller.score.at(controller.getPlayerColor()) += 0.5; 
+                    if (controller.getPlayerColor() == WHITE) {
+                        controller.score.at(BLACK) += 0.5; 
+                    } else {
+                        controller.score.at(WHITE) += 0.5;
+                    }
+                    std::shared_ptr<Board> newBoard{new Board()};  
                     endGame->reset(newBoard);
-                    std::cout << "StaleMate - - Use the game command to start a new game" << std::endl << std::flush;
-                    controller.reset(newBoard); 
+                    controller.handleGameEnd(newBoard); 
                     historyService->reset(newBoard);   
+                    std::cout << "StaleMate - Use the game command to start a new game" << std::endl << std::flush;
+
                     continue;
                 }
+
+                controller.switchTurn(); 
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
@@ -115,7 +128,7 @@ int main() {
                                       "- cannot exit setup mode until one King of each color " \
                                       "are on the board." << std::endl;
                     } else if (board->isInCheck(WHITE) || board->isInCheck(BLACK)) {
-                        std::cout << "A Knight is in check - cannot exit setup " \
+                        std::cout << "A King is in check - cannot exit setup " \
                                       "mode until both Knights are not in check." << std::endl; 
                     } else if (controller.checkPawnEdgeRows()) {
                         std::cout << "There is a pawn in the first or last rows of the board "\
@@ -128,6 +141,7 @@ int main() {
                         } else {
                             std::cout << "It is now Blacks turn to move" << std::endl; 
                         }
+                        historyService->reset(board); 
                         break;
                     }
                 } else if (command == "+") {
@@ -170,22 +184,21 @@ int main() {
                         int yIndex = src[1] - '0' - 1; 
 
                         if (!((board->getSquare(xIndex, yIndex))->isEmpty())) {
-                            delete (board->getSquare(xIndex, yIndex))->getPiece();
                             board->getSquare(xIndex, yIndex)->setPiece(nullptr);
                         }
         
                         if (pt == ROOK) {
-                            board->setSquare(xIndex, yIndex, new Rook(c));
+                            board->setSquare(xIndex, yIndex,  std::make_shared<Rook>(c));
                         } else if (pt == KNIGHT) {
-                            board->setSquare(xIndex, yIndex, new Knight(c));
+                            board->setSquare(xIndex, yIndex, std::make_shared<Knight>(c));
                         } else if (pt == BISHOP) {
-                            board->setSquare(xIndex, yIndex, new Bishop(c));
+                            board->setSquare(xIndex, yIndex, std::make_shared<Bishop>(c));
                         } else if (pt == QUEEN) {
-                            board->setSquare(xIndex, yIndex, new Queen(c));
+                            board->setSquare(xIndex, yIndex, std::make_shared<Queen>(c));
                         } else if (pt == KING) {
-                            board->setSquare(xIndex, yIndex, new King(c));
+                            board->setSquare(xIndex, yIndex, std::make_shared<King>(c));
                         } else {
-                            board->setSquare(xIndex, yIndex, new Pawn(c));
+                            board->setSquare(xIndex, yIndex, std::make_shared<Pawn>(c));
                         }
                         controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))}, true);
                     }
@@ -196,7 +209,6 @@ int main() {
                     int xIndex = src[0] - 'a'; 
                     int yIndex = src[1] - '0' - 1; 
 
-                    delete (board->getSquare(xIndex, yIndex))->getPiece();
                     board->getSquare(xIndex, yIndex)->setPiece(nullptr);
 
                     controller.notifyObservers(Move{*(controller.getEmptySquare()), *(controller.getSquare(xIndex ,yIndex))}, true);
@@ -214,7 +226,9 @@ int main() {
             }
         } 
     }
-    for (auto it = observers.begin(); it != observers.end(); ++it) {
-        delete *it;
-    }
+
+
+    std::cout << "Final Score" << std::endl; 
+    std::cout << "White: " << controller.score[WHITE] << std::endl; 
+    std::cout << "Black: " << controller.score[BLACK] << std::endl;  
 }

@@ -2,7 +2,7 @@
 #include "king.h"
 #include <random>
 
-BotLevel2::BotLevel2(Color color, Board* board): Bot{color, board}{}
+BotLevel2::BotLevel2(Color color, std::shared_ptr<Board> board): Bot{color, board}{}
 
 template <typename T>
 T getRandom(const std::vector<T>& vector) {
@@ -14,7 +14,7 @@ T getRandom(const std::vector<T>& vector) {
 }
 
 Move BotLevel2::getNextMove() const {
-    const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(color);
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(color);
     std::vector<Move> captureMoves = findCaptureMoves(squares, color);
     std::vector<Move> checkMoves = findCheckMoves(squares, color);
     std::vector<Move> getRandomMoves = findRandomMoves(squares, color);

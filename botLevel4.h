@@ -3,11 +3,11 @@
 
 #include "bot.h"
 #include <map>
+#include <memory>
 
 class BotLevel4: public Bot{
-    std::map<PieceType, int> allSquaresWithPieces; 
     public:
-        BotLevel4(Color color, Board* board);
+        BotLevel4(Color color, std::shared_ptr<Board> board);
         Move getNextMove() const override;
 };
 

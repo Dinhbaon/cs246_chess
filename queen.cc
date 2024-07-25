@@ -26,6 +26,6 @@ PieceType Queen::getPieceType() const {
     return QUEEN; 
 }
 
-Piece* Queen::copy() const {
-    return new Queen(*this); 
+std::shared_ptr<Piece> Queen::copy() const {
+    return std::make_shared<Queen>(*this); 
 }

@@ -1,7 +1,7 @@
 #include "endgameservice.h"
 
-EndGameService::EndGameService(Controller *controller, Board *board): controller{controller}, board{board} {
-    controller->attach(this);
+EndGameService::EndGameService(Controller *controller, std::shared_ptr<Board> board): controller{controller}, board{board} {
+
     isCheckMate = false;
     isStaleMate = false;
 }
@@ -11,7 +11,7 @@ void EndGameService::initNotify(){
 }
 
 EndGameService::~EndGameService() {
-    controller->detach(this);
+
 }
 
 void EndGameService::resetCheckMate(){
@@ -31,9 +31,9 @@ bool EndGameService::getIsStaleMate(){
 }
 
 
-bool checkCanMove(Board *board, Controller *controller, Color oppositionColor){
+bool checkCanMove(std::shared_ptr<Board> board, Controller *controller, Color oppositionColor){
     
-    const std::vector<Square*> &squares = board->getAllSquaresWithPieces().at(oppositionColor);
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(oppositionColor);
     for(auto it = squares.begin(); it != squares.end(); ++it){
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
@@ -48,7 +48,7 @@ bool checkCanMove(Board *board, Controller *controller, Color oppositionColor){
     return true;
 }
 
-void EndGameService::reset(Board* board) {
+void EndGameService::reset(std::shared_ptr<Board> board) {
     this->board = board; 
     resetCheckMate();
     resetStaleMate(); 

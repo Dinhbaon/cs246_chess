@@ -7,11 +7,11 @@
 using namespace std;
 
 Graphic::Graphic(Controller *s) : subject{s}, window{bottom * squareDim, right * squareDim} {
-    subject->attach(this);
+
 }
 
 Graphic::~Graphic() {
-    subject->detach(this);
+
 }
 
 void Graphic::printRook(int c_background, int color, int x, int y) {
@@ -305,7 +305,7 @@ void Graphic::notify(Move move) {
 }
 
 void Graphic::initNotify() {
-    Square *sq;
+    std::shared_ptr<Square>sq;
     int c_background;
     PieceType pieceType;
     for (int i = 0; i < bottom; ++i) {

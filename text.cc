@@ -6,11 +6,9 @@
 using namespace std;
 
 Text::Text(Controller *s) : subject{s} {
-    subject->attach(this);
 }
 
 Text::~Text() {
-    subject->detach(this);
 }
 
 void Text::notify(Move move) {

@@ -2,6 +2,7 @@
 #define QUEEN_H
 
 #include "piece.h"
+#include <memory>
 
 class Queen: public Piece {
     
@@ -10,7 +11,7 @@ class Queen: public Piece {
         bool canMove(const Move& move, const Board& board) const override;
         bool canCapture(const Move& move, const Board& board) const override; 
         PieceType getPieceType() const override; 
-        Piece* copy() const override; 
+        std::shared_ptr<Piece> copy() const override; 
         char name() const override;
 };
 

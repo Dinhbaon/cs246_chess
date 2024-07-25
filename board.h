@@ -8,13 +8,14 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <memory>
 
-template class std::map<Color, std::vector<Piece*>>;
+template class std::map<Color, std::vector<std::shared_ptr<Piece>>>;
 
 class Board {
 
-    mutable std::map<Color, std::vector<Square*>> allSquaresWithPieces; 
-    std::vector<Square*> board;
+    mutable std::map<Color, std::vector<std::shared_ptr<Square>>> allSquaresWithPieces; 
+    std::vector<std::shared_ptr<Square>> board;
     int xDimension = 8;
     int yDimension = 8; 
     Move lastMove; 
@@ -26,7 +27,6 @@ class Board {
     void Enpassent(const Move& move); 
     public:
         Board(); 
-        ~Board();
         Board(const Board& other);
         Board &operator=(const Board &other);
         bool operator==(const Board &other); 
@@ -41,12 +41,12 @@ class Board {
         bool isMoveEnpassent(const Move& move) const;
         bool checkPawnEdgeRows() const;
         // Getters and setters
-        Square* getSquare(const int x, const int y) const;
-        Square *getEmptySquare() const;
-        void setSquare(const int x, const int y, Piece* piece); 
-        const std::map<Color, std::vector<Square*>>& getAllSquaresWithPieces() const;
+        std::shared_ptr<Square> getSquare(const int x, const int y) const;
+        std::shared_ptr<Square> getEmptySquare() const;
+        void setSquare(const int x, const int y, std::shared_ptr<Piece> piece); 
+        const std::map<Color, std::vector<std::shared_ptr<Square>>>& getAllSquaresWithPieces() const;
         Move getLastMove() const;
-        Square* getKingSquare(Color color) const;
+        std::shared_ptr<Square> getKingSquare(Color color) const;
         void emptyBoard();
  
 };

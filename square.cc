@@ -1,7 +1,7 @@
 #include "square.h"
 #include "move.h"
 
-Square::Square(int x, int y, Piece* piece): x{x}, y{y}, piece{piece} {
+Square::Square(int x, int y, std::shared_ptr<Piece> piece): x{x}, y{y}, piece{piece} {
     if (y == 7 || y == 5 || y == 3 || y == 1) {
         for (int i = 1; i < dim; i += 2) {
             if (x == i) {
@@ -42,11 +42,11 @@ char Square::charAt(int col, int row) {
     return piece->name();
 }
 
-Piece* Square::getPiece() const {
+std::shared_ptr<Piece> Square::getPiece() const {
     return piece;
 }
 
-void Square::setPiece(Piece* piece) {
+void Square::setPiece(std::shared_ptr<Piece> piece) {
     this->piece = piece; 
 }
 
