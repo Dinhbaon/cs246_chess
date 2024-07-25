@@ -48,6 +48,12 @@ bool checkCanMove(Board *board, Controller *controller, Color oppositionColor){
     return true;
 }
 
+void EndGameService::reset(Board* board) {
+    this->board = board; 
+    resetCheckMate();
+    resetStaleMate(); 
+}
+
 void EndGameService::notify(Move move){
     Color color = controller->getPlayerColor();
     Color oppositionColor;

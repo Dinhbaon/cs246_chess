@@ -75,12 +75,12 @@ Board::Board() {
 
 }
 
-// Board::~Board() {
-//     for (Square* square : board) {
-//         delete square->getPiece(); 
-//         delete square;  
-//     }
-// }
+Board::~Board() {
+    for (Square* square : board) {
+        delete square->getPiece(); 
+        delete square;  
+    }
+}
 
 //Helper methods
 bool Board::isSquareUnderAttack(const Square& square, Color color) const {

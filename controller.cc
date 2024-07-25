@@ -143,8 +143,8 @@ bool Controller::checkPromotion() const {
     
 }
 
-void Controller::reset() {
-    setBoard(new Board);
+void Controller::reset(Board* board) {
+    setBoard(board);
     setMode(START);
     whitePlayer = nullptr; 
     blackPlayer = nullptr; 

@@ -73,16 +73,18 @@ int main() {
 
                 controller.makeMove(move, controller.getPlayerColor()); 
                 if(endGame->getIsCheckMate()) {
+                    Board* newBoard = new Board(); 
                     std::cout << "CheckMate - Use the game command to start a new game" << std::endl << std::flush;
-                    endGame->resetCheckMate();
-                    controller.reset(); 
-                    historyService->clearHistory(); 
+                    endGame->reset(newBoard);
+                    controller.reset(newBoard); 
+                    historyService->reset(newBoard); 
                     continue;
                 } else if(endGame->getIsStaleMate()) {
-                    endGame->resetStaleMate();
+                    Board* newBoard = new Board(); 
+                    endGame->reset(newBoard);
                     std::cout << "StaleMate - - Use the game command to start a new game" << std::endl << std::flush;
-                    controller.reset(); 
-                    historyService->clearHistory();   
+                    controller.reset(newBoard); 
+                    historyService->reset(newBoard);   
                     continue;
                 }
 

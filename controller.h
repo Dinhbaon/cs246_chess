@@ -27,7 +27,7 @@ class Controller: public Subject {
         bool checkPromotion() const;  
         void makeMove(Move move, Color color);
         void emptyBoard();     
-        void reset(); 
+        void reset(Board* board); 
         // Getters and setters
         void setPlayers(Color color, std::string player);
         void setMode(Mode mode); 
