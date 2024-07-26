@@ -108,7 +108,6 @@ int main() {
 
                     continue;
                 } else if(endGame->getIsStaleMate()) {
-                    controller.score.at(controller.getPlayerColor()) += 0.5; 
                     controller.score.at(WHITE) += 0.5; 
                     controller.score.at(BLACK) += 0.5; 
                     std::shared_ptr<Board> newBoard{new Board()};  
