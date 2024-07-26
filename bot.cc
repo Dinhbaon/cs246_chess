@@ -31,6 +31,7 @@ std::vector<Move> Bot::findAvoidCaptureMoves(const std::vector<std::shared_ptr<S
                 for(int y = 0; y < 8; ++y){
                     Move move {**it, Square(x, y)};
                     if((*it)->getPiece()->canMove(move, *board)
+                    && board->isSquareUnderAttack(**it, color)
                     && !(board->isSquareUnderAttack(Square(x, y), color))
                     && !(board->isCheckAfterMove(move, color))){
                         moves.emplace_back(move);
@@ -49,7 +50,7 @@ std::vector<Move> Bot::findRandomAvoidCaptureMoves(const std::vector<std::shared
             for(int y = 0; y < 8; ++y){
                 Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)
-                && !(board->isSquareUnderAttack(Square(x, y), color))
+                && !(board->isSquareUnderAttackAfterMove(move, color))
                 && !(board->isCheckAfterMove(move, color))){
                     moves.emplace_back(move);
                 }
@@ -82,11 +83,11 @@ std::vector<Move> Bot::findCaptureMoves(const std::vector<std::shared_ptr<Square
 }
 
 std::vector<Move> Bot::findCheckMoves(const std::vector<std::shared_ptr<Square>> &squares, Color color) const {
-    Color attackingColor;
+    Color oppositionColor;
     if(color==WHITE){
-        attackingColor = BLACK;
+        oppositionColor = BLACK;
     } else {
-        attackingColor = WHITE;
+        oppositionColor = WHITE;
     }
     std::vector<Move> moves;
     for(auto it = squares.begin(); it != squares.end(); ++it){
@@ -94,7 +95,8 @@ std::vector<Move> Bot::findCheckMoves(const std::vector<std::shared_ptr<Square>>
             for(int y = 0; y < 8; ++y){
                 Move move {**it, Square(x, y)};
                 if((*it)->getPiece()->canMove(move, *board)
-                && board->isCheckAfterMove(move, attackingColor)
+                && board->isCheckAfterMove(move, oppositionColor)
+                && !(board->isSquareUnderAttackAfterMove(move, color))
                 && !(board->isCheckAfterMove(move, color))) {
                     moves.emplace_back(move);
                 }
@@ -129,11 +131,11 @@ Move Bot::findBetterCaptureMoves(const std::vector<std::shared_ptr<Square>> &squ
         for(int x = 0; x < 8; ++x){
             for(int y = 0; y < 8; ++y){
                 Move move {**it, Square(x, y)};
-                if((*it)->getPiece()->canMove(move, *board)
-                && board->getSquare(x, y)->getPiece() != nullptr
-                && !(board->isCheckAfterMove(move, color))
-                && (board->isSquareUnderAttack(Square(x, y), color) 
-                && piecesPoints.at((*it)->getPiece()->getPieceType()) > piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()))){
+                if((*it)->getPiece()->canMove(move, *board) // check can move
+                && board->getSquare(x, y)->getPiece() != nullptr // check if piece exist at square
+                && !(board->isCheckAfterMove(move, color)) // check if check after move
+                && (board->isSquareUnderAttackAfterMove(move, color) // check if square moving in is under attack
+                && piecesPoints.at((*it)->getPiece()->getPieceType()) < piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()))){
                     if(piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()) > maxPoint){
                         bestMove = move;
                         maxPoint = piecesPoints.at((*it)->getPiece()->getPieceType()) - piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType());
@@ -141,7 +143,7 @@ Move Bot::findBetterCaptureMoves(const std::vector<std::shared_ptr<Square>> &squ
                 } else if ((*it)->getPiece()->canMove(move, *board)
                 && board->getSquare(x, y)->getPiece() != nullptr
                 && !(board->isCheckAfterMove(move, color))
-                && !(board->isSquareUnderAttack(Square(x, y), color))){
+                && !(board->isSquareUnderAttackAfterMove(move, color))){
                     if(piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()) > maxPoint){
                         bestMove = move;
                         maxPoint = piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType());
@@ -153,6 +155,50 @@ Move Bot::findBetterCaptureMoves(const std::vector<std::shared_ptr<Square>> &squ
                     if(maxPoint == 0){
                         bestMove = move;
                     }
+                }
+            }
+        }
+    }
+    return bestMove;
+}
+
+bool checkCanMove(std::shared_ptr<Board> board, Color oppositionColor){
+    
+    const std::vector<std::shared_ptr<Square>> &squares = board->getAllSquaresWithPieces().at(oppositionColor);
+    for(auto it = squares.begin(); it != squares.end(); ++it){
+        for(int x = 0; x < 8; ++x){
+            for(int y = 0; y < 8; ++y){
+                Move move {**it, Square(x, y)};
+                if((*it)->getPiece()->canMove(move, *board)
+                && !(board->isCheckAfterMove(move, oppositionColor))){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+Move Bot::findCheckMate(const std::vector<std::shared_ptr<Square>> &squares, Color color) const {
+    Move bestMove;
+    Color oppositionColor;
+    if(color==WHITE){
+        oppositionColor = BLACK;
+    } else {
+        oppositionColor = WHITE;
+    }
+    for(auto it = squares.begin(); it != squares.end(); ++it){
+        for(int x = 0; x < 8; ++x){
+            for(int y = 0; y < 8; ++y){
+                Move move {**it, Square(x, y)};
+                Board tmp = *board;
+                tmp.movePiece(move, color);
+                if((*it)->getPiece()->canMove(move, *board)
+                && board->isCheckAfterMove(move, oppositionColor)
+                && !(board->isCheckAfterMove(move, color))
+                && !(checkCanMove(std::make_shared<Board>(tmp), oppositionColor))) {
+                    bestMove = move;
+                    return bestMove;
                 }
             }
         }
