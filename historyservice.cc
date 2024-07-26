@@ -33,7 +33,7 @@ void HistoryService::undo() {
         std::shared_ptr<Board> newBoard = std::make_shared<Board>(getCurrBoard()); 
         controller->setBoard(newBoard); 
         currBoard = newBoard; 
-        controller->notifyObservers(Move{controllerLastMove.end, controllerLastMove.start}, true); 
+        controller->printInit(); 
         controller->switchTurn(); 
     } else {
         std::cout << "Nothing to undo" << std::endl; 
@@ -47,8 +47,9 @@ void HistoryService::redo() {
         std::shared_ptr<Board> newBoard = std::make_shared<Board>(getCurrBoard()); 
         controller->setBoard(newBoard); 
         currBoard = newBoard; 
-        controller->notifyObservers(Move{controllerLastMove.start, controllerLastMove.end}), true; 
+        controller->printInit(); 
         controller->switchTurn();
+
     } else {
         std::cout << "Nothing to redo" << std::endl; 
     }
