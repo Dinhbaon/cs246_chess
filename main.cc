@@ -118,8 +118,14 @@ int main() {
 
                     continue;
                 }
-
                 controller.switchTurn(); 
+                if (controller.isInCheck(controller.getPlayerColor())) {
+                    if (controller.getPlayerColor() == WHITE) {
+                        std::cout << "White is in check." << std::endl; 
+                    } else {
+                        std:: cout << "Black is in check." << std::endl; 
+                    }
+                }
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
