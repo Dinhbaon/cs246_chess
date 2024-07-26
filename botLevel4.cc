@@ -32,6 +32,8 @@ Move BotLevel4::getNextMove() const {
         return checkMate;
     } else if (!(betterCaptureMove.start == Square(0,0) && betterCaptureMove.end == Square(0,0))){
         return betterCaptureMove;
+    } else if(board->isInCheck(color)){
+        return getRandom(getRandomMoves);
     } else if(checkMoves.size() > 0){
         return getRandom(checkMoves);
     } else if (avoidCapture.size() > 0){
