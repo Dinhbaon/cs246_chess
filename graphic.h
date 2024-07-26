@@ -29,6 +29,7 @@ class Graphic: public Observer {
         ~Graphic();
         int getPieceColor(int x, int y);
         int getBackgroundColor(int x, int y);
+        void printPiece(int x, int y);
 };
 
 #endif

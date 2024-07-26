@@ -1,0 +1,10 @@
+setup
++ P e2
++ P d3
++ K d1
++ k e8
++ q d8
+= black
+done
+game computer3 computer3
+move

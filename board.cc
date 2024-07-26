@@ -97,6 +97,31 @@ bool Board::isSquareUnderAttack(const Square& square, Color color) const {
     return false;
 }
 
+//Helper methods
+bool Board::isSquareUnderAttackAfterMove(Move lastMove, Color color) const {
+    Color attackingColor; 
+    if (color == WHITE) {
+        attackingColor = BLACK; 
+    } else {
+        attackingColor = WHITE; 
+    }
+    
+    Board tmp {*this};
+    tmp.movePiece(lastMove, color);
+    const std::vector<std::shared_ptr<Square>>& squares = tmp.getAllSquaresWithPieces().at(attackingColor);
+    if (!squares.empty()) {
+        for (std::shared_ptr<Square> squareWithPieces : squares) {
+            Move move{*squareWithPieces, lastMove.end}; 
+            if (squareWithPieces->getPiece()->canCapture(move, tmp)
+            && !(tmp.isCheckAfterMove(move, attackingColor))) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 bool Board::isInCheck(Color color) const {
     return isSquareUnderAttack(*getKingSquare(color), color);
 }

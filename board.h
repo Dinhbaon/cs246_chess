@@ -34,6 +34,7 @@ class Board {
         void movePiece(Move move, Color color);
         // Public utility methods
         bool isSquareUnderAttack(const Square& square, Color color) const;  
+        bool isSquareUnderAttackAfterMove(Move move, Color color) const;  
         bool isInCheck(Color color) const;
         bool isCheckAfterMove(Move move, Color color);
         bool oneKing(const Color color) const;

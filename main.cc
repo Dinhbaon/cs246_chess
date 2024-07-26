@@ -234,9 +234,9 @@ int main() {
 
                 } else if (command == "=") { // command == "="
                     std::cin >> s;
-                    if (s == "black" || "b" || "B") {
+                    if (s == "black" || s == "b" || s == "B") {
                         c = BLACK;
-                    } else if (s == "white" || "w" || "W") {
+                    } else if (s == "white" || s == "w" || s == "W") {
                         c = WHITE;
                     }
                     controller.setPlayerTurn(c);

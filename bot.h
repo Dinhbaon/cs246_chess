@@ -16,7 +16,9 @@ class Bot: public Player{
         std::vector<Move> findCheckMoves(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
         std::vector<Move> findRandomMoves(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
         std::vector<Move> findAvoidCaptureMoves(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
+        std::vector<Move> findDefensiveMove(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
         Move findBetterCaptureMoves(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
+        Move findCheckMate(const std::vector<std::shared_ptr<Square>> &squares, Color color) const;
 };
 
 #endif
