@@ -204,4 +204,8 @@ std::shared_ptr<Square>Controller::getEmptySquare() const {
     return board->getEmptySquare();
 }
 
+std::shared_ptr<Board> Controller::getBoard() const {
+    return board; 
+}
+
 

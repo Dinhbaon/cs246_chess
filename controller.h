@@ -45,7 +45,8 @@ class Controller: public Subject {
         bool getIsEnpassent() const; 
         bool getIsCastle() const; 
         Move getLastMove() const;  
-        void setBoard(std::shared_ptr<Board> board);   
+        void setBoard(std::shared_ptr<Board> board);  
+        std::shared_ptr<Board> getBoard() const;  
         
         
 };

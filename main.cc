@@ -136,6 +136,7 @@ int main() {
             }
             controller.setMode(SETUP); 
             while (std::cin >> command) {
+                board = controller.getBoard(); 
                 Color c = BLACK;
                 PieceType pt = ROOK;
                 std::string s;
