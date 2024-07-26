@@ -208,4 +208,16 @@ std::shared_ptr<Board> Controller::getBoard() const {
     return board; 
 }
 
+bool Controller::oneKing(Color color) const {
+    return board->oneKing(color);
+}
+
+bool Controller::isInCheck(Color color) const {
+    return board->isInCheck(color);
+}
+
+void Controller::setSquare(const int x, const int y, std::shared_ptr<Piece> piece) {
+    board->setSquare(x, y, piece);
+}
+
 

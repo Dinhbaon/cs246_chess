@@ -32,7 +32,7 @@ std::vector<Move> Bot::findAvoidCaptureMoves(const std::vector<std::shared_ptr<S
                     Move move {**it, Square(x, y)};
                     if((*it)->getPiece()->canMove(move, *board)
                     && board->isSquareUnderAttack(**it, color)
-                    && !(board->isSquareUnderAttack(Square(x, y), color))
+                    && !(board->isSquareUnderAttackAfterMove(move, color))
                     && !(board->isCheckAfterMove(move, color))){
                         moves.emplace_back(move);
                     }
@@ -135,7 +135,7 @@ Move Bot::findBetterCaptureMoves(const std::vector<std::shared_ptr<Square>> &squ
                 && board->getSquare(x, y)->getPiece() != nullptr // check if piece exist at square
                 && !(board->isCheckAfterMove(move, color)) // check if check after move
                 && (board->isSquareUnderAttackAfterMove(move, color) // check if square moving in is under attack
-                && piecesPoints.at((*it)->getPiece()->getPieceType()) < piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()))){
+                && piecesPoints.at((*it)->getPiece()->getPieceType()) <= piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()))){
                     if(piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType()) > maxPoint){
                         bestMove = move;
                         maxPoint = piecesPoints.at((*it)->getPiece()->getPieceType()) - piecesPoints.at(board->getSquare(x, y)->getPiece()->getPieceType());
