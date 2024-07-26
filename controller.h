@@ -39,6 +39,8 @@ class Controller: public Subject {
         bool isValidMove(Move move, Color color) const; 
         bool checkPawnEdgeRows() const;
         void setIsInGame(bool isInGame); 
+        bool oneKing(Color color) const;
+        bool isInCheck(Color color) const;
         std::shared_ptr<Player>  getPlayerTurn() const; 
         Color getPlayerColor() const;
         void setPlayerTurn(Color color); 
@@ -46,6 +48,7 @@ class Controller: public Subject {
         bool getIsCastle() const; 
         Move getLastMove() const;  
         void setBoard(std::shared_ptr<Board> board);  
+        void setSquare(const int x, const int y, std::shared_ptr<Piece> piece); 
         std::shared_ptr<Board> getBoard() const;  
         
         
