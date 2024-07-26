@@ -261,29 +261,18 @@ void Graphic::notify(Move move) {
     }
     c_background = getBackgroundColor(move.start.getX(), move.start.getY());
 
-    printSquare(c_background, move.start.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
+    if (subject->getSquare(move.start.getX(), move.start.getY())->isEmpty()) {
+        printSquare(c_background, move.start.getX() * squareDim, (bottom - 1 - move.start.getY()) * squareDim);
+    } else {
+        printPiece(move.start.getX(), move.start.getY());
+    }
 
     c_background = getBackgroundColor(move.end.getX(), move.end.getY());
     if (subject->getSquare(move.end.getX(), move.end.getY())->isEmpty()) {
         printSquare(c_background, move.end.getX() * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
         return;
-    }
-    
-    color = getPieceColor(move.end.getX(), move.end.getY());
-    pieceType = subject->getSquare(move.end.getX(), move.end.getY())->getPiece()->getPieceType();
-
-    if (pieceType == ROOK) {
-        printRook(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
-    } else if (pieceType == KNIGHT) {
-        printKnight(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
-    } else if (pieceType == BISHOP) {
-        printBishop(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
-    } else if (pieceType == QUEEN) {
-        printQueen(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
-    } else if (pieceType == KING) {
-        printKing(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
     } else {
-        printPawn(c_background, color, move.end.getX() * pieceDim, (bottom - 1 - move.end.getY()) * pieceDim);
+        printPiece(move.end.getX(), move.end.getY());
     }
 
     if (subject->getIsEnpassent()) {
@@ -302,6 +291,26 @@ void Graphic::notify(Move move) {
             printSquare(getBackgroundColor(0, move.end.getY()), 0 * squareDim, (bottom - 1 - move.end.getY()) * squareDim);
         }   
     }    
+}
+
+void Graphic::printPiece(int x, int y) {
+    int c_background = getBackgroundColor(x, y);
+    int color = getPieceColor(x, y);
+    PieceType pieceType = subject->getSquare(x, y)->getPiece()->getPieceType();
+
+    if (pieceType == ROOK) {
+        printRook(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    } else if (pieceType == KNIGHT) {
+        printKnight(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    } else if (pieceType == BISHOP) {
+        printBishop(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    } else if (pieceType == QUEEN) {
+        printQueen(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    } else if (pieceType == KING) {
+        printKing(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    } else {
+        printPawn(c_background, color, x * pieceDim, (bottom - 1 - y) * pieceDim);
+    }
 }
 
 void Graphic::initNotify() {

@@ -47,7 +47,7 @@ void HistoryService::redo() {
         std::shared_ptr<Board> newBoard = std::make_shared<Board>(getCurrBoard()); 
         controller->setBoard(newBoard); 
         currBoard = newBoard; 
-        controller->notifyObservers(Move{controllerLastMove.start, controllerLastMove.end}), true; 
+        controller->notifyObservers(Move{controllerLastMove.start, controllerLastMove.end}, true); 
         controller->switchTurn();
     } else {
         std::cout << "Nothing to redo" << std::endl; 
