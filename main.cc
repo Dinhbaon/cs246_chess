@@ -108,12 +108,8 @@ int main() {
 
                     continue;
                 } else if(endGame->getIsStaleMate()) {
-                    controller.score.at(controller.getPlayerColor()) += 0.5; 
-                    if (controller.getPlayerColor() == WHITE) {
-                        controller.score.at(BLACK) += 0.5; 
-                    } else {
-                        controller.score.at(WHITE) += 0.5;
-                    }
+                    controller.score.at(WHITE) += 0.5; 
+                    controller.score.at(BLACK) += 0.5; 
                     std::shared_ptr<Board> newBoard{new Board()};  
                     endGame->reset(newBoard);
                     controller.handleGameEnd(newBoard); 
@@ -122,8 +118,14 @@ int main() {
 
                     continue;
                 }
-
                 controller.switchTurn(); 
+                if (controller.isInCheck(controller.getPlayerColor())) {
+                    if (controller.getPlayerColor() == WHITE) {
+                        std::cout << "White is in check." << std::endl; 
+                    } else {
+                        std:: cout << "Black is in check." << std::endl; 
+                    }
+                }
 
             } else {
                 std::cout << "Not in Game - Use game [Human/Computer[1-4]] to start one" << std::endl; 
